@@ -1,0 +1,52 @@
+label {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 40px;
+  height: 40px;
+  & .disabled {
+    // border: 1px solid var(--checkbox-border-disabled);
+    // background: var(--checkbox-bg-disabled);
+  }
+
+  input {
+    position: absolute;
+    outline: none;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+
+    width: 40px;
+    height: 40px;
+
+    cursor: pointer;
+
+    background-color: var(--checkbox-bg);
+    border: 1px solid var(--checkbox-border);
+    &:hover {
+      background-color: var(--checkbox-bg-hover);
+      border: 1px solid var(--checkbox-border-hover);
+    }
+    &:disabled {
+      background-color: var(--checkbox-bg-disabled);
+      border: 1px solid var(--checkbox-border-disabled);
+    }
+  }
+
+  span {
+    user-select: none;
+    pointer-events: none;
+    // MAY BE DELETE
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &.disabled {
+      // background-color: var(--checkbox-check-disabled);
+    }
+  }
+}

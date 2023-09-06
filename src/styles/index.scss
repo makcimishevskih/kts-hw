@@ -1,0 +1,23 @@
+@import "./reset.scss";
+@import "./vars.scss";
+@import "./margin.scss";
+
+@import "./Roboto/fonts";
+
+html,
+body,
+#root {
+  font-family: Roboto;
+  height: 100%;
+}
+
+body {
+  width: 1440px;
+  margin: 0 auto;
+  background: #f6f8fa;
+}
+
+.container {
+  padding: 0 100px;
+}
+// --main-gb: #F6F8FA;
