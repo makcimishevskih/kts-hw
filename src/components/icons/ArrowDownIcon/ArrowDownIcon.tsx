@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { IconProps } from '../Icon';
 
-const ArrowDownIcon: FC<IconProps> = ({ width = 24, height = 24, color = 'primary', handler, className }) => {
+const ArrowDownIcon: FC<IconProps> = ({ width = 24, height = 24, color = 'primary', handler, className, style }) => {
   const colorStyle = {
     primary: 'var(--text-primary)',
     secondary: 'var(--text-secondary)',
@@ -9,9 +9,8 @@ const ArrowDownIcon: FC<IconProps> = ({ width = 24, height = 24, color = 'primar
   };
 
   return (
-    <div onClick={handler}>
+    <div onClick={handler} style={{ cursor: 'pointer', ...style }}>
       <svg
-        data-testid="icon"
         className={className}
         width={width}
         height={height}

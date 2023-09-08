@@ -39,42 +39,19 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div onClick={onClick} id="test-card" className={cxCard} {...props}>
-      <img
-        className={css.card__img}
-        src={image}
-        alt={typeof title === 'string' ? title : 'product'}
-      />
+      <img className={css.card__img} src={image} alt={typeof title === 'string' ? title : 'product'} />
 
       <div className={css.card__info}>
         <div className={css.card__header}>
           {captionSlot && (
-            <Text
-              tag="p"
-              view="p-14"
-              color="secondary"
-              className={css.card__caption}
-              stylesProps={{ marginBottom: '8px' }}
-            >
+            <Text mt="8px" tag="p" view="p-14" color="secondary" className={css.card__caption} mb="8px">
               {captionSlot}
             </Text>
           )}
-          <Text
-            tag="h2"
-            view="p-20"
-            maxLines={2}
-            weight="bold"
-            color="primary"
-            stylesProps={{ marginBottom: '8px' }}
-          >
+          <Text mt="8px" tag="h2" view="p-20" maxLines={2} weight="bold" color="primary">
             {title}
           </Text>
-          <Text
-            stylesProps={{ marginBottom: '20px' }}
-            view="p-16"
-            maxLines={3}
-            tag="p"
-            color="secondary"
-          >
+          <Text mt="8px" view="p-16" maxLines={3} tag="p" color="secondary">
             {subtitle}
           </Text>
         </div>

@@ -1,4 +1,5 @@
 .header {
+  padding: var(--space-m) 0;
   border-bottom: 2px solid #d9d9d9;
   &__nav {
     display: flex;
@@ -6,6 +7,10 @@
     justify-content: space-between;
   }
   &__left {
+    .header__logoWrapper {
+      width: 32px;
+      height: 32px;
+    }
     display: flex;
     align-items: center;
     gap: var(--space-xl);

@@ -1,16 +1,11 @@
+@import "styles/mixins.scss";
+
 label {
   position: relative;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flexbox(center, center);
 
   width: 40px;
   height: 40px;
-  & .disabled {
-    // border: 1px solid var(--checkbox-border-disabled);
-    // background: var(--checkbox-bg-disabled);
-  }
 
   input {
     position: absolute;
@@ -42,11 +37,6 @@ label {
     // MAY BE DELETE
     position: relative;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    &.disabled {
-      // background-color: var(--checkbox-check-disabled);
-    }
+    @include flexbox(center, center, 50px);
   }
 }

@@ -1,7 +1,9 @@
+@import "styles/mixins.scss";
+
 .orgsList {
-  display: flex;
+  // @include flexbox(flex-start, flex-start, 80px);
+  @include flexbox(stretch, flex-start, 80px);
   flex-wrap: wrap;
-  justify-content: space-between;
 
   margin-top: var(--margin-xl);
 }

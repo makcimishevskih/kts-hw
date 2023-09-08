@@ -116,12 +116,142 @@ export type TOrgs = {
 export type TOrgsResponse = {
   data: TOrgs[];
 };
+export type TContributorsResponse = {
+  data: TContributor[];
+};
+export type TTagsResponse = {
+  data: TTag[];
+};
+export type TTag = {
+  name: string;
+  zipball_url: string;
+  tarball_url: string;
+  commit: {
+    sha: string;
+    url: string;
+  };
+  node_id: string;
+};
+export type TContributor = {
+  login: string;
+  id: number;
+  node_id: string;
+  avatar_url: string;
+  gravatar_id: string;
+  url: string;
+  html_url: string;
+  followers_url: string;
+  following_url: string;
+  gists_url: string;
+  starred_url: string;
+  subscriptions_url: string;
+  organizations_url: string;
+  repos_url: string;
+  events_url: string;
+  received_events_url: string;
+  type: string;
+  site_admin: boolean;
+  contributions: number;
+};
+export type TReadme = {
+  name: string;
+  path: string;
+  sha: string;
+  size: number;
+  url: string;
+  html_url: string;
+  git_url: string;
+  download_url: string;
+  type: string;
+  content: string;
+  encoding: string;
+  _links: {
+    self: string;
+    git: string;
+    html: string;
+  };
+};
 
-const URLS = { ktsstudio: 'https://api.github.com/orgs/ktsstudio/repos' };
+// 1.
+// export const URL_ORG = { ktsstudio: 'https://api.github.com/orgs/ktsstudio/repos' };
+// for ORG          ---> 'https://api.github.com/orgs/{ORG_NAME}/repos'
+// 2.
+// export const URL_ORG_CONTRIBUTORS = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/contributors' };
+// for CONTRIBUTORS ---> 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/contributors'
+// 3.
+// export const URL_ORG_TAGS = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/tags' };
+// for TAGS(TOPICS) ---> 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/tags' };
+// 4.
+// export const URL_ORG_LANGUAGES = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/languages' };
+// for LANGUAGES    ---> 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/languages' };
+// 5.
+// export const URL_ORG_README = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/contents/README.md' };
+// for README       ---> 'https://api.github.com/repos/{ORG}/{REPO_NAME}/contents/{FILE_NAME}';
 
-export async function getOrgs() {
+const config = {
+  headers: {
+    Authorization: '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',
+    'X-GitHub-Api-Version': '2022-11-28',
+  },
+};
+
+export async function getOrgs(url: string) {
   try {
-    const { data } = await axios.get<TOrgsResponse>(URLS.ktsstudio);
+    const { data } = await axios.get<TOrgsResponse>(url, config);
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
+  }
+}
+
+// name
+export async function getContributors(url: string) {
+  try {
+    const { data } = await axios.get<TContributorsResponse>(url, config);
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
+  }
+}
+export async function getTags(url: string) {
+  try {
+    const { data } = await axios.get<TTagsResponse>(url, config);
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
+  }
+}
+export async function getLanguages(url: string) {
+  try {
+    const { data } = await axios.get<TTagsResponse>(url, config);
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
+  }
+}
+export async function getReadme(url: string) {
+  try {
+    const { data } = await axios.get(url, config);
 
     return data;
   } catch (error) {

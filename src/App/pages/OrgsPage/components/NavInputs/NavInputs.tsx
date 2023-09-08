@@ -39,9 +39,8 @@ const NavInputs: FC<INavInputsProps> = () => {
         afterSlot={<ArrowDownIcon color="secondary" />}
         width="s"
       />
-      <div className={css.orgs__filter}>
+      <div className={`${css.orgs__filter} margin-top-m`}>
         <Input
-          className="margin-top-m"
           onClick={wrapperHandleClick2}
           ref={inputRef2}
           borderRadius="6px"

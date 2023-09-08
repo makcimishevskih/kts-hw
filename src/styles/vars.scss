@@ -1,3 +1,4 @@
+// GAP VARS
 :root {
   // border
   --border-radius: 6px;
@@ -6,11 +7,15 @@
   --brand-active: #487773ff;
   --brand-hover: #86aaa7ff;
   // spaces
+  --space-xxxs: 4px;
   --space-xxs: 8px;
   --space-xs: 12px;
   --space-s: 14px;
+  --space-m: 16px;
   --space-l: 20px;
   --space-xl: 24px;
+  --space-xxl: 40px;
+  --space-xxxl: 44px;
   // loader
   --loader-bg: #518581;
   // button
@@ -63,4 +68,7 @@
   --margin-s: 18px;
   --margin-xs: 14px;
   --margin-xxs: 8px;
+  // tags
+  --tag-bg: #daedff;
+  --tag-color: #0066cc;
 }
