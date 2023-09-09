@@ -2,19 +2,16 @@ import './App.scss';
 
 // import { ROUTES } from '../routes/routes';
 
-import { Route, Routes } from 'react-router-dom';
-
-import Providers from 'providers/Providers';
+import { Route, Routes, To } from 'react-router-dom';
 
 import Header from 'components/Header';
 import OrgsPage from 'App/pages/OrgsPage';
+import ErrorPage from 'App/pages/ErrorPage';
 import ProductPage from 'App/pages/ProductPage';
-// import { useEffect, useState } from 'react';
-// import { getOrgs } from 'utils/fetchData';
+import { useEffect, useState } from 'react';
+import { geTOrgRepos, geTOrg, TOrgRepo, TOrg } from 'utils/fetchData';
 
-import { TOrgs } from 'utils/fetchData';
-
-const list: TOrgs[] = [
+const list: TOrgRepo[] = [
   {
     id: 25694602,
     node_id: 'MDEwOlJlcG9zaXRvcnkyNTY5NDYwMg==',
@@ -3327,24 +3324,28 @@ const list: TOrgs[] = [
 ];
 
 function App() {
-  // const [state, setState] = useState<TOrgs[]>([]);
+  const [org, seTOrgRepo] = useState<TOrg | object>({});
+  const [list, setState] = useState<TOrgRepo[]>([]);
 
-  // useEffect(() => {
-  // getOrgs('https://api.github.com/orgs/ktsstudio/repos').then(setState);
-  // { name, id, full_name, description, updated_at,  stargazers_count }
-  // }, []);
+  // console.log(org?.name, org?.login, org?.public_repos);
+
+  useEffect(() => {
+    // geTOrg('ktsstudio').then(seTOrgRepo);
+    // geTOrgRepos(5).then(setState);
+  }, []);
+
   return (
     <div className="app">
       <Header />
 
       <div className="container">
-        <Providers>
-          <Routes>
-            <Route path={'/'} element={<OrgsPage list={list} />} />
-            <Route path={'product-page'} element={<ProductPage list={list} />} />
-            {/* <Route path={'product-page/:id'} element={<ProductPage />} /> */}
-          </Routes>
-        </Providers>
+        <Routes>
+          {/* org={org} */}
+          <Route path="/" element={<OrgsPage list={list} />} />
+          <Route path="product/:id" element={<ProductPage list={list} />} />
+          <Route path="*" element={<ErrorPage />} />
+          {/* <Route path={'product-page/:id'} element={<ProductPage />} /> */}
+        </Routes>
       </div>
     </div>
   );

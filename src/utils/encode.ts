@@ -5,3 +5,8 @@ export function base64ToBytes(base64: string) {
     return Uint8Array.from(binString, (m: any) => m.codePointAt(0));
   }
 }
+
+export function decodeFromUint8Array(str: string) {
+  const decodedContent = new TextDecoder().decode(base64ToBytes(str));
+  return decodedContent;
+}

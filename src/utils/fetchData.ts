@@ -1,26 +1,61 @@
+// REFACTOR
 import axios from 'axios';
 
-export type TOwner = {
+export type TOrg = {
   login: string;
   id: number;
   node_id: string;
-  avatar_url: string;
-  gravatar_id: string;
   url: string;
+  repos_url: string;
+  events_url: string;
+  hooks_url: string;
+  issues_url: string;
+  members_url: string;
+  public_members_url: string;
+  avatar_url: string;
+  description: string;
+  name: string;
+  company: any | null;
+  blog: string;
+  location: string;
+  email: string;
+  twitter_username: any | null;
+  is_verified: boolean;
+  has_organization_projects: boolean;
+  has_repository_projects: boolean;
+  public_repos: number;
+  public_gists: number;
+  followers: number;
+  following: number;
+  html_url: 'https://github.com/ktsstudio';
+  // created_at: '2015-09-19T20:45:56Z';
+  // updated_at: '2022-08-08T18:10:25Z';
+  created_at: Date;
+  updated_at: Date;
+  archived_at: any | null;
+  type: string;
+};
+
+export type TOwner = {
+  id: number;
+  url: string;
+  login: string;
+  node_id: string;
+  avatar_url: string;
   html_url: string;
-  followers_url: string;
-  following_url: string;
+  repos_url: string;
+  events_url: string;
+  type: string;
   gists_url: string;
   starred_url: string;
   subscriptions_url: string;
   organizations_url: string;
-  repos_url: string;
-  events_url: string;
   received_events_url: string;
-  type: string;
   site_admin: boolean;
+  gravatar_id: string;
+  followers_url: string;
+  following_url: string;
 };
-
 export type TPermissions = {
   admin: boolean;
   maintain: boolean;
@@ -28,8 +63,7 @@ export type TPermissions = {
   triage: boolean;
   pull: boolean;
 };
-
-export type TOrgs = {
+export type TOrgRepo = {
   owner: TOwner;
   permissions: TPermissions;
   id: number;
@@ -112,16 +146,6 @@ export type TOrgs = {
   watchers: number;
   default_branch: string;
 };
-
-export type TOrgsResponse = {
-  data: TOrgs[];
-};
-export type TContributorsResponse = {
-  data: TContributor[];
-};
-export type TTagsResponse = {
-  data: TTag[];
-};
 export type TTag = {
   name: string;
   zipball_url: string;
@@ -172,22 +196,6 @@ export type TReadme = {
   };
 };
 
-// 1.
-// export const URL_ORG = { ktsstudio: 'https://api.github.com/orgs/ktsstudio/repos' };
-// for ORG          ---> 'https://api.github.com/orgs/{ORG_NAME}/repos'
-// 2.
-// export const URL_ORG_CONTRIBUTORS = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/contributors' };
-// for CONTRIBUTORS ---> 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/contributors'
-// 3.
-// export const URL_ORG_TAGS = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/tags' };
-// for TAGS(TOPICS) ---> 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/tags' };
-// 4.
-// export const URL_ORG_LANGUAGES = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/languages' };
-// for LANGUAGES    ---> 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/languages' };
-// 5.
-// export const URL_ORG_README = { ktsstudio: 'https://api.github.com/repos/ktsstudio/notific/contents/README.md' };
-// for README       ---> 'https://api.github.com/repos/{ORG}/{REPO_NAME}/contents/{FILE_NAME}';
-
 const config = {
   headers: {
     Authorization: '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',
@@ -195,9 +203,31 @@ const config = {
   },
 };
 
-export async function getOrgs(url: string) {
+export async function geTOrg(orgName = 'ktsstudio', url?: string) {
   try {
-    const { data } = await axios.get<TOrgsResponse>(url, config);
+    // const { data } = await axios.get<TOrgReposResponse>(url, config);
+    // { name = 'ktsstudio' }
+    const { data } = await axios.get<TOrg>(`https://api.github.com/orgs/${orgName}`, config);
+
+    return data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      throw new Error(error.message);
+    } else {
+      throw new Error('An unexpected error occurred');
+    }
+  }
+}
+// export async function geTOrgRepos(perPage: number, url?: string) {
+export async function geTOrgRepos() {
+  try {
+    // { name = 'ktsstudio', page = 5 }
+    // 'https://api.github.com/orgs/ktsstudio/repos?per_page=5'
+    const { data } = await axios.get<TOrgRepo[]>(
+      `https://api.github.com/orgs/ktsstudio/repos`,
+      // `https://api.github.com/orgs/ktsstudio/repos?per_page=${perPage}`,
+      config,
+    );
 
     return data;
   } catch (error) {
@@ -212,7 +242,8 @@ export async function getOrgs(url: string) {
 // name
 export async function getContributors(url: string) {
   try {
-    const { data } = await axios.get<TContributorsResponse>(url, config);
+    //api.github.com/repos/{ORG_NAME}/{REPO_NAME}/contributors
+    const { data } = await axios.get<TContributor[]>(url, config);
 
     return data;
   } catch (error) {
@@ -223,22 +254,11 @@ export async function getContributors(url: string) {
     }
   }
 }
-export async function getTags(url: string) {
-  try {
-    const { data } = await axios.get<TTagsResponse>(url, config);
 
-    return data;
-  } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(error.message);
-    } else {
-      throw new Error('An unexpected error occurred');
-    }
-  }
-}
 export async function getLanguages(url: string) {
   try {
-    const { data } = await axios.get<TTagsResponse>(url, config);
+    // 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/languages'
+    const { data } = await axios.get<any[]>(url, config);
 
     return data;
   } catch (error) {
@@ -249,9 +269,10 @@ export async function getLanguages(url: string) {
     }
   }
 }
-export async function getReadme(url: string) {
+export async function getReadme(url: string, fileName: string) {
   try {
-    const { data } = await axios.get(url, config);
+    // 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/contents/{FILE_NAME}';
+    const { data } = await axios.get(url.slice(0, url.length - 7) + fileName, config);
 
     return data;
   } catch (error) {

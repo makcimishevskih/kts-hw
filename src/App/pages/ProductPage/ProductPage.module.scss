@@ -1,7 +1,7 @@
 @import "styles/mixins.scss";
 
 .product {
-  padding: var(--space-xxl) 0;
+  padding: var(--space-xxxl) 0;
   &__header {
     @include flexbox(center, flex-start, var(--space-m));
     img {
@@ -70,7 +70,7 @@
     }
   }
   &__info {
-    @include flexbox(flex-start, flex-start, var(--space-l));
+    @include flexbox(flex-start, flex-start, 80px);
     margin-top: var(--space-l);
     padding-bottom: var(--space-xxs);
 
@@ -140,6 +140,19 @@
   }
 
   &__readme {
+    min-height: 560px;
     margin-top: var(--space-xl);
+
+    border: 1px solid var(--border-color-light);
+    border-radius: 4px;
+    .content {
+      padding: var(--space-xxl);
+
+      font-size: 18px;
+      line-height: 22px;
+
+      overflow: auto;
+      white-space: pre-wrap;
+    }
   }
 }

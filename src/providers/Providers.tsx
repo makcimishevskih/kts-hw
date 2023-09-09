@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 interface IProvidersProps {
   children: ReactNode;
 }
+
 const Providers: FC<IProvidersProps> = ({ children }) => {
   return <BrowserRouter>{children}</BrowserRouter>;
 };

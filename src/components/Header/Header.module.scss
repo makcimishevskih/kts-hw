@@ -1,6 +1,6 @@
 .header {
   padding: var(--space-m) 0;
-  border-bottom: 2px solid #d9d9d9;
+  border-bottom: 2px solid var(--border-color-light);
   &__nav {
     display: flex;
     align-items: center;

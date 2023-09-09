@@ -2,10 +2,11 @@ import css from './OrgsList.module.scss';
 
 import Card from 'components/Card';
 import { FC } from 'react';
-import { TOrgs } from 'utils/fetchData';
+import { TOrgRepo } from 'utils/fetchData';
+import { getFormattedDate } from 'utils/formatDate';
 
 interface IOrgsListProps {
-  list: TOrgs[];
+  list: TOrgRepo[];
 }
 
 const OrgsList: FC<IOrgsListProps> = ({ list }) => {
@@ -18,7 +19,7 @@ const OrgsList: FC<IOrgsListProps> = ({ list }) => {
             <>
               <span>{el.stargazers_count}</span>
               {'    '}
-              <span>{el.updated_at}</span>
+              <span>Updated {getFormattedDate(el.created_at)}</span>
             </>
           }
           title={el.name}

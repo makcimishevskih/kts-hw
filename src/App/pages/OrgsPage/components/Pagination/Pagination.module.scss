@@ -1,16 +1,23 @@
-// @import "../../../../../styles/mixins.scss";
 @import "styles/mixins.scss";
 
 .pagination {
   margin-top: var(--margin-xxl);
   @include flexbox(center, center, 50px);
   .pagination__list {
-    @include flexbox(center, center, 20px);
+    @include flexbox(center, center, 10px);
+    margin: 0 var(--space-m);
+
     .pagination__item {
+      padding: 10px;
+
+      font-size: 18px;
+      line-height: 22px;
+
+      cursor: pointer;
+      &.activePage {
+        background-color: green;
+        color: var(--button-primary-text);
+      }
     }
-  }
-  .pagination__right {
-  }
-  .pagination__left {
   }
 }
