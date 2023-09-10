@@ -1,16 +1,12 @@
+import classNames from 'classnames';
+import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
 import css from './Input.module.scss';
 
-import classNames from 'classnames';
-import { forwardRef, InputHTMLAttributes, useEffect, useRef } from 'react';
-
 export type InputProps = Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'value'> & {
-  /** Значение поля */
   value: string;
-  /** Callback, вызываемый при вводе данных в поле */
-  onChange: (value: string) => void;
-  /** Слот для иконки справа */
-  afterSlot?: React.ReactNode;
   className?: string;
+  afterSlot?: ReactNode;
+  onChange: (value: string) => void;
   styles?: object;
   borderRadius?: string;
   width: 's' | 'm' | 'l';
@@ -23,7 +19,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const cxInputWrapper = classNames(css.inputWrapper, className);
 
-    const widthStyle: any = {
+    const widthStyle: Record<typeof width, string> = {
       s: '300px',
       m: '600px',
       l: '100%',
@@ -39,6 +35,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           onChange={(e) => {
             onChange(e.target.value);
           }}
+          style={styles && { ...styles }}
           {...props}
         />
         {afterSlot ? <>{afterSlot}</> : null}
@@ -46,5 +43,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     );
   },
 );
+
+Input.displayName = 'Input';
 
 export default Input;

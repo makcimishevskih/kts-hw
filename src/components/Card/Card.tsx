@@ -1,8 +1,7 @@
-import css from './Card.module.scss';
+import classNames from 'classnames';
 import React from 'react';
 import Text from '../Text';
-import classNames from 'classnames';
-import Button from '../Button';
+import css from './Card.module.scss';
 
 export type CardProps = {
   /** Дополнительный classname */
@@ -31,11 +30,10 @@ const Card: React.FC<CardProps> = ({
   actionSlot,
   captionSlot,
   contentSlot,
-  className = 'test-card',
+  className,
   ...props
 }) => {
-  // const cxCard = classNames(css.card, className);
-  const cxCard = classNames(css.card, 'test-card');
+  const cxCard = classNames(css.card, className);
 
   return (
     <div onClick={onClick} id="test-card" className={cxCard} {...props}>
@@ -44,7 +42,15 @@ const Card: React.FC<CardProps> = ({
       <div className={css.card__info}>
         <div className={css.card__header}>
           {captionSlot && (
-            <Text mt="8px" tag="p" view="p-14" color="secondary" className={css.card__caption} mb="8px">
+            <Text
+              mt="8px"
+              tag="p"
+              view="p-14"
+              color="secondary"
+              className={css.card__caption}
+              mb="8px"
+              stylesProps={{ display: 'flex', alignItems: 'center', gap: '20px' }}
+            >
               {captionSlot}
             </Text>
           )}

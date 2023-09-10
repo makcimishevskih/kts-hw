@@ -1,31 +1,32 @@
-import css from './OrgsPage.module.scss';
 import { FC, useEffect, useState } from 'react';
-
-import { TOrgRepo, TOrg, geTOrgRepos } from 'utils/fetchData';
-
 import Text from 'components/Text';
-import OrgsList from './components/OrgsList';
+
+import { TOrgRepo, geTOrgRepos, TOrg } from 'utils/fetchData';
+
 import NavInputs from './components/NavInputs';
+import OrgsList from './components/OrgsList';
 import Pagination from './components/Pagination';
+import css from './OrgsPage.module.scss';
 
 interface OrganisationsPageProps {
   list: TOrgRepo[];
-  // org: TOrg;
+  org: TOrg | null;
 }
-const OrganisationsPage: FC<OrganisationsPageProps> = ({ list }) => {
-  // const [orgName, seTOrgRepoName] = useState('');
-  // const [orgType, seTOrgRepoType] = useState('');
+const OrgsPage: FC<OrganisationsPageProps> = ({ org }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [reposList, setReposList] = useState<TOrgRepo[]>([]);
 
   const perPage = 9;
   const amount = Math.ceil(reposList.length / perPage);
 
+  useEffect(() => {
+    if (org) {
+      geTOrgRepos(org?.login).then(setReposList);
+    }
+  }, [org]);
+
   const handlerCurrentPage = (n: number) => {
-    console.log(n);
-    // if (currentPage !== 1) {
     setCurrentPage(n);
-    // }
   };
   const handlerPrevPage = () => {
     if (currentPage !== 1) {
@@ -38,12 +39,7 @@ const OrganisationsPage: FC<OrganisationsPageProps> = ({ list }) => {
     }
   };
 
-  useEffect(() => {
-    geTOrgRepos().then(setReposList);
-  }, []);
-
   const listOnPage = reposList.slice(currentPage === 1 ? 0 : (currentPage - 1) * perPage, perPage * currentPage);
-  // console.log(listAll.length, listOnPage.length, amount);
 
   return (
     <section className={css.orgs}>
@@ -59,8 +55,6 @@ const OrganisationsPage: FC<OrganisationsPageProps> = ({ list }) => {
       <NavInputs />
       <OrgsList list={listOnPage} />
 
-      {/* REFACTOR AND CREATE PAGES */}
-      {/* <Pagination pages={org?.public_repos} /> */}
       <Pagination
         perPage={perPage}
         pagesCount={amount}
@@ -73,4 +67,4 @@ const OrganisationsPage: FC<OrganisationsPageProps> = ({ list }) => {
     </section>
   );
 };
-export default OrganisationsPage;
+export default OrgsPage;

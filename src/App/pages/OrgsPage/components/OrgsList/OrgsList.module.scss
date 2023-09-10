@@ -1,9 +1,26 @@
 @import "styles/mixins.scss";
 
 .orgsList {
-  // @include flexbox(flex-start, flex-start, 80px);
   @include flexbox(stretch, flex-start, 80px);
   flex-wrap: wrap;
 
-  margin-top: var(--margin-xl);
+  margin-top: var(--space-xxl);
+
+  .stars {
+    position: relative;
+    padding-left: 20px;
+    &::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 16px;
+      height: 16px;
+
+      background-image: url("assets/star.svg");
+      background-repeat: no-repeat;
+    }
+  }
 }

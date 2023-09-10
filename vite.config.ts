@@ -11,7 +11,6 @@ const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, str
   const webpackConfigAliases: Record<string, string> = {};
 
   Object.entries(paths).forEach(([alias, paths]) => {
-    // const aliasPath = paths[0].replace(/[^a-zA-Z]/g, '');
     const aliasPath = paths[0]
       .split('/')
       .filter((el) => el !== '*')
@@ -27,12 +26,5 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: parseTsConfigPaths(tsconfig.compilerOptions.paths),
-    // {
-    //   // App: path.join(SRC_PATH, 'App'),
-    //   assets: path.join(SRC_PATH, 'assets'),
-    //   pages: path.join(SRC_PATH, 'pages'),
-    //   utils: path.join(SRC_PATH, 'utils'),
-    //   components: path.join(SRC_PATH, 'App/components'),
-    // },
   },
 });

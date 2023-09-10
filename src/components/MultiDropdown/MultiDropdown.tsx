@@ -1,9 +1,8 @@
-import css from './MultiDropdown.module.scss';
-// import classNames from 'classnames';
+import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
 import Input from '../Input';
 import ArrowDownIcon from '../icons/ArrowDownIcon';
-import classNames from 'classnames';
+import css from './MultiDropdown.module.scss';
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
@@ -39,30 +38,24 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
   const [inputText, setInputText] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const ref = useRef<any>(null);
+  const ref = useRef<HTMLInputElement>(null);
 
   const handleText = (v: string) => {
-    if (
-      options.filter(({ value }) =>
-        value.toLowerCase().startsWith(inputText.toLowerCase())
-      ).length !== 0
-    ) {
+    if (options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase())).length !== 0) {
       setIsOpen(true);
     }
     setInputText(v);
   };
 
-  const filtered = options.filter(({ value }) =>
-    value.toLowerCase().startsWith(inputText.toLowerCase())
-  );
+  const filtered = options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase()));
 
   useEffect(() => {
-    const handleClick = (e: any) => {
+    const handleClick = (e: MouseEvent) => {
       e.stopPropagation();
 
       if (!disabled) {
         if (ref.current) {
-          if (!ref.current.contains(e.target)) {
+          if (!ref.current.contains(e.target as Node)) {
             setIsOpen(false);
           } else {
             setIsOpen(true);
@@ -73,29 +66,25 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
     document.addEventListener('click', handleClick);
 
     return () => document.removeEventListener('click', handleClick);
-  }, []);
+  }, [disabled]);
 
   return (
     <div className={cx} ref={ref} id="drop">
       <Input
+        width="m"
         value={!isOpen && value.length !== 0 ? getTitle(value) : inputText}
         disabled={disabled}
         onChange={handleText}
+        afterSlot={<ArrowDownIcon />}
         placeholder={getTitle(value)}
         onFocus={() => setIsOpen(true)}
-        afterSlot={<ArrowDownIcon />}
       />
       {isOpen && !disabled ? (
         <ul className={css.list}>
           {filtered.map((el) => (
             <li
               onClick={() => {
-                // console.log(value.includes(el));
-                onChange(
-                  !value.includes(el)
-                    ? [...value, el]
-                    : options.filter((filterEl) => filterEl.key !== el.key)
-                );
+                onChange(!value.includes(el) ? [...value, el] : options.filter((filterEl) => filterEl.key !== el.key));
               }}
               key={el.key}
               className={`${css.item} 

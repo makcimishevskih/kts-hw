@@ -1,9 +1,9 @@
-import css from './Header.module.scss';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import user from 'assets/header.png';
 import logo from 'assets/logo.svg';
-import { FC } from 'react';
 import Text from 'components/Text';
-import { Link } from 'react-router-dom';
+import css from './Header.module.scss';
 
 interface IHeaderProps {}
 

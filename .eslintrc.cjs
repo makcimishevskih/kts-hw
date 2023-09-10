@@ -1,4 +1,5 @@
-import path from 'path';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const path = require('path');
 
 module.exports = {
   root: true,
@@ -28,9 +29,8 @@ module.exports = {
   ],
   plugins: ['@typescript-eslint', 'import', 'prettier', 'react', 'react-hooks'],
   rules: {
-    // 'import/no-unresolved': [2, { caseSensitive: false }],
     'react/react-in-jsx-scope': 'off',
-    'react/jsx-filename-extension': [1, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+
     'no-console': 'warn',
     'import/order': [
       'error',
@@ -54,15 +54,8 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', '.tsx', '.scss', '.svg', '.png', '.jpg'],
     },
     'import/resolver': {
-      // node: {
-      //   extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      //   paths: ['src'],
-      //   moduleDirectory: ['node_modules', 'src/'],
-      // },
       typescript: {
-        // project: path.resolve('./tsconfig.json'),
-        project: 'packages/*/tsconfig.json',
-        // project: './tsconfig.json',
+        project: path.resolve('./tsconfig.json'),
       },
     },
     'import/external-module-folders': ['node_modules', 'node_modules/@types'],

@@ -1,14 +1,15 @@
 import classNames from 'classnames';
 
-import css from './Button.module.scss';
 import React from 'react';
 import Loader from '../Loader';
+import css from './Button.module.scss';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
-  /** Состояние загрузки */
   loading?: boolean;
-  /** Текст кнопки */
   children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  disabled?: boolean;
 };
 
 const Button: React.FC<ButtonProps> = ({ onClick, loading, children, disabled, className, ...props }) => {

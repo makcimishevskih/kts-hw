@@ -1,6 +1,5 @@
-import css from './ErrorPage.module.scss';
-
 import { FC } from 'react';
+import css from './ErrorPage.module.scss';
 
 interface IErrorPageProps {}
 

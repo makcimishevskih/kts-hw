@@ -1,6 +1,5 @@
 export const ROUTES = {
-  // MAIN: '/',
-  // ORGS_PAGE: '/organisations-page',
   ORGS_PAGE: '/',
-  PRODUCT_PAGE: '/product-page',
+  PRODUCT_PAGE: '/product',
+  ERROR_PAGE: '*',
 };

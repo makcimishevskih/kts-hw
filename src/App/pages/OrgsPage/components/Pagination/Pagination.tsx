@@ -1,7 +1,6 @@
-import css from './Pagination.module.scss';
-
 import { FC } from 'react';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
+import css from './Pagination.module.scss';
 
 interface IPaginationProps {
   perPage?: number;
@@ -22,31 +21,31 @@ const Pagination: FC<IPaginationProps> = ({
 }) => {
   const amountPages = new Array(pagesCount).fill(0).map((_, i) => i + 1);
 
-  function aa(currentPage: number) {
-    const l = amountPages[amountPages.length - 1];
-    const f = amountPages[0];
+  function getPages(currentPage: number) {
+    const first = amountPages[0];
+    const last = amountPages[amountPages.length - 1];
 
     if (amountPages.length <= 5) {
       return amountPages;
     }
 
     if (currentPage === 1) {
-      return [...amountPages.slice(0, currentPage + 2), '...', l];
-    } else if (currentPage === l || currentPage === l - 1) {
-      return [f, '...', ...amountPages.slice(currentPage - 2, l + 1)];
-    } else if (currentPage < 3) {
-      return [...amountPages.slice(currentPage - 2, currentPage + 1), '...', l];
+      return [...amountPages.slice(0, currentPage + 2), '...', last];
+    } else if (currentPage === last || currentPage === last - 1) {
+      return [first, '...', ...amountPages.slice(currentPage - 2, last + 1)];
     } else if (currentPage === 3) {
-      return [f, ...amountPages.slice(currentPage - 2, currentPage + 1), '...', l];
-    } else if (currentPage >= l - 2) {
-      return [...amountPages.slice(currentPage - 2, currentPage + 1), '...', l];
+      return [first, ...amountPages.slice(currentPage - 2, currentPage + 1), '...', last];
+    } else if (currentPage < 3) {
+      return [...amountPages.slice(currentPage - 2, currentPage + 1), '...', last];
+    } else if (currentPage >= last - 2) {
+      return [...amountPages.slice(currentPage - 2, currentPage + 1), '...', last];
     } else if (currentPage > 3) {
-      return [f, '...', ...amountPages.slice(currentPage - 2, currentPage + 1), '...', l];
+      return [first, '...', ...amountPages.slice(currentPage - 2, currentPage + 1), '...', last];
     }
     return amountPages;
   }
 
-  const pages = aa(currentPage);
+  const pages = getPages(currentPage);
 
   return (
     <div className={css.pagination}>

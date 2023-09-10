@@ -1,7 +1,7 @@
 @import "styles/mixins.scss";
 
 .pagination {
-  margin-top: var(--margin-xxl);
+  margin-top: var(--space-xxxl);
   @include flexbox(center, center, 50px);
   .pagination__list {
     @include flexbox(center, center, 10px);

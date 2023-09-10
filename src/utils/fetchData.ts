@@ -1,4 +1,3 @@
-// REFACTOR
 import axios from 'axios';
 
 export type TOrg = {
@@ -15,11 +14,11 @@ export type TOrg = {
   avatar_url: string;
   description: string;
   name: string;
-  company: any | null;
+  company: string | null;
   blog: string;
   location: string;
   email: string;
-  twitter_username: any | null;
+  twitter_username: string | null;
   is_verified: boolean;
   has_organization_projects: boolean;
   has_repository_projects: boolean;
@@ -28,11 +27,9 @@ export type TOrg = {
   followers: number;
   following: number;
   html_url: 'https://github.com/ktsstudio';
-  // created_at: '2015-09-19T20:45:56Z';
-  // updated_at: '2022-08-08T18:10:25Z';
   created_at: Date;
   updated_at: Date;
-  archived_at: any | null;
+  archived_at: string | null;
   type: string;
 };
 
@@ -131,11 +128,11 @@ export type TOrgRepo = {
   has_pages: boolean;
   has_discussions: boolean;
   forks_count: number;
-  mirror_url: any | null;
+  mirror_url: string | null;
   archived: boolean;
   disabled: boolean;
   open_issues_count: number;
-  license: any | null;
+  license: object | null;
   allow_forking: boolean;
   is_template: boolean;
   web_commit_signoff_required: boolean;
@@ -196,6 +193,8 @@ export type TReadme = {
   };
 };
 
+type TLanguages = Record<string, number>;
+
 const config = {
   headers: {
     Authorization: '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',
@@ -203,10 +202,8 @@ const config = {
   },
 };
 
-export async function geTOrg(orgName = 'ktsstudio', url?: string) {
+export async function geTOrg(orgName = 'ktsstudio') {
   try {
-    // const { data } = await axios.get<TOrgReposResponse>(url, config);
-    // { name = 'ktsstudio' }
     const { data } = await axios.get<TOrg>(`https://api.github.com/orgs/${orgName}`, config);
 
     return data;
@@ -218,16 +215,9 @@ export async function geTOrg(orgName = 'ktsstudio', url?: string) {
     }
   }
 }
-// export async function geTOrgRepos(perPage: number, url?: string) {
-export async function geTOrgRepos() {
+export async function geTOrgRepos(name: string) {
   try {
-    // { name = 'ktsstudio', page = 5 }
-    // 'https://api.github.com/orgs/ktsstudio/repos?per_page=5'
-    const { data } = await axios.get<TOrgRepo[]>(
-      `https://api.github.com/orgs/ktsstudio/repos`,
-      // `https://api.github.com/orgs/ktsstudio/repos?per_page=${perPage}`,
-      config,
-    );
+    const { data } = await axios.get<TOrgRepo[]>(`https://api.github.com/orgs/${name}/repos`, config);
 
     return data;
   } catch (error) {
@@ -239,10 +229,8 @@ export async function geTOrgRepos() {
   }
 }
 
-// name
 export async function getContributors(url: string) {
   try {
-    //api.github.com/repos/{ORG_NAME}/{REPO_NAME}/contributors
     const { data } = await axios.get<TContributor[]>(url, config);
 
     return data;
@@ -257,8 +245,7 @@ export async function getContributors(url: string) {
 
 export async function getLanguages(url: string) {
   try {
-    // 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/languages'
-    const { data } = await axios.get<any[]>(url, config);
+    const { data } = await axios.get<TLanguages>(url, config);
 
     return data;
   } catch (error) {
@@ -271,7 +258,6 @@ export async function getLanguages(url: string) {
 }
 export async function getReadme(url: string, fileName: string) {
   try {
-    // 'https://api.github.com/repos/{ORG_NAME}/{REPO_NAME}/contents/{FILE_NAME}';
     const { data } = await axios.get(url.slice(0, url.length - 7) + fileName, config);
 
     return data;

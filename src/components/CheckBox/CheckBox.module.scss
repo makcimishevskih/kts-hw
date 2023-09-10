@@ -32,10 +32,10 @@ label {
   }
 
   span {
+    position: relative;
+
     user-select: none;
     pointer-events: none;
-    // MAY BE DELETE
-    position: relative;
 
     @include flexbox(center, center, 50px);
   }

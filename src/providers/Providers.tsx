@@ -1,4 +1,3 @@
-// import ProductPage from 'pages/';
 import { FC, ReactNode } from 'react';
 
 import { BrowserRouter } from 'react-router-dom';

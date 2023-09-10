@@ -1,7 +1,7 @@
+import classNames from 'classnames';
+import * as React from 'react';
 import css from './Text.module.scss';
 
-import * as React from 'react';
-import classNames from 'classnames';
 
 export type TextProps = {
   /** Отступы*/
