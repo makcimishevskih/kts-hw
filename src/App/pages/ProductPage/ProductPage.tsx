@@ -5,7 +5,16 @@ import Text from 'components/Text';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
 
 import { decodeFromUint8Array } from 'utils/encode';
-import { getContributors, getLanguages, TContributor, TOrgRepo, TReadme, getReadme, TOrg } from 'utils/fetchData';
+import {
+  getContributors,
+  getLanguages,
+  TContributor,
+  TOrgRepo,
+  TReadme,
+  getReadme,
+  TOrg,
+  TLanguages,
+} from 'utils/fetchData';
 import { randomRGBColor } from 'utils/randomRGBColor';
 
 import css from './ProductPage.module.scss';
@@ -21,7 +30,7 @@ const ProductPage: FC<IProductPageProps> = ({ list }) => {
   const [contributors, setContributors] = useState<TContributor[]>([]);
   const [readme, setReadme] = useState<TReadme | null>(null);
   const [readmeContent, setReadmeContent] = useState<string>('');
-  const [languages, setLanguages] = useState<Record<string, number> | null>(null);
+  const [languages, setLanguages] = useState<TLanguages | null>(null);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -47,7 +56,8 @@ const ProductPage: FC<IProductPageProps> = ({ list }) => {
         setReadmeContent(decodeFromUint8Array(readme.content));
       }
     })();
-  }, [product]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const renderSubs = [
     { count: product?.stargazers_count, text: 'stars' },

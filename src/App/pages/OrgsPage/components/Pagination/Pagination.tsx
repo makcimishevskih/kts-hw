@@ -73,7 +73,10 @@ const Pagination: FC<IPaginationProps> = ({
       <ArrowBackIcon
         width="36"
         height="36"
-        style={{ transform: 'rotate(180deg)', opacity: currentPage === amountPages[amountPages.length - 1] ? 0.2 : 1 }}
+        style={{
+          transform: 'rotate(180deg)',
+          opacity: currentPage === amountPages[amountPages.length - 1] || amountPages ? 0.2 : 1,
+        }}
         onClick={handlerNextPage}
         color="accent"
       />

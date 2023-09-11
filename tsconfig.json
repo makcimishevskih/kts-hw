@@ -5,9 +5,11 @@
       "App": [ "App/*" ],
       "pages": [ "App/pages/*" ],
       "assets": [ "assets/*" ],
+      "hooks": [ "hooks/*" ],
       "utils": [ "utils/*" ],
       "config": [ "config/*" ],
       "styles": [ "styles/*" ],
+      "routes": [ "routes/*" ],
       "providers": [ "providers/*" ],
       "components": [ "components/*" ]
     },

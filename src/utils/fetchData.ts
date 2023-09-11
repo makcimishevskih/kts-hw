@@ -32,7 +32,6 @@ export type TOrg = {
   archived_at: string | null;
   type: string;
 };
-
 export type TOwner = {
   id: number;
   url: string;
@@ -192,13 +191,13 @@ export type TReadme = {
     html: string;
   };
 };
+export type TLanguages = Record<string, number>;
 
-type TLanguages = Record<string, number>;
+const API_TOKEN = import.meta.env.VITE_REACT_APP_GH_TOKEN;
 
 const config = {
   headers: {
-    Authorization: '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',
-    'X-GitHub-Api-Version': '2022-11-28',
+    Authorization: `Bearer ${API_TOKEN}`,
   },
 };
 

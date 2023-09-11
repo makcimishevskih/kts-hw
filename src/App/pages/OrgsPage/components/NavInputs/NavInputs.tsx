@@ -1,14 +1,16 @@
-import { FC, useRef, useState } from 'react';
+import { FC, FormEvent, useEffect, useRef, useState } from 'react';
 import Button from 'components/Button';
 import Input from 'components/Input';
 import ArrowDownIcon from 'components/icons/ArrowDownIcon';
 import Loupe from 'components/icons/Loupe';
 import css from './NavInputs.module.scss';
 
+interface INavInputsProps {
+  changeOrgName: (name: string) => void;
+}
 
-interface INavInputsProps {}
-
-const NavInputs: FC<INavInputsProps> = () => {
+const NavInputs: FC<INavInputsProps> = ({ changeOrgName }) => {
+  const [l, setL] = useState(false);
   const [v1, setV1] = useState('');
   const [v2, setV2] = useState('');
 
@@ -28,31 +30,39 @@ const NavInputs: FC<INavInputsProps> = () => {
   const handle2 = (value: string) => {
     setV2(value);
   };
+
+  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setL(true);
+
+    changeOrgName(v2);
+  };
+
   return (
     <div className={css.orgs__navInputs}>
       <Input
-        onClick={wrapperHandleClick1}
+        width="s"
         ref={inputRef1}
         value={v1}
         onChange={handle1}
-        placeholder="Type"
+        onClick={wrapperHandleClick1}
         afterSlot={<ArrowDownIcon color="secondary" />}
-        width="s"
+        placeholder="Type"
       />
-      <div className={`${css.orgs__filter} margin-top-m`}>
+      <form onSubmit={handleSubmit} className={`${css.orgs__filter} margin-top-m`}>
         <Input
-          onClick={wrapperHandleClick2}
+          width="l"
           ref={inputRef2}
           borderRadius="6px"
           value={v2}
           onChange={handle2}
+          onClick={wrapperHandleClick2}
           placeholder="Enter organization name"
-          width="l"
         />
         <Button>
           <Loupe />
         </Button>
-      </div>
+      </form>
     </div>
   );
 };

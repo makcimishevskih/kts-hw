@@ -1,6 +1,7 @@
 @import "styles/mixins.scss";
 
 .product {
+  height: 100%;
   padding: var(--space-xxxl) 0;
   &__header {
     @include flexbox(center, flex-start, var(--space-m));

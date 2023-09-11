@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import Text from 'components/Text';
+import { decodeFromUint8Array } from 'utils/encode';
 
 import { TOrgRepo, geTOrgRepos, TOrg } from 'utils/fetchData';
 
@@ -11,8 +12,11 @@ import css from './OrgsPage.module.scss';
 interface OrganisationsPageProps {
   list: TOrgRepo[];
   org: TOrg | null;
+
+  changeOrgName: (name: string) => void;
 }
-const OrgsPage: FC<OrganisationsPageProps> = ({ org }) => {
+
+const OrgsPage: FC<OrganisationsPageProps> = ({ org, changeOrgName }) => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [reposList, setReposList] = useState<TOrgRepo[]>([]);
 
@@ -52,8 +56,12 @@ const OrgsPage: FC<OrganisationsPageProps> = ({ org }) => {
         </Text>
       </header>
 
-      <NavInputs />
-      <OrgsList list={listOnPage} />
+      <NavInputs changeOrgName={changeOrgName} />
+      {org ? (
+        <OrgsList list={listOnPage} />
+      ) : (
+        <div style={{ textAlign: 'center', marginTop: 30 }}>Please type organization</div>
+      )}
 
       <Pagination
         perPage={perPage}
