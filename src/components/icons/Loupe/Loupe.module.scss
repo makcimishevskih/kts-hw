@@ -1,0 +1,16 @@
+@import "styles/vars.scss";
+
+.loupe {
+  .fill_primary {
+    fill: $text-primary;
+  }
+  .fill_secondary {
+    fill: $text-secondary;
+  }
+  .fill_accent {
+    fill: $text-accent;
+  }
+  .fill_default {
+    fill: white;
+  }
+}

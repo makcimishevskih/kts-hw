@@ -1,0 +1,46 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.inputWrapper {
+  @include flexbox(center, space-between);
+
+  width: 100%;
+  height: 52px;
+
+  padding: $space-s;
+
+  background-color: $input-bg;
+  border: 1px solid $input-border;
+
+  &:focus-within {
+    background-color: $input-bg-focus;
+    @include border(1px, $input-border-focus);
+  }
+
+  .nativeInput {
+    border: none;
+
+    width: 100%;
+
+    gap: 8px;
+
+    @include typo(16px, 20px);
+    @include border(1px, $input-border);
+
+    &:focus {
+      outline: none;
+
+      color: $input-text-focus;
+      background-color: $input-bg-focus;
+    }
+
+    &::placeholder {
+      color: $input-placeholder;
+    }
+
+    &:disabled {
+      background-color: $input-bg-disabled;
+      border: 1px solid $input-border-disabled;
+    }
+  }
+}

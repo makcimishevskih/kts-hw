@@ -1,0 +1,13 @@
+@import "styles/vars.scss";
+
+.checkbox {
+  .fill_primary {
+    stroke: $text-primary;
+  }
+  .fill_secondary {
+    stroke: $text-secondary;
+  }
+  .fill_accent {
+    stroke: $text-accent;
+  }
+}

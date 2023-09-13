@@ -1,0 +1,42 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.myBtn {
+  border: none;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  max-width: 185px;
+  height: 52px;
+  gap: 8px;
+
+  padding: $space-s $space-l;
+
+  @include typo(18px, 18px);
+
+  color: $button-primary-text;
+  background-color: $brand;
+
+  &:active {
+    background-color: $brand-active;
+  }
+
+  &:disabled {
+    color: $button-primary-text-disabled;
+    background-color: $button-primary-bg-disabled;
+  }
+
+  &.loading {
+    background-color: $brand;
+
+    &.disabled {
+      background-color: $button-primary-bg-disabled;
+    }
+  }
+
+  &:not([disabled]):hover {
+    background-color: $brand-hover;
+  }
+}

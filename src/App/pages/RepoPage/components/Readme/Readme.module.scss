@@ -1,0 +1,22 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.readme {
+  min-height: 560px;
+  margin-top: $space-xl;
+
+  @include border(1px, $border-color-light, 4px);
+  &__status {
+    @include flexbox(center, center);
+    margin-top: $space-m;
+    @include typo(20px, 22px);
+  }
+  .content {
+    padding: $space-xxl;
+
+    @include typo(18px, 22px);
+
+    overflow: auto;
+    white-space: pre-wrap;
+  }
+}

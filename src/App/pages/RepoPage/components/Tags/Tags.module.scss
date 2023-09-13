@@ -1,0 +1,16 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.tags {
+  @include flexbox(center, flex-start, $space-xxs);
+  margin-top: $space-l;
+
+  .tag {
+    padding: $space-xxs $space-m;
+
+    @include typo(12px, 14px, 700);
+    color: $tag-color;
+    background-color: $tag-bg;
+    border-radius: 20px;
+  }
+}

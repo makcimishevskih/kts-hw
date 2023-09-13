@@ -1,0 +1,49 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.text {
+  font-weight: normal;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+
+.primary {
+  color: $text-primary;
+}
+
+.secondary {
+  color: $text-secondary;
+}
+
+.accent {
+  color: $text-accent;
+}
+
+.title {
+  @include typo(44px, 48px, 700);
+}
+
+.button {
+  @include typo(18px, 18px);
+}
+
+.p-20 {
+  @include typo(20px, 24px);
+}
+
+.p-18 {
+  @include typo(18px, 22px);
+}
+
+.p-16 {
+  @include typo(16px, 20px);
+}
+
+.p-14 {
+  @include typo(14px, 18px);
+}
+
+.p-12 {
+  @include typo(12px, 14px);
+}

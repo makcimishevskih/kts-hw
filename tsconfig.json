@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "App": [ "App/*" ],
+      "hooks": [ "hooks/*" ],
+      "utils": [ "utils/*" ],
+      "config": [ "config/*" ],
+      "assets": [ "assets/*" ],
+      "styles": [ "styles/*" ],
+      "routes": [ "routes/*" ],
+      "pages": [ "App/pages/*" ],
+      "entities": [ "entities/*" ],
+      "providers": [ "providers/*" ],
+      "components": [ "components/*" ]
+    },
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": [ "ES2020", "DOM", "DOM.Iterable" ],
+    "module": "ESNext",
+    "skipLibCheck": true,
+
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
+
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noFallthroughCasesInSwitch": true
+  },
+  "include": [ "src" ],
+  "references": [ { "path": "./tsconfig.node.json" } ],
+  "exclude": [
+    "node_modules",
+    "./src/**/*.spec.ts"
+  ]
+}

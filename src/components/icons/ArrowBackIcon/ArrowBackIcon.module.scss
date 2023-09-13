@@ -1,0 +1,21 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.arrow {
+  @include flexbox(center, center);
+  &__back {
+    transform: rotate(180deg);
+    &__transparent {
+      opacity: 0.2;
+    }
+  }
+  .stroke_primary {
+    stroke: $text-primary;
+  }
+  .stroke_secondary {
+    stroke: $text-secondary;
+  }
+  .stroke_accent {
+    stroke: $text-accent;
+  }
+}
