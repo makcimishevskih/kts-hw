@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Loader from 'components/Loader';
 import Text from 'components/Text';
 import { TContributor } from 'entities/repo';
 import css from './Contributors.module.scss';
@@ -6,9 +7,10 @@ import css from './Contributors.module.scss';
 interface IContributorsProps {
   contributors: TContributor[];
   error: string;
+  loading: boolean;
 }
 
-const Contributors: FC<IContributorsProps> = ({ contributors, error }) => {
+const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) => {
   return (
     <div className={css.contributors}>
       <Text tag="h4" className={css.contributors__title}>
@@ -20,9 +22,11 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error }) => {
         </Text>
       </Text>
 
-      <div className={css.error}>{error}</div>
-
-      {!contributors.length && <div className={css.emptyContributors}>No conributors yet</div>}
+      <div className={css.contributors__status}>
+        {error && <div className={css.error}>{error}</div>}
+        {!loading && !error && !contributors.length && <div className={css.emptyContributors}>No conributors yet</div>}
+        {loading && !error && <Loader color="accent" size="l" />}
+      </div>
 
       <ul className={css.contributors__list}>
         {contributors.map((cont) => (

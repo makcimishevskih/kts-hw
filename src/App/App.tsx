@@ -11,12 +11,9 @@ import Header from 'components/Header';
 import { ROUTES } from 'config/routes';
 import { TOrg } from 'entities/org';
 import { TOrgRepo } from 'entities/repo';
-import { getData, getOrg } from 'utils/fetchData';
+import { getData } from 'utils/fetchData';
 
 import css from './App.module.scss';
-
-// LOADING
-// ERRORS
 
 const App = () => {
   const [org, setOrgRepo] = useState<TOrg | null>(null);
@@ -51,16 +48,25 @@ const App = () => {
 
       {orgError && <div>{orgError}</div>}
 
-      <Container>
-        <Routes>
-          <Route
-            path={ROUTES.ORGS_PAGE}
-            element={<OrgsPage org={org} repos={repos} handleRepos={handleRepos} changeOrgName={changeOrgName} />}
-          />
-          <Route path={`${ROUTES.REPO_PAGE}/:id`} element={<RepoPage orgName={orgName} repos={repos} org={org} />} />
-          <Route path={ROUTES.ERROR_PAGE} element={<ErrorPage />} />
-        </Routes>
-      </Container>
+      <Routes>
+        <Route
+          path={ROUTES.ORGS_PAGE}
+          element={
+            <Container>
+              <OrgsPage org={org} repos={repos} handleRepos={handleRepos} changeOrgName={changeOrgName} />
+            </Container>
+          }
+        />
+        <Route
+          path={`${ROUTES.REPO_PAGE}/:id`}
+          element={
+            <Container>
+              <RepoPage orgName={orgName} repos={repos} />
+            </Container>
+          }
+        />
+        <Route path={ROUTES.ERROR_PAGE} element={<ErrorPage />} />
+      </Routes>
     </div>
   );
 };

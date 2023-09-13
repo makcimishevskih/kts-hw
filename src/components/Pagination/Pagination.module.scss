@@ -2,8 +2,15 @@
 @import "styles/vars.scss";
 
 .pagination {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+
   margin-top: $space-xxxl;
   @include flexbox(center, center, 50px);
+
+  flex: 0;
 
   .pagination__list {
     @include flexbox(center, center, 10px);

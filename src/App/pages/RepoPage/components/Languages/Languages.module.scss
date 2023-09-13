@@ -2,17 +2,19 @@
 @import "styles/vars.scss";
 
 .languages {
-  .emptyLanguage {
+  &__status {
+    margin-top: $space-xxs;
+    @include flexbox(center, center);
     @include typo(20px, 22px);
   }
   &__range {
-    display: flex;
-    gap: 2px;
+    @include flexbox(center, flex-start, 2px);
 
     width: 280px;
     height: 10px;
 
     margin-top: $space-xxs;
+
     border-radius: $border-radius;
     overflow: hidden;
   }

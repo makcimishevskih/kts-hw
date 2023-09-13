@@ -16,7 +16,6 @@ import css from './RepoPage.module.scss';
 
 type TRepoPageProps = {
   repos: TOrgRepo[];
-  org: TOrg | null;
   orgName: string;
 };
 
@@ -27,9 +26,8 @@ const RepoPage: FC<TRepoPageProps> = ({ orgName, repos }) => {
   const [readme, setReadme] = useState<TReadme | null>(null);
   const [languages, setLanguages] = useState<TLanguages | null>(null);
   const [errors, setErrors] = useState({ contributors: '', readme: '', languages: '' });
-
+  const [loaders, setLoaders] = useState({ contributors: false, readme: false, languages: false });
   const navigate = useNavigate();
-  const location = useLocation();
 
   const goToBack = useCallback(() => {
     navigate(-1);
@@ -41,6 +39,7 @@ const RepoPage: FC<TRepoPageProps> = ({ orgName, repos }) => {
   useEffect(() => {
     if (repo && orgName) {
       const repoURL = `repos/${orgName}/${repo.name}`;
+      setLoaders({ contributors: true, readme: true, languages: true });
 
       getData<TContributor[]>(`${repoURL}/contributors`).then((response) => {
         if (response.isError) {
@@ -50,6 +49,7 @@ const RepoPage: FC<TRepoPageProps> = ({ orgName, repos }) => {
           }));
         } else {
           setContributors(response.data);
+          setLoaders((prev) => ({ ...prev, contributors: false }));
         }
       });
       getData<TLanguages>(`${repoURL}/languages`).then((response) => {
@@ -60,6 +60,7 @@ const RepoPage: FC<TRepoPageProps> = ({ orgName, repos }) => {
           }));
         } else {
           setLanguages(response.data);
+          setLoaders((prev) => ({ ...prev, languages: false }));
         }
       });
       getData<TReadme>(`${repoURL}/contents/${FILE_NAME}`).then((response) => {
@@ -70,6 +71,7 @@ const RepoPage: FC<TRepoPageProps> = ({ orgName, repos }) => {
           }));
         } else {
           setReadme(response.data);
+          setLoaders((prev) => ({ ...prev, readme: false }));
         }
       });
     }
@@ -96,27 +98,29 @@ const RepoPage: FC<TRepoPageProps> = ({ orgName, repos }) => {
         </Text>
       </header>
 
-      <Link className={css.repo__homepage} to={repo?.homepage || location.pathname}>
+      <div className={css.repo__homepage}>
         <img width="16px" height="16px" src={link} alt="link-logo" />
         {repo?.homepage ? (
-          <Text tag="p" view="p-16" weight="bold" stylesProps={{ color: 'red' }}>
-            {repo?.homepage}
-          </Text>
+          <Link className={css.homepage__link} to={repo?.homepage}>
+            <Text tag="span" view="p-16" weight="bold">
+              {repo?.homepage}
+            </Text>
+          </Link>
         ) : (
-          "Don't have a link"
+          <div className={css.homepage__empty}>Don&apos;t have a link</div>
         )}
-      </Link>
+      </div>
 
       <Tags tags={repo?.topics} />
 
       <ul className={css.repo__subs}>{renderSubs}</ul>
 
       <div className={css.repo__info}>
-        <Contributors contributors={contributors} error={errors.contributors} />
-        <Languages languages={languages} error={errors.languages} />
+        <Contributors contributors={contributors} error={errors.contributors} loading={loaders.contributors} />
+        <Languages languages={languages} error={errors.languages} loading={loaders.languages} />
       </div>
 
-      <Readme readme={readme} error={errors.readme} />
+      <Readme readme={readme} error={errors.readme} loading={loaders.readme} />
     </div>
   );
 };

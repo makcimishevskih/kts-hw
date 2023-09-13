@@ -2,7 +2,9 @@
 @import "styles/vars.scss";
 
 .contributors {
-  .emptyContributors {
+  &__status {
+    margin-top: $space-xxs;
+    @include flexbox(center, center);
     @include typo(20px, 22px);
   }
 

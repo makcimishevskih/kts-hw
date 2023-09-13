@@ -1,15 +1,24 @@
 @import "styles/vars.scss";
+@import "styles/mixins.scss";
 
 .orgs {
-  height: 100%;
-  margin-top: $space-xxxl;
-  padding-bottom: $space-xxxl;
+  position: relative;
+
+  padding-top: $space-xxxl;
+  padding-bottom: 100px;
+
+  min-height: calc(100vh - 66px);
+
+  &__status {
+    margin-top: $space-xxxl;
+    @include flexbox(center, center);
+  }
+  &__empty {
+    @include typo(24px, 26px, 500);
+    @include flexbox(center, center);
+  }
 
   &__header {
-    text-align: center;
-  }
-  .emptyOrgList {
-    margin-top: $space-xxxl;
     text-align: center;
   }
 }

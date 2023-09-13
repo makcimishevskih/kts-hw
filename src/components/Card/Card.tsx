@@ -37,7 +37,14 @@ const Card: React.FC<CardProps> = ({
 
   return (
     <div onClick={onClick} id="test-card" className={cxCard} {...props}>
-      <img className={css.card__img} src={image} alt={typeof title === 'string' ? title : 'product'} />
+      <img
+        loading="lazy"
+        width="360"
+        height="400"
+        className={css.card__img}
+        src={image}
+        alt={typeof title === 'string' ? title : 'product'}
+      />
 
       <div className={css.card__info}>
         <div className={css.card__header}>

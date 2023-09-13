@@ -13,12 +13,17 @@
   }
 
   &__homepage {
+    margin-top: $space-xl;
     @include flexbox(center, flex-start, $space-xxs);
 
-    margin-top: $space-xl;
-
-    @include typo(16px, 18px, 700);
-    color: $tag-color;
+    .homepage__Link {
+      @include typo(16px, 18px, 700);
+      color: $tag-color;
+    }
+  }
+  .homepage__empty {
+    @include flexbox(center, center);
+    @include typo(20px, 22px, 500);
   }
 
   &__subs {

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import Loader from 'components/Loader';
 import Text from 'components/Text';
 
 import { TLanguages } from 'entities/repo';
@@ -10,9 +11,10 @@ import css from './Languages.module.scss';
 interface ILanguagesProps {
   languages: TLanguages | null;
   error: string;
+  loading: boolean;
 }
 
-const Languages: FC<ILanguagesProps> = ({ languages, error }) => {
+const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
   const langValues: number[] = (languages && Object.values(languages)) || [];
   const oneLanguagesSum = langValues.reduce((acc, count) => acc + count, 0) / 100;
   const languagesWithPercent =
@@ -30,9 +32,12 @@ const Languages: FC<ILanguagesProps> = ({ languages, error }) => {
           Languages
         </Text>
 
-        <div className={css.error}>{error}</div>
+        <div className={css.languages__status}>
+          {loading && !error && <Loader color="accent" size="l" />}
+          {error && <div className={css.error}>{error}</div>}
+          {!loading && !error && !languages && <div className={css.emptyLanguage}>No languages data </div>}
+        </div>
 
-        {!languages && <div className={css.emptyLanguage}>No languages data </div>}
         {languagesWithPercent && (
           <>
             <div className={css.languages__range}>

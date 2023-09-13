@@ -1,11 +1,12 @@
 import { FC, useEffect, useState } from 'react';
+import Loader from 'components/Loader';
 import Pagination from 'components/Pagination';
 import Text from 'components/Text';
 
 import { TOrg } from 'entities/org';
 import { TOrgRepo } from 'entities/repo';
 import usePagination from 'hooks/usePagination';
-import { getData, getOrgRepos } from 'utils/fetchData';
+import { getData } from 'utils/fetchData';
 
 import NavInputs from './components/NavInputs';
 import OrgsList from './components/OrgsList';
@@ -24,13 +25,17 @@ const REPO_PER_PAGE = 9;
 const OrgsPage: FC<OrganisationsPageProps> = ({ org, repos, changeOrgName, handleRepos }) => {
   const { offset, paginationNums, totalPagesCount, onChange } = usePagination(org?.public_repos, REPO_PER_PAGE);
   const [orgReposError, setOrgReposError] = useState('');
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     if (org) {
+      setLoading(true);
       getData<TOrgRepo[]>(`orgs/${org.login}/repos?per_page=${REPO_PER_PAGE}&page=${offset}`).then((response) => {
         if (response.isError) {
           setOrgReposError("Can't load org repositories");
         } else {
           handleRepos(response.data);
+          setLoading(false);
         }
       });
     }
@@ -49,7 +54,13 @@ const OrgsPage: FC<OrganisationsPageProps> = ({ org, repos, changeOrgName, handl
       </header>
 
       <NavInputs changeOrgName={changeOrgName} />
-      {org ? <OrgsList repos={repos} /> : <div className={css.emptyOrgList}>Please type organization</div>}
+
+      <div className={css.orgs__status}>
+        {loading && !orgReposError && <Loader color="accent" size="l" />}
+        {orgReposError && <div className={css.error}>{orgReposError}</div>}
+      </div>
+
+      {org ? <OrgsList repos={repos} /> : <div className={css.orgs__empty}>Please type organization</div>}
 
       <Pagination
         offset={offset}
