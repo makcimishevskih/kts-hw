@@ -1,8 +1,15 @@
+@import "styles/vars.scss";
+
 .orgs {
   height: 100%;
-  margin-top: var(--space-xxxl);
-  padding-bottom: var(--space-xxxl);
+  margin-top: $space-xxxl;
+  padding-bottom: $space-xxxl;
+
   &__header {
+    text-align: center;
+  }
+  .emptyOrgList {
+    margin-top: $space-xxxl;
     text-align: center;
   }
 }

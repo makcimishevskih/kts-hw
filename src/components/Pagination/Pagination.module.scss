@@ -1,0 +1,38 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.pagination {
+  margin-top: $space-xxxl;
+  @include flexbox(center, center, 50px);
+
+  .pagination__list {
+    @include flexbox(center, center, 10px);
+
+    width: 300px;
+
+    margin: 0 $space-m;
+
+    .pagination__item {
+      padding: 10px;
+
+      @include typo(18px, 22px);
+
+      cursor: pointer;
+
+      &_current {
+        padding: 10px;
+
+        background-color: green;
+        color: $button-primary-text;
+      }
+    }
+  }
+
+  .arrow__back {
+    transform: rotate(180deg);
+  }
+
+  .arrow_transparent {
+    opacity: 0.2;
+  }
+}

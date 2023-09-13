@@ -1,4 +1,5 @@
 @import "styles/mixins.scss";
+@import "styles/vars.scss";
 
 .inputWrapper {
   @include flexbox(center, space-between);
@@ -6,14 +7,14 @@
   width: 100%;
   height: 52px;
 
-  padding: var(--space-s);
+  padding: $space-s;
 
-  background-color: var(--input-bg);
-  border: 1px solid var(--input-border);
+  background-color: $input-bg;
+  border: 1px solid $input-border;
 
-  &:has(input:focus) {
-    background-color: var(--input-bg-focus);
-    border: 1px solid var(--input-border-focus);
+  &:focus-within {
+    background-color: $input-bg-focus;
+    @include border(1px, $input-border-focus);
   }
 
   .nativeInput {
@@ -23,23 +24,23 @@
 
     gap: 8px;
 
-    font-size: 16px;
-    line-height: 20px;
-    border: 1px solid var(--input-border);
+    @include typo(16px, 20px);
+    @include border(1px, $input-border);
 
     &:focus {
       outline: none;
 
-      color: var(--input-text-focus);
-      background-color: var(--input-bg-focus);
-      border: 1px solid var(--input-bg-focus);
+      color: $input-text-focus;
+      background-color: $input-bg-focus;
     }
+
     &::placeholder {
-      color: var(--input-placeholder);
+      color: $input-placeholder;
     }
+
     &:disabled {
-      background-color: var(--input-bg-disabled);
-      border: 1px solid var(--input-border-disabled);
+      background-color: $input-bg-disabled;
+      border: 1px solid $input-border-disabled;
     }
   }
 }

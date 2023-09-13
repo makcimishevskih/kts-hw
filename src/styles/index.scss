@@ -1,6 +1,5 @@
 @import "./reset.scss";
 @import "./vars.scss";
-@import "./margin.scss";
 @import "./Roboto/fonts";
 
 body {
@@ -18,10 +17,4 @@ body {
   max-width: 1440px;
   margin: 0 auto;
   background-color: #f6f8fa;
-}
-
-.container {
-  margin: 0 auto;
-  padding: 0 100px;
-  overflow: hidden;
 }

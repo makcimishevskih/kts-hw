@@ -25,14 +25,7 @@ export type MultiDropdownProps = {
   /** Возвращает строку которая будет выводится в инпуте. В случае если опции не выбраны, строка должна отображаться как placeholder. */
   getTitle: (value: Option[]) => string;
 };
-const MultiDropdown: FC<MultiDropdownProps> = ({
-  options,
-  value,
-  disabled,
-  getTitle,
-  onChange,
-  className = 'test-multidropdown',
-}) => {
+const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTitle, onChange, className }) => {
   const cx = classNames(css.wrapperMultiDropDown, className);
 
   const [inputText, setInputText] = useState('');
@@ -53,14 +46,10 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
     const handleClick = (e: MouseEvent) => {
       e.stopPropagation();
 
-      if (!disabled) {
-        if (ref.current) {
-          if (!ref.current.contains(e.target as Node)) {
-            setIsOpen(false);
-          } else {
-            setIsOpen(true);
-          }
-        }
+      if (!disabled && ref.current && !ref.current.contains(e.target as Node)) {
+        setIsOpen(false);
+      } else {
+        setIsOpen(true);
       }
     };
     document.addEventListener('click', handleClick);
@@ -69,7 +58,7 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
   }, [disabled]);
 
   return (
-    <div className={cx} ref={ref} id="drop">
+    <div className={cx} ref={ref}>
       <Input
         width="m"
         value={!isOpen && value.length !== 0 ? getTitle(value) : inputText}
@@ -79,6 +68,7 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
         placeholder={getTitle(value)}
         onFocus={() => setIsOpen(true)}
       />
+
       {isOpen && !disabled ? (
         <ul className={css.list}>
           {filtered.map((el) => (
@@ -87,9 +77,7 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
                 onChange(!value.includes(el) ? [...value, el] : options.filter((filterEl) => filterEl.key !== el.key));
               }}
               key={el.key}
-              className={`${css.item} 
-              ${value.includes(el) ? css.itemChecked : ''}
-              `}
+              className={`${css.item} ${value.includes(el) ? css.itemChecked : ''}`}
             >
               {el.value}
             </li>

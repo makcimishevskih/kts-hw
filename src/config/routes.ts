@@ -1,5 +1,5 @@
 export const ROUTES = {
   ORGS_PAGE: '/',
-  PRODUCT_PAGE: '/product',
+  REPO_PAGE: '/repo',
   ERROR_PAGE: '*',
 };

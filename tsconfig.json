@@ -3,13 +3,14 @@
     "baseUrl": "src",
     "paths": {
       "App": [ "App/*" ],
-      "pages": [ "App/pages/*" ],
-      "assets": [ "assets/*" ],
       "hooks": [ "hooks/*" ],
       "utils": [ "utils/*" ],
       "config": [ "config/*" ],
+      "assets": [ "assets/*" ],
       "styles": [ "styles/*" ],
       "routes": [ "routes/*" ],
+      "pages": [ "App/pages/*" ],
+      "entities": [ "entities/*" ],
       "providers": [ "providers/*" ],
       "components": [ "components/*" ]
     },

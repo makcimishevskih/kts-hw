@@ -42,15 +42,7 @@ const Card: React.FC<CardProps> = ({
       <div className={css.card__info}>
         <div className={css.card__header}>
           {captionSlot && (
-            <Text
-              mt="8px"
-              tag="p"
-              view="p-14"
-              color="secondary"
-              className={css.card__caption}
-              mb="8px"
-              stylesProps={{ display: 'flex', alignItems: 'center', gap: '20px' }}
-            >
+            <Text mt="8px" tag="p" view="p-14" color="secondary" className={css.card__caption} mb="8px">
               {captionSlot}
             </Text>
           )}
@@ -67,7 +59,7 @@ const Card: React.FC<CardProps> = ({
               {contentSlot}
             </Text>
           )}
-          {actionSlot && actionSlot}
+          {actionSlot}
         </div>
       </div>
     </div>

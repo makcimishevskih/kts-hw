@@ -1,14 +1,19 @@
+@import "styles/vars.scss";
+
 .loaderWrapper {
   width: 60px;
   height: 60px;
+
   &.l {
     width: 60px;
     height: 60px;
   }
+
   &.m {
     width: 48px;
     height: 48px;
   }
+
   &.s {
     width: 24px;
     height: 24px;
@@ -17,5 +22,19 @@
   .loader {
     height: 100%;
     width: 100%;
+  }
+
+  .disabled {
+    stroke: #000000;
+    stroke-opacity: 0.2;
+  }
+  .fill_primary {
+    fill: $text-primary;
+  }
+  .fill_secondary {
+    fill: $text-secondary;
+  }
+  .fill_accent {
+    fill: $text-accent;
   }
 }

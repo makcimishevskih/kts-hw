@@ -1,11 +1,15 @@
+@import "styles/vars.scss";
+
 .header {
-  padding: var(--space-m) 0;
-  border-bottom: 2px solid var(--border-color-light);
+  padding: $space-m 0;
+  border-bottom: 2px solid $border-color-light;
+
   &__nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
+
   &__left {
     .header__logoWrapper {
       width: 32px;
@@ -13,12 +17,13 @@
     }
     display: flex;
     align-items: center;
-    gap: var(--space-xl);
+    gap: $space-xl;
   }
+
   &__right {
     width: 32px;
     height: 32px;
-    img {
+    .header__userLogo {
       width: 100%;
       height: 100%;
     }

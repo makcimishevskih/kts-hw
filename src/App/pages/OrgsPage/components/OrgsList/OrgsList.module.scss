@@ -1,14 +1,16 @@
 @import "styles/mixins.scss";
+@import "styles/vars.scss";
 
 .orgsList {
   @include flexbox(stretch, flex-start, 80px);
   flex-wrap: wrap;
 
-  margin-top: var(--space-xxl);
+  margin-top: $space-xxl;
 
   .stars {
     position: relative;
     padding-left: 20px;
+
     &::before {
       content: "";
       position: absolute;

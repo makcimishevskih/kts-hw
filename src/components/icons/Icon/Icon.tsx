@@ -5,7 +5,7 @@ import CheckIcon from '../CheckIcon';
 export type IconProps = React.SVGAttributes<SVGElement> & {
   className?: string;
   color?: 'primary' | 'secondary' | 'accent';
-  handler?: () => void;
+  onClick?: () => void;
 };
 
 const Icon: React.FC<React.PropsWithChildren<IconProps>> = () => {

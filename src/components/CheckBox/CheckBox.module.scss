@@ -1,13 +1,14 @@
 @import "styles/mixins.scss";
+@import "styles/vars.scss";
 
-label {
+.checkbox__label {
   position: relative;
   @include flexbox(center, center);
 
   width: 40px;
   height: 40px;
 
-  input {
+  .checkbox__input {
     position: absolute;
     outline: none;
     appearance: none;
@@ -19,24 +20,31 @@ label {
 
     cursor: pointer;
 
-    background-color: var(--checkbox-bg);
-    border: 1px solid var(--checkbox-border);
+    background-color: $checkbox-bg;
+    border: 1px solid $checkbox-border;
     &:hover {
-      background-color: var(--checkbox-bg-hover);
-      border: 1px solid var(--checkbox-border-hover);
+      background-color: $checkbox-bg-hover;
+      border: 1px solid $checkbox-border-hover;
     }
     &:disabled {
-      background-color: var(--checkbox-bg-disabled);
-      border: 1px solid var(--checkbox-border-disabled);
+      background-color: $checkbox-bg-disabled;
+      border: 1px solid $checkbox-border-disabled;
     }
   }
 
-  span {
+  .checkbox_checked {
     position: relative;
 
     user-select: none;
     pointer-events: none;
 
     @include flexbox(center, center, 50px);
+  }
+  .path {
+    stroke: black;
+    stroke-opacity: 0.2;
+  }
+  .path_checked {
+    stroke: $brand;
   }
 }

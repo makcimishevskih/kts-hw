@@ -4,3 +4,14 @@
   justify-content: $justify-content;
   gap: $gap;
 }
+
+@mixin typo($font-size, $line-height, $font-weight: 400) {
+  font-size: $font-size;
+  line-height: $line-height;
+  font-weight: $font-weight;
+}
+
+@mixin border($border-heigth, $border-color, $border-radius: 0, $border-style: solid) {
+  border: $border-heigth $border-style $border-color;
+  border-radius: $border-radius;
+}

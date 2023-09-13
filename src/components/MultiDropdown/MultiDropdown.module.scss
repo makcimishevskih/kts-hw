@@ -1,24 +1,28 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
 .wrapperMultiDropDown {
   width: 400px;
 
   .list {
     width: 400px;
-    margin-top: var(--space-xxs);
+    margin-top: $space-xxs;
 
-    background-color: var(--dropdown-options-bg);
+    background-color: $dropdown-options-bg;
     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.25);
 
     .item {
-      font-size: 16px;
-      line-height: 20px;
-      padding: var(--space-s) var(--space-xs);
+      @include typo(16px, 20px);
+      padding: $space-s $space-xs;
 
       cursor: pointer;
+
       &.itemChecked {
-        color: var(--brand);
+        color: $brand;
       }
+
       &:hover {
-        color: var(--text-secondary);
+        color: $text-secondary;
       }
     }
   }

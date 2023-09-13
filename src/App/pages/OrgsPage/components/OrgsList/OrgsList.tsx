@@ -1,26 +1,25 @@
-
-import { FC } from 'react';
+import { FC, memo } from 'react';
 
 import { Link } from 'react-router-dom';
 import Card from 'components/Card';
-import { TOrgRepo } from 'utils/fetchData';
+import { TOrgRepo } from 'entities/repo';
 import { getFormattedDate } from 'utils/formatDate';
 
 import css from './OrgsList.module.scss';
 
 interface IOrgsListProps {
-  list: TOrgRepo[];
+  repos: TOrgRepo[];
 }
 
-const OrgsList: FC<IOrgsListProps> = ({ list }) => {
+const OrgsList: FC<IOrgsListProps> = ({ repos }) => {
   return (
     <ul className={css.orgsList}>
-      {list.map(({ id, name, description, created_at, owner, stargazers_count }) => (
-        <Link key={id} to={`/product/${id}`}>
+      {repos.map(({ id, name, description, created_at, owner, stargazers_count }) => (
+        <Link key={id} to={`/repo/${id}`}>
           <Card
             captionSlot={
               <>
-                <span className={css.stars}>{stargazers_count}</span>
+                <span className={css.stars}>{stargazers_count || 0}</span>
                 <span className={css.date}>Updated {getFormattedDate(created_at)}</span>
               </>
             }
@@ -34,4 +33,4 @@ const OrgsList: FC<IOrgsListProps> = ({ list }) => {
   );
 };
 
-export default OrgsList;
+export default memo(OrgsList);

@@ -1,52 +1,44 @@
 import { FC, useEffect, useState } from 'react';
+import Pagination from 'components/Pagination';
 import Text from 'components/Text';
-import { decodeFromUint8Array } from 'utils/encode';
 
-import { TOrgRepo, geTOrgRepos, TOrg } from 'utils/fetchData';
+import { TOrg } from 'entities/org';
+import { TOrgRepo } from 'entities/repo';
+import usePagination from 'hooks/usePagination';
+import { getData, getOrgRepos } from 'utils/fetchData';
 
 import NavInputs from './components/NavInputs';
 import OrgsList from './components/OrgsList';
-import Pagination from './components/Pagination';
 import css from './OrgsPage.module.scss';
 
-interface OrganisationsPageProps {
-  list: TOrgRepo[];
+type OrganisationsPageProps = {
+  repos: TOrgRepo[];
   org: TOrg | null;
 
+  handleRepos: (repos: TOrgRepo[]) => void;
   changeOrgName: (name: string) => void;
-}
+};
 
-const OrgsPage: FC<OrganisationsPageProps> = ({ org, changeOrgName }) => {
-  const [currentPage, setCurrentPage] = useState<number>(1);
-  const [reposList, setReposList] = useState<TOrgRepo[]>([]);
+const REPO_PER_PAGE = 9;
 
-  const perPage = 9;
-  const amount = Math.ceil(reposList.length / perPage);
-
+const OrgsPage: FC<OrganisationsPageProps> = ({ org, repos, changeOrgName, handleRepos }) => {
+  const { offset, paginationNums, totalPagesCount, onChange } = usePagination(org?.public_repos, REPO_PER_PAGE);
+  const [orgReposError, setOrgReposError] = useState('');
   useEffect(() => {
     if (org) {
-      geTOrgRepos(org?.login).then(setReposList);
+      getData<TOrgRepo[]>(`orgs/${org.login}/repos?per_page=${REPO_PER_PAGE}&page=${offset}`).then((response) => {
+        if (response.isError) {
+          setOrgReposError("Can't load org repositories");
+        } else {
+          handleRepos(response.data);
+        }
+      });
     }
-  }, [org]);
-
-  const handlerCurrentPage = (n: number) => {
-    setCurrentPage(n);
-  };
-  const handlerPrevPage = () => {
-    if (currentPage !== 1) {
-      setCurrentPage((n) => n - 1);
-    }
-  };
-  const handlerNextPage = () => {
-    if (currentPage !== amount) {
-      setCurrentPage((n) => n + 1);
-    }
-  };
-
-  const listOnPage = reposList.slice(currentPage === 1 ? 0 : (currentPage - 1) * perPage, perPage * currentPage);
+  }, [org, offset, handleRepos]);
 
   return (
     <section className={css.orgs}>
+      {orgReposError && <div>{orgReposError}</div>}
       <header className={css.orgs__header}>
         <Text tag="h2" view="title">
           List organization repositories
@@ -57,20 +49,13 @@ const OrgsPage: FC<OrganisationsPageProps> = ({ org, changeOrgName }) => {
       </header>
 
       <NavInputs changeOrgName={changeOrgName} />
-      {org ? (
-        <OrgsList list={listOnPage} />
-      ) : (
-        <div style={{ textAlign: 'center', marginTop: 30 }}>Please type organization</div>
-      )}
+      {org ? <OrgsList repos={repos} /> : <div className={css.emptyOrgList}>Please type organization</div>}
 
       <Pagination
-        perPage={perPage}
-        pagesCount={amount}
-        currentPage={currentPage}
-        reposAmount={reposList.length}
-        handlerPrevPage={handlerPrevPage}
-        handlerNextPage={handlerNextPage}
-        handlerCurrentPage={handlerCurrentPage}
+        offset={offset}
+        paginationNums={paginationNums}
+        onChange={onChange}
+        totalPagesCount={totalPagesCount}
       />
     </section>
   );

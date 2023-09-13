@@ -1,50 +1,49 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
 .text {
   font-weight: normal;
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
 }
+
 .primary {
-  color: var(--text-primary);
+  color: $text-primary;
 }
+
 .secondary {
-  color: var(--text-secondary);
+  color: $text-secondary;
 }
+
 .accent {
-  color: var(--text-accent);
+  color: $text-accent;
 }
 
 .title {
-  font-size: 44px;
-  line-height: 48px;
-  font-weight: 700;
+  @include typo(44px, 48px, 700);
 }
 
 .button {
-  font-size: 18px;
-  line-height: 18px;
+  @include typo(18px, 18px);
 }
 
 .p-20 {
-  font-size: 20px;
-  line-height: 24px;
+  @include typo(20px, 24px);
 }
 
 .p-18 {
-  font-size: 18px;
-  line-height: 22px;
+  @include typo(18px, 22px);
 }
 
 .p-16 {
-  font-size: 16px;
-  line-height: 20px;
+  @include typo(16px, 20px);
 }
 
 .p-14 {
-  font-size: 14px;
-  line-height: 18px;
+  @include typo(14px, 18px);
 }
+
 .p-12 {
-  font-size: 12px;
-  line-height: 14px;
+  @include typo(12px, 14px);
 }

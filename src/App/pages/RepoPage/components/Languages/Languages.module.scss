@@ -1,0 +1,36 @@
+@import "styles/mixins.scss";
+@import "styles/vars.scss";
+
+.languages {
+  .emptyLanguage {
+    @include typo(20px, 22px);
+  }
+  &__range {
+    display: flex;
+    gap: 2px;
+
+    width: 280px;
+    height: 10px;
+
+    margin-top: $space-xxs;
+    border-radius: $border-radius;
+    overflow: hidden;
+  }
+
+  .languages__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, auto));
+    grid-gap: 4px 20px;
+
+    margin-top: $space-xxs;
+
+    .languages__item {
+      @include flexbox(center, flex-start, 8px);
+
+      .languages__percent {
+        margin-left: $space-xxxs;
+        color: $text-secondary;
+      }
+    }
+  }
+}

@@ -1,53 +1,66 @@
-import './App.scss';
-
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
+
 import ErrorPage from 'App/pages/ErrorPage';
 import OrgsPage from 'App/pages/OrgsPage';
-import ProductPage from 'App/pages/ProductPage';
+import RepoPage from 'App/pages/RepoPage';
+
+import Container from 'components/Container';
 import Header from 'components/Header';
-import { ROUTES } from 'routes/routes';
-import { geTOrgRepos, geTOrg, TOrgRepo, TOrg } from 'utils/fetchData';
 
-// ШРИФТ
+import { ROUTES } from 'config/routes';
+import { TOrg } from 'entities/org';
+import { TOrgRepo } from 'entities/repo';
+import { getData, getOrg } from 'utils/fetchData';
+
+import css from './App.module.scss';
+
+// LOADING
+// ERRORS
+
 const App = () => {
-  const [org, seTOrgRepo] = useState<TOrg | null>(null);
-  const [list, setState] = useState<TOrgRepo[]>([]);
+  const [org, setOrgRepo] = useState<TOrg | null>(null);
+  const [repos, setRepos] = useState<TOrgRepo[]>([]);
+  const [orgError, setOrgError] = useState<string>('');
 
-  // BUTTON PRESS FOR SEARCHING
-  // const [orgName, setOrgName] = useState('ktsstudio'); // input
-  const [orgName, setOrgName] = useState(''); // input
+  const [orgName, setOrgName] = useState('');
 
-  const changeOrgName = (name: string) => {
+  const handleRepos = useCallback((repos: TOrgRepo[]) => {
+    setRepos(repos);
+  }, []);
+
+  const changeOrgName = useCallback((name: string) => {
     setOrgName(name);
-  };
-
-  console.log(org);
+  }, []);
 
   useEffect(() => {
     if (orgName) {
-      // geTOrg('ktsstudio').then(seTOrgRepo);
-      // geTOrgRepos('ktsstudio').then(setState);
-      geTOrg(orgName).then(seTOrgRepo);
-      geTOrgRepos(orgName).then(setState);
+      getData<TOrg>('orgs/ktsstudio').then((response) => {
+        if (response.isError) {
+          setOrgError("Can't load org");
+        } else {
+          setOrgRepo(response.data);
+        }
+      });
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orgName]);
 
   return (
-    <div className="app">
+    <div className={css.app}>
       <Header />
 
-      <div className="container">
+      {orgError && <div>{orgError}</div>}
+
+      <Container>
         <Routes>
           <Route
             path={ROUTES.ORGS_PAGE}
-            element={<OrgsPage list={list} org={org} changeOrgName={changeOrgName} handleOrg={() => {}} />}
+            element={<OrgsPage org={org} repos={repos} handleRepos={handleRepos} changeOrgName={changeOrgName} />}
           />
-          <Route path={`${ROUTES.PRODUCT_PAGE}/:id`} element={<ProductPage list={list} org={org} />} />
+          <Route path={`${ROUTES.REPO_PAGE}/:id`} element={<RepoPage orgName={orgName} repos={repos} org={org} />} />
           <Route path={ROUTES.ERROR_PAGE} element={<ErrorPage />} />
         </Routes>
-      </div>
+      </Container>
     </div>
   );
 };
