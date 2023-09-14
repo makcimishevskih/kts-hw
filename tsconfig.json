@@ -5,6 +5,7 @@
       "App": [ "App/*" ],
       "hooks": [ "hooks/*" ],
       "utils": [ "utils/*" ],
+      "store": [ "store/*" ],
       "config": [ "config/*" ],
       "assets": [ "assets/*" ],
       "styles": [ "styles/*" ],

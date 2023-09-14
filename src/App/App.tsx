@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { observer } from 'mobx-react-lite';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 import ErrorPage from 'App/pages/ErrorPage';
@@ -9,51 +10,38 @@ import Container from 'components/Container';
 import Header from 'components/Header';
 
 import { ROUTES } from 'config/routes';
-import { TOrg } from 'entities/org';
-import { TOrgRepo } from 'entities/repo';
-import { getData } from 'utils/fetchData';
+// import { TOrg } from 'entities/org';
+// import { TOrgRepo } from 'entities/repo';
+// import { getData } from 'utils/fetchData';
 
+import OrgStore from 'store/OrgStore/OrgStore';
 import css from './App.module.scss';
 
-const App = () => {
-  const [org, setOrgRepo] = useState<TOrg | null>(null);
-  const [repos, setRepos] = useState<TOrgRepo[]>([]);
-  const [orgError, setOrgError] = useState<string>('');
+// "Фильтрация по типу репозитория:
+// Для реализации необходимо воспользоваться
+//  параметром type в методе получения списка репозиториев"
 
-  const [orgName, setOrgName] = useState('');
-
-  const handleRepos = useCallback((repos: TOrgRepo[]) => {
-    setRepos(repos);
-  }, []);
-
-  const changeOrgName = useCallback((name: string) => {
-    setOrgName(name);
-  }, []);
-
+const App = observer(() => {
   useEffect(() => {
-    if (orgName) {
-      getData<TOrg>('orgs/ktsstudio').then((response) => {
-        if (response.isError) {
-          setOrgError("Can't load org");
-        } else {
-          setOrgRepo(response.data);
-        }
-      });
+    if (OrgStore.orgName) {
+      OrgStore.getOrgData();
     }
-  }, [orgName]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [OrgStore.orgName]);
 
   return (
     <div className={css.app}>
       <Header />
 
-      {orgError && <div>{orgError}</div>}
+      {OrgStore.orgError && <div>{OrgStore.orgError}</div>}
 
       <Routes>
         <Route
           path={ROUTES.ORGS_PAGE}
           element={
             <Container>
-              <OrgsPage org={org} repos={repos} handleRepos={handleRepos} changeOrgName={changeOrgName} />
+              {/* <OrgsPage org={org} repos={repos} handleRepos={handleRepos} changeOrgName={changeOrgName} /> */}
+              <OrgsPage />
             </Container>
           }
         />
@@ -61,7 +49,8 @@ const App = () => {
           path={`${ROUTES.REPO_PAGE}/:id`}
           element={
             <Container>
-              <RepoPage orgName={orgName} repos={repos} />
+              {/* <RepoPage orgName={orgName} repos={repos} /> */}
+              <RepoPage />
             </Container>
           }
         />
@@ -69,6 +58,6 @@ const App = () => {
       </Routes>
     </div>
   );
-};
+});
 
 export default App;
