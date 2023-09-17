@@ -24,8 +24,19 @@ export type MultiDropdownProps = {
   onChange: (value: Option[]) => void;
   /** Возвращает строку которая будет выводится в инпуте. В случае если опции не выбраны, строка должна отображаться как placeholder. */
   getTitle: (value: Option[]) => string;
+  onClick?: () => void;
+  type?: 'multi' | 'single';
 };
-const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTitle, onChange, className }) => {
+const MultiDropdown: FC<MultiDropdownProps> = ({
+  type = 'multi',
+  value,
+  options,
+  disabled,
+  className,
+  getTitle,
+  onChange,
+  onClick,
+}) => {
   const cx = classNames(css.wrapperMultiDropDown, className);
 
   const [inputText, setInputText] = useState('');
@@ -58,7 +69,7 @@ const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTi
   }, [disabled]);
 
   return (
-    <div className={cx} ref={ref}>
+    <div className={cx} ref={ref} onClick={onClick}>
       <Input
         width="m"
         value={!isOpen && value.length !== 0 ? getTitle(value) : inputText}
@@ -74,10 +85,12 @@ const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTi
           {filtered.map((el) => (
             <li
               onClick={() => {
-                onChange(!value.includes(el) ? [...value, el] : options.filter((filterEl) => filterEl.key !== el.key));
+                type === 'multi'
+                  ? onChange(!value.includes(el) ? [...value, el] : value.filter((filterEl) => filterEl.key !== el.key))
+                  : onChange(!value.includes(el) ? [el] : []);
               }}
               key={el.key}
-              className={`${css.item} ${value.includes(el) ? css.itemChecked : ''}`}
+              className={`${css.item} ${value.includes(el) ? css.item_checked : ''}`}
             >
               {el.value}
             </li>

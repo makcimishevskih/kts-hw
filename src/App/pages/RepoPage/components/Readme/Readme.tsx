@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
-import { TReadme } from 'entities/repo';
+import { TReadme } from 'store/types/entities/repo';
 import { decodeFromUint8Array } from 'utils/encode';
 
 import css from './Readme.module.scss';

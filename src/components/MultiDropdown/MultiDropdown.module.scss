@@ -3,8 +3,13 @@
 
 .wrapperMultiDropDown {
   width: 400px;
+  position: relative;
 
   .list {
+    position: absolute;
+    top: 50px;
+    left: 0;
+
     width: 400px;
     margin-top: $space-xxs;
 
@@ -17,8 +22,9 @@
 
       cursor: pointer;
 
-      &.itemChecked {
-        color: $brand;
+      &_checked {
+        // color: $brand;
+        color: red;
       }
 
       &:hover {

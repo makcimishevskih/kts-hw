@@ -3,7 +3,7 @@ import { FC } from 'react';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
-import { TLanguages } from 'entities/repo';
+import { TLanguages } from 'store/types/entities/repo';
 import { randomRGBColor } from 'utils/randomRGBColor';
 
 import css from './Languages.module.scss';

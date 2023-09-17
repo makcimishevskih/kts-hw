@@ -1,13 +1,14 @@
 import classNames from 'classnames';
 import { FC } from 'react';
+
 import Text from 'components/Text';
 
-import { TOrgRepo } from 'entities/repo';
+import { TOrgRepos } from 'store/types/entities/repo';
 
 import css from './Subs.module.scss';
 
 interface ISubsProps {
-  repo: TOrgRepo | null;
+  repo: TOrgRepos | null;
 }
 
 const Subs: FC<ISubsProps> = ({ repo }) => {

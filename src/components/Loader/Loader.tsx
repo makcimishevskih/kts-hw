@@ -5,7 +5,7 @@ import css from './Loader.module.scss';
 export type LoaderProps = {
   color?: 'primary' | 'secondary' | 'accent';
   className?: string;
-  size?: 's' | 'm' | 'l';
+  size?: 's' | 'm' | 'l' | 'xl';
 };
 
 const Loader: React.FC<LoaderProps> = ({ color = 'accent', size, className }) => {

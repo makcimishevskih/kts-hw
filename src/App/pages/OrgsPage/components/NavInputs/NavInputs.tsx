@@ -1,19 +1,31 @@
-import { observer } from 'mobx-react-lite';
 import { FC, FormEvent, useCallback, useRef, useState } from 'react';
+
 import Button from 'components/Button';
 import Input from 'components/Input';
-import ArrowDownIcon from 'components/icons/ArrowDownIcon';
+import MultiDropdown, { Option } from 'components/MultiDropdown';
 import Loupe from 'components/icons/Loupe';
-import OrgStore from 'store/OrgStore/OrgStore';
+
+import { TTypes } from 'store/models/types';
 import css from './NavInputs.module.scss';
 
 interface INavInputsProps {
-  // changeOrgName: (name: string) => void;
+  handleOffsetToStart: () => void;
+  setOrgName: (name: string) => void;
+  setOrgType: (type: TTypes) => void;
 }
 
-const NavInputs: FC<INavInputsProps> = observer(() => {
-  const [typeInputValue, setTypeInputValue] = useState('');
-  const [searchInputValue, setSearchInputValue] = useState('');
+const typeOptions: Option[] = [
+  { key: 'all', value: 'all' },
+  { key: 'public', value: 'public' },
+  { key: 'private', value: 'private' },
+  { key: 'forks', value: 'forks' },
+  { key: 'sources', value: 'sources' },
+  { key: 'member', value: 'member' },
+];
+
+const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setOrgType }) => {
+  const [searchInputValue, setSearchInputValue] = useState('ktsstudio');
+  const [optionsValue, setValue] = useState<Option[]>([typeOptions[0]]);
 
   const repoTypeInput = useRef<HTMLInputElement | null>(null);
   const searchInput = useRef<HTMLInputElement | null>(null);
@@ -23,19 +35,33 @@ const NavInputs: FC<INavInputsProps> = observer(() => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    OrgStore.changeOrgName(searchInputValue);
+    if (!searchInputValue) {
+      return;
+    }
+    const type: TTypes = optionsValue[0].value as TTypes;
+
+    handleOffsetToStart();
+
+    setOrgName(searchInputValue);
+    setOrgType(type);
   };
 
+  const getTitle = () => (optionsValue.length ? optionsValue.map((el) => el.value).join(', ') : 'Select org type');
+
+  const handleOptionValues = (value: Option[]) => {
+    if (value.length) {
+      setValue(value);
+    }
+  };
   return (
     <div className={css.orgs__navInputs}>
-      <Input
-        width="s"
-        ref={repoTypeInput}
-        value={typeInputValue}
-        onChange={setTypeInputValue}
+      <MultiDropdown
+        type="single"
+        value={optionsValue}
+        onChange={handleOptionValues}
         onClick={handleRepoTypeInputClick}
-        afterSlot={<ArrowDownIcon color="secondary" />}
-        placeholder="Type"
+        getTitle={getTitle}
+        options={typeOptions}
       />
       <form onSubmit={handleSubmit} className={css.orgs__filter}>
         <Input
@@ -53,59 +79,6 @@ const NavInputs: FC<INavInputsProps> = observer(() => {
       </form>
     </div>
   );
-});
+};
+
 export default NavInputs;
-// const NavInputs: FC<INavInputsProps> = observer(({ changeOrgName }) => {
-//   const [l, setL] = useState(false);
-//   const [typeInputValue, setTypeInputValue] = useState('');
-//   const [searchInputValue, setSearchInputValue] = useState('');
-
-//   const repoTypeInput = useRef<HTMLInputElement | null>(null);
-//   const searchInput = useRef<HTMLInputElement | null>(null);
-
-//   const handleRepoTypeInputClick = useCallback(() => repoTypeInput?.current?.focus(), [repoTypeInput]);
-//   const handleSearchInputClick = useCallback(() => searchInput?.current?.focus(), [searchInput]);
-
-//   // const handle1 = (value: string) => {
-//   //   setTypeInputValue(value);
-//   // };
-//   // const handle2 = (value: string) => {
-//   //   setSearchInputValue(value);
-//   // };
-
-//   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-//     e.preventDefault();
-//     setL(true);
-
-//     changeOrgName(searchInputValue);
-//   };
-
-//   return (
-//     <div className={css.orgs__navInputs}>
-//       <Input
-//         width="s"
-//         ref={repoTypeInput}
-//         value={typeInputValue}
-//         onChange={setTypeInputValue}
-//         onClick={handleRepoTypeInputClick}
-//         afterSlot={<ArrowDownIcon color="secondary" />}
-//         placeholder="Type"
-//       />
-//       <form onSubmit={handleSubmit} className={css.orgs__filter}>
-//         <Input
-//           width="l"
-//           ref={searchInput}
-//           borderRadius="6px"
-//           value={searchInputValue}
-//           onChange={setSearchInputValue}
-//           onClick={handleSearchInputClick}
-//           placeholder="Enter organization name"
-//         />
-//         <Button>
-//           <Loupe />
-//         </Button>
-//       </form>
-//     </div>
-//   );
-// });
-// export default NavInputs;

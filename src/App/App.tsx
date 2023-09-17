@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 
 import ErrorPage from 'App/pages/ErrorPage';
 import OrgsPage from 'App/pages/OrgsPage';
@@ -10,37 +10,38 @@ import Container from 'components/Container';
 import Header from 'components/Header';
 
 import { ROUTES } from 'config/routes';
-// import { TOrg } from 'entities/org';
-// import { TOrgRepo } from 'entities/repo';
-// import { getData } from 'utils/fetchData';
 
-import OrgStore from 'store/OrgStore/OrgStore';
+import useStores from 'providers/RootStoreProvider/useStores';
+
 import css from './App.module.scss';
 
-// "Фильтрация по типу репозитория:
-// Для реализации необходимо воспользоваться
-//  параметром type в методе получения списка репозиториев"
+const App = () => {
+  const {
+    github: { orgName, findRepoById, getFullRepoData, getOrgData },
+  } = useStores();
 
-const App = observer(() => {
   useEffect(() => {
-    if (OrgStore.orgName) {
-      OrgStore.getOrgData();
+    if (orgName) {
+      getOrgData();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [OrgStore.orgName]);
+  }, [orgName]);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    navigate({ pathname: window.location.pathname });
+  }, [navigate]);
 
   return (
     <div className={css.app}>
       <Header />
-
-      {OrgStore.orgError && <div>{OrgStore.orgError}</div>}
 
       <Routes>
         <Route
           path={ROUTES.ORGS_PAGE}
           element={
             <Container>
-              {/* <OrgsPage org={org} repos={repos} handleRepos={handleRepos} changeOrgName={changeOrgName} /> */}
               <OrgsPage />
             </Container>
           }
@@ -49,8 +50,7 @@ const App = observer(() => {
           path={`${ROUTES.REPO_PAGE}/:id`}
           element={
             <Container>
-              {/* <RepoPage orgName={orgName} repos={repos} /> */}
-              <RepoPage />
+              <RepoPage findRepoById={findRepoById} orgName={orgName} getFullRepoData={getFullRepoData} />
             </Container>
           }
         />
@@ -58,6 +58,6 @@ const App = observer(() => {
       </Routes>
     </div>
   );
-});
+};
 
-export default App;
+export default observer(App);

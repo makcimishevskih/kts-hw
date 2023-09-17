@@ -27,7 +27,7 @@ export type TPermissions = {
   pull: boolean;
 };
 
-export type TOrgRepo = {
+export type TOrgRepos = {
   owner: TOwner;
   permissions: TPermissions;
   id: number;
