@@ -6,8 +6,8 @@ import link from 'assets/link.svg';
 
 import Text from 'components/Text';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
-import useStores from 'providers/RootStoreProvider/useStores';
-import { TOrgRepos } from 'store/types/entities/repo';
+
+import { TLanguagesModel, TOrgReposModel, TReadmeModel, TContributorModel } from 'store/models/repo';
 
 import Contributors from './components/Contributors';
 import Languages from './components/Languages';
@@ -17,19 +17,29 @@ import Tags from './components/Tags';
 
 import css from './RepoPage.module.scss';
 
-type TRepoPageProps = {
+type RepoPageProps = {
   orgName: string;
-  getFullRepoData: (filename: string) => void;
-  findRepoById: (id: string) => TOrgRepos | null;
+  readme: TReadmeModel | null;
+  languages: TLanguagesModel | null;
+  contributors: TContributorModel[];
+  errorsRepo: { contributors: string; readme: string; languages: string };
+  loadersRepo: { contributors: boolean; readme: boolean; languages: boolean };
+  getFullRepoData: (orgName: string, fileName: string) => void;
+  findRepoById: (id: string) => TOrgReposModel | null;
 };
 
 const FILE_NAME = 'README.md';
 
-const RepoPage: FC<TRepoPageProps> = ({ findRepoById, orgName, getFullRepoData }) => {
-  const {
-    github: { contributors, languages, readme, errorsRepo, loadersRepo },
-  } = useStores();
-
+const RepoPage: FC<RepoPageProps> = ({
+  orgName,
+  errorsRepo,
+  loadersRepo,
+  readme,
+  languages,
+  contributors,
+  findRepoById,
+  getFullRepoData,
+}) => {
   const navigate = useNavigate();
 
   const goToBack = useCallback(() => {
@@ -38,11 +48,11 @@ const RepoPage: FC<TRepoPageProps> = ({ findRepoById, orgName, getFullRepoData }
   }, []);
   const { id } = useParams();
 
-  const repo: TOrgRepos | null = (id && findRepoById(id)) || null;
+  const repo: TOrgReposModel | null = (id && findRepoById(id)) || null;
 
   useEffect(() => {
     if (repo && orgName) {
-      getFullRepoData(FILE_NAME);
+      getFullRepoData(orgName, FILE_NAME);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orgName, repo]);
@@ -51,7 +61,7 @@ const RepoPage: FC<TRepoPageProps> = ({ findRepoById, orgName, getFullRepoData }
     <div className={css.repo}>
       <header className={css.repo__header}>
         <ArrowBackIcon width="32" height="32" onClick={goToBack} color="accent" />
-        <img src={repo?.owner.avatar_url} width="40" height="40" alt="repo-avatar" />
+        <img src={repo?.owner.avatarUrl} width="40" height="40" alt="repo-avatar" />
         <Text tag="h2" view="title">
           {repo?.name}
         </Text>
@@ -69,8 +79,7 @@ const RepoPage: FC<TRepoPageProps> = ({ findRepoById, orgName, getFullRepoData }
         )}
       </div>
 
-      {repo && <Tags tags={repo.topics} />}
-
+      <Tags repo={repo} />
       <Subs repo={repo} />
 
       <div className={css.repo__info}>

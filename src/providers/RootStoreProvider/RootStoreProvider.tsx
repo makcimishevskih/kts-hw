@@ -1,5 +1,5 @@
 import { FC, PropsWithChildren } from 'react';
-import { RootStoreContext } from 'providers/RootStoreProvider';
+import { RootStoreContext } from 'hooks/useStores';
 import RootStore from 'store/RootStore';
 
 const RootStoreProvider: FC<PropsWithChildren> = ({ children }) => {

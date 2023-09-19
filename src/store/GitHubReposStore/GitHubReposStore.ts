@@ -1,6 +1,4 @@
-// Global store unused
 import { makeObservable, observable, action, runInAction } from 'mobx';
-import { normalizeOrg, TOrgApi, TOrgModel } from 'store/models/org';
 import {
   TOrgReposModel,
   TContributorModel,
@@ -13,47 +11,30 @@ import {
   normalizeContributor,
   normalizeReadme,
 } from 'store/models/repo';
-import { TTypes } from 'store/models/types';
-
 import { getData } from 'utils/fetchData';
 
+import { TTypes } from '../types/entities/types';
 import { CollectionModel, getCollection, getInitialCollectionModel } from './../shared/collection';
 
-export type IPrivateFields = '_org' | '_orgRepos' | '_orgType' | '_orgName';
+export type PrivateFields = '_orgRepos';
 
-export class GithubStore {
-  private _org: TOrgModel | null = null;
-  private _orgName: string = '';
-  orgError: string = '';
-  orgLoading: boolean = false;
-
+export class GithubReposStore {
   private _orgRepos: CollectionModel<number | string, TOrgReposModel> = getInitialCollectionModel();
+  private _orgType: TTypes = 'all';
   errorReposList = '';
   loadingReposList = false;
-
   readme: TReadmeModel | null = null;
   contributors: TContributorModel[] = [];
   languages: TLanguagesModel | null = null;
   errorsRepo = { contributors: '', readme: '', languages: '' };
   loadersRepo = { contributors: false, readme: false, languages: false };
-
-  private _orgType: TTypes = 'all';
   orgReposLength: number = 0;
   selectedRepo: TOrgReposModel | null = null;
 
   constructor() {
-    makeObservable<GithubStore, IPrivateFields>(this, {
-      // ORG_PAGE
-      _org: observable,
-      _orgName: observable,
-      _orgType: observable,
+    makeObservable<GithubReposStore, PrivateFields>(this, {
       _orgRepos: observable,
-      orgError: observable,
-      setOrgName: action,
-      setOrgType: action,
-      getOrgData: action,
       getReposData: action,
-      // REPO_PAGE
       selectedRepo: observable,
       readme: observable,
       languages: observable,
@@ -65,10 +46,6 @@ export class GithubStore {
       loadingReposList: observable,
       getFullRepoData: action,
     });
-  }
-
-  get org() {
-    return this._org;
   }
 
   get orgRepos(): TOrgReposModel[] {
@@ -83,57 +60,28 @@ export class GithubStore {
     this._orgType = type;
   };
 
-  get orgName() {
-    return this._orgName;
-  }
-
-  setOrgName = (name: string) => {
-    this._orgName = name;
-  };
-
   findRepoById = (paramId: string) => {
     if (paramId) {
-      this.selectedRepo = this._orgRepos && this._orgRepos.entities[+paramId];
+      this.selectedRepo = this._orgRepos.entities[+paramId];
     }
 
     return this.selectedRepo;
   };
 
-  // ORG
-  getOrgData = () => {
-    this.orgError = '';
-    this.orgLoading = true;
-
-    getData<TOrgApi, TOrgModel>(`orgs/${this._orgName}`, normalizeOrg).then(({ isError, data }) => {
-      if (isError) {
-        runInAction(() => {
-          this.orgLoading = false;
-          this.orgError = "Can't find org. Try again!";
-        });
-      } else {
-        runInAction(() => {
-          this._org = data;
-          this.orgLoading = false;
-        });
-      }
-    });
-  };
-
-  // REPOS
-  getReposData = (perPage: number, offset: number) => {
+  getReposData = (orgName: string, orgType: TTypes, perPage: number, offset: number) => {
     this.errorReposList = '';
     this.loadingReposList = true;
 
     this._orgRepos = getInitialCollectionModel();
 
     getData<TOrgReposApi[], TOrgReposModel[]>(
-      `orgs/${this._orgName}/repos?type=${this._orgType}&per_page=${perPage}&page=${offset}`,
+      `orgs/${orgName}/repos?type=${orgType}&per_page=${perPage}&page=${offset}`,
       normalizeOrgRepos,
     ).then(({ isError, data }) => {
       if (isError) {
         runInAction(() => {
+          this.errorReposList = "Can't load org repositories";
           this.loadingReposList = false;
-          this.errorReposList = "Can't load _org repositories";
         });
       } else {
         runInAction(() => {
@@ -144,34 +92,35 @@ export class GithubStore {
             this.loadingReposList = false;
           } catch (err) {
             this._orgRepos = getInitialCollectionModel();
+            this.errorReposList = "Can't load org repositories";
             this.loadingReposList = false;
-            this.errorReposList = "Can't load _org repositories";
           }
         });
       }
     });
-    getData<TOrgReposApi[], TOrgReposModel[]>(
-      `orgs/${this._orgName}/repos?type=${this._orgType}`,
-      normalizeOrgRepos,
-    ).then(({ isError, data }) => {
-      if (isError) {
-        runInAction(() => {
-          this.loadingReposList = false;
-          this.errorReposList = "Can't load _org repositories";
-        });
-      } else {
-        runInAction(() => {
-          this.orgReposLength = data.length;
-          this.loadingReposList = false;
-        });
-      }
-    });
+    getData<TOrgReposApi[], TOrgReposModel[]>(`orgs/${orgName}/repos?type=${orgType}`, normalizeOrgRepos).then(
+      ({ isError, data }) => {
+        if (isError) {
+          runInAction(() => {
+            this.errorReposList = "Can't load org repositories";
+            this.loadingReposList = false;
+          });
+        } else {
+          runInAction(() => {
+            this.orgReposLength = data.length;
+            this.loadingReposList = false;
+          });
+        }
+      },
+    );
   };
 
-  getFullRepoData = (fileName: string) => {
-    const repoURL = this.selectedRepo && `repos/${this._orgName}/${this.selectedRepo?.name}`;
+  getFullRepoData = (orgName: string, fileName: string) => {
+    const repoURL = this.selectedRepo && `repos/${orgName}/${this.selectedRepo?.name}`;
+
     this.errorsRepo = { contributors: '', readme: '', languages: '' };
     this.loadersRepo = { contributors: true, readme: true, languages: true };
+
     getData<TContributorApi[], TContributorModel[]>(`${repoURL}/contributors`, normalizeContributor).then(
       ({ isError, data }) => {
         if (isError) {
@@ -207,4 +156,4 @@ export class GithubStore {
   };
 }
 
-export default GithubStore;
+export default GithubReposStore;

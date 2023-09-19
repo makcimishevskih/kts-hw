@@ -29,8 +29,7 @@
 
     .card__footer {
       @include flexbox(center, space-between);
-      // FIX TOP
-      margin-top: 20px;
+      margin-top: $space-xl;
     }
   }
 }

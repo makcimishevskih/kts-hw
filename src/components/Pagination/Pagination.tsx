@@ -8,15 +8,21 @@ import css from './Pagination.module.scss';
 
 type TPaginationProps = {
   offset: number;
+  isLastPage: boolean;
+  isFirstPage: boolean;
   totalPagesCount: number;
   paginationNums: (string | number)[];
   onChange: (n: number) => void;
 };
 
-const Pagination: FC<TPaginationProps> = ({ offset, paginationNums, totalPagesCount, onChange }) => {
-  const isFirstPage = offset === 1;
-  const isLastPage = offset === paginationNums[paginationNums.length - 1];
-
+const Pagination: FC<TPaginationProps> = ({
+  offset,
+  isLastPage,
+  isFirstPage,
+  paginationNums,
+  totalPagesCount,
+  onChange,
+}) => {
   const handleOffset = (n: number) => {
     onChange(n);
   };

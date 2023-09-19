@@ -1,3 +1,4 @@
+// API
 export type TOwnerApi = {
   id: number;
   url: string;
@@ -144,7 +145,7 @@ export type TReadmeApi = {
   };
 };
 
-// Models
+// MODELS
 
 export type TPermissionsModel = {
   admin: boolean;

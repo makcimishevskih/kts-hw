@@ -11,14 +11,32 @@ import Header from 'components/Header';
 
 import { ROUTES } from 'config/routes';
 
-import useStores from 'providers/RootStoreProvider/useStores';
+import useLocalStore from 'hooks/useLocalStore';
+
+import GitHubOrgStore from 'store/GitHubOrgStore';
+import GitHubReposStore from 'store/GitHubReposStore';
 
 import css from './App.module.scss';
 
 const App = () => {
+  const { orgType, orgName, orgError, setOrgName, setOrgType, getOrgData } = useLocalStore<GitHubOrgStore>(
+    () => new GitHubOrgStore(),
+  );
+
   const {
-    github: { orgName, findRepoById, getFullRepoData, getOrgData },
-  } = useStores();
+    orgRepos,
+    orgReposLength,
+    errorReposList,
+    loadingReposList,
+    readme,
+    languages,
+    contributors,
+    errorsRepo,
+    loadersRepo,
+    getReposData,
+    findRepoById,
+    getFullRepoData,
+  } = useLocalStore<GitHubReposStore>(() => new GitHubReposStore());
 
   useEffect(() => {
     if (orgName) {
@@ -42,7 +60,18 @@ const App = () => {
           path={ROUTES.ORGS_PAGE}
           element={
             <Container>
-              <OrgsPage />
+              <OrgsPage
+                getReposData={getReposData}
+                orgName={orgName}
+                orgType={orgType}
+                orgError={orgError}
+                setOrgName={setOrgName}
+                setOrgType={setOrgType}
+                orgReposLength={orgReposLength}
+                orgRepos={orgRepos}
+                loadingReposList={loadingReposList}
+                errorReposList={errorReposList}
+              />
             </Container>
           }
         />
@@ -50,7 +79,16 @@ const App = () => {
           path={`${ROUTES.REPO_PAGE}/:id`}
           element={
             <Container>
-              <RepoPage findRepoById={findRepoById} orgName={orgName} getFullRepoData={getFullRepoData} />
+              <RepoPage
+                orgName={orgName}
+                contributors={contributors}
+                languages={languages}
+                readme={readme}
+                errorsRepo={errorsRepo}
+                loadersRepo={loadersRepo}
+                findRepoById={findRepoById}
+                getFullRepoData={getFullRepoData}
+              />
             </Container>
           }
         />

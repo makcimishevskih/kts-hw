@@ -1,52 +1,73 @@
 import { observer } from 'mobx-react-lite';
-import { StoreContext } from 'providers';
-import { FC, useContext, useEffect } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { FC, useEffect } from 'react';
 
+import { useNavigate } from 'react-router-dom';
 import Pagination from 'components/Pagination';
 import Text from 'components/Text';
 
-import usePagination from 'hooks/usePagination';
+import useLocalStore from 'hooks/useLocalStore';
 
-import useStores from 'providers/RootStoreProvider/useStores';
+import { useQueryParamsStoreInit } from 'hooks/useQueryParams';
+import PaginationStore from 'store/PaginationStore';
+
+import { TOrgReposModel } from 'store/models/repo';
+import { TTypes } from 'store/models/types';
 
 import NavInputs from './components/NavInputs';
 import OrgsList from './components/OrgsList';
+
 import css from './OrgsPage.module.scss';
 
-const REPO_PER_PAGE = 9;
+const ITEM_PER_PAGE = 9;
 
-const OrgsPage: FC = () => {
-  const {
-    github: {
-      org,
-      orgRepos,
-      orgReposLength,
-      orgType,
-      orgError,
-      loadingReposList,
-      errorReposList,
-      setOrgName,
-      setOrgType,
-      getReposData,
-    },
-  } = useStores();
+type OrgPageProps = {
+  orgName: string;
+  orgType: TTypes;
+  orgError: string;
+  setOrgName: (name: string) => void;
+  setOrgType: (type: TTypes) => void;
+  getReposData: (orgName: string, orgType: TTypes, item: number, offset: number) => void;
+  orgRepos: TOrgReposModel[];
+  orgReposLength: number;
+  errorReposList: string;
+  loadingReposList: boolean;
+};
 
-  const { offset, paginationNums, totalPagesCount, onChange, handleOffsetToStart } = usePagination(
-    orgReposLength,
-    REPO_PER_PAGE,
-  );
+const OrgsPage: FC<OrgPageProps> = ({
+  orgName,
+  orgType,
+  orgError,
+  setOrgName,
+  setOrgType,
+  orgRepos,
+  getReposData,
+  orgReposLength,
+  errorReposList,
+  loadingReposList,
+}) => {
+  const navigate = useNavigate();
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setSearchParams] = useSearchParams();
+  useQueryParamsStoreInit();
+
+  const { isFirstPage, isLastPage, offset, paginationNums, totalPagesCount, onChange, handleOffsetToStart, setOrgLen } =
+    useLocalStore<PaginationStore>(() => new PaginationStore(ITEM_PER_PAGE));
 
   useEffect(() => {
-    if (org) {
-      getReposData(REPO_PER_PAGE, offset);
-      setSearchParams({ offset: offset + '', per_page: REPO_PER_PAGE + '', type: orgType });
+    if (orgName) {
+      getReposData(orgName, orgType, ITEM_PER_PAGE, offset);
+
+      navigate({
+        pathname: '/',
+        search: `?name=${orgName}&type=${orgType}&offset=${offset}`,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [org, offset]);
+  }, [offset, orgName, orgType]);
+
+  useEffect(() => {
+    setOrgLen(orgReposLength);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orgReposLength]);
 
   const error = orgError && <div className={css.orgs__error}>{orgError}</div>;
 
@@ -64,18 +85,21 @@ const OrgsPage: FC = () => {
       <NavInputs setOrgName={setOrgName} setOrgType={setOrgType} handleOffsetToStart={handleOffsetToStart} />
       {error}
 
-      <OrgsList
-        orgType={orgType}
-        orgRepos={orgRepos}
-        orgReposLength={orgReposLength}
-        loadingReposList={loadingReposList}
-        errorReposList={errorReposList}
-      />
+      {orgRepos.length > 0 && (
+        <OrgsList
+          orgRepos={orgRepos}
+          orgReposLength={orgReposLength}
+          errorReposList={errorReposList}
+          loadingReposList={loadingReposList}
+        />
+      )}
 
       <Pagination
         offset={offset}
-        paginationNums={paginationNums}
         onChange={onChange}
+        isLastPage={isLastPage}
+        isFirstPage={isFirstPage}
+        paginationNums={paginationNums}
         totalPagesCount={totalPagesCount}
       />
     </section>

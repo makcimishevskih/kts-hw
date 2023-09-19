@@ -41,7 +41,6 @@ const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setOr
     const type: TTypes = optionsValue[0].value as TTypes;
 
     handleOffsetToStart();
-
     setOrgName(searchInputValue);
     setOrgType(type);
   };
@@ -53,6 +52,7 @@ const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setOr
       setValue(value);
     }
   };
+
   return (
     <div className={css.orgs__navInputs}>
       <MultiDropdown

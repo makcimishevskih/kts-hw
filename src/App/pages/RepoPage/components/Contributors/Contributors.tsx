@@ -1,13 +1,14 @@
+import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
-import { TContributor } from 'store/models/repo';
+import { TContributorModel } from 'store/models/repo';
 
 import css from './Contributors.module.scss';
 
 interface IContributorsProps {
-  contributors: TContributor[];
+  contributors: TContributorModel[];
   error: string;
   loading: boolean;
 }
@@ -32,13 +33,13 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
 
       <ul className={css.contributors__list}>
         {contributors.map((cont) => (
-          <li key={cont.node_id} className={css.contributors__item}>
-            <img className={css.contributors__avatar} width="32" height="32" src={cont.avatar_url} alt="avatar" />
+          <li key={cont.nodeId} className={css.contributors__item}>
+            <img className={css.contributors__avatar} width="32" height="32" src={cont.avatarUrl} alt="avatar" />
             <Text tag="h4" view="p-16" weight="bold">
               {cont.login}
             </Text>
             <Text tag="h4" view="p-16" color="secondary">
-              {cont.node_id}
+              {cont.nodeId}
             </Text>
           </li>
         ))}
@@ -46,4 +47,4 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
     </div>
   );
 };
-export default Contributors;
+export default observer(Contributors);

@@ -31,16 +31,6 @@ export type TOrgApi = {
   type: string;
 };
 
-// export type TTagApi = {
-//   name: string;
-//   zipball_url: string;
-//   tarball_url: string;
-//   commit: {
-//     sha: string;
-//     url: string;
-//   };
-//   node_id: string;
-// };
 export type TOrgModel = {
   login: string;
   id: number;
@@ -74,17 +64,6 @@ export type TOrgModel = {
   type: string;
 };
 
-// export type TTagModel = {
-//   name: string;
-//   zipball_url: string;
-//   tarball_url: string;
-//   commit: {
-//     sha: string;
-//     url: string;
-//   };
-//   node_id: string;
-// };
-
 export const normalizeOrg = (from: TOrgApi): TOrgModel => ({
   login: from.login,
   id: from.id,
@@ -117,13 +96,3 @@ export const normalizeOrg = (from: TOrgApi): TOrgModel => ({
   archivedAt: from.archived_at,
   type: from.type,
 });
-// export const normalizeTag = (from: TTagApi): TTagModel => ({
-//   name: from.name,
-//   zipball_url: from.zipball_url,
-//   tarball_url: from.tarball_url,
-//   node_id: from.node_id,
-//   commit: {
-//     sha: from.commit.sha,
-//     url: from.commit.url,
-//   },
-// });

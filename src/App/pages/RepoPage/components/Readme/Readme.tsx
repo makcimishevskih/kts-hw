@@ -1,17 +1,18 @@
+import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
-import { TReadme } from 'store/types/entities/repo';
+import { TReadmeModel } from 'store/models/repo';
 import { decodeFromUint8Array } from 'utils/encode';
 
 import css from './Readme.module.scss';
 
 type TReadmeProps = {
-  readme: TReadme | null;
   error: string;
   loading: boolean;
+  readme: TReadmeModel | null;
 };
 
 const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
@@ -32,4 +33,4 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
     </div>
   );
 };
-export default Readme;
+export default observer(Readme);
