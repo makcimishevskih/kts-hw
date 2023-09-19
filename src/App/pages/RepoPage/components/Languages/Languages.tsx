@@ -36,11 +36,11 @@ const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
 
         <div className={css.languages__status}>
           {loading && !error && <Loader color="accent" size="l" />}
-          {error && <div className={css.error}>{error}</div>}
+          {error && !loading && <div className={css.error}>{error}</div>}
           {!loading && !error && languages === null && <div className={css.emptyLanguage}>No languages data </div>}
         </div>
 
-        {languagesWithPercent && (
+        {languagesWithPercent && languagesWithPercent?.length > 0 && (
           <>
             <div className={css.languages__range}>
               {languagesWithPercent.map(({ name, percent, color }) => (
@@ -68,4 +68,5 @@ const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
     </>
   );
 };
-export default observer(Languages);
+// export default observer(Languages);
+export default Languages;

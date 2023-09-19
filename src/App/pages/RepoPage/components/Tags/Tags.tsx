@@ -1,21 +1,20 @@
 import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
-import { TOrgReposModel } from 'store/models/repo';
+
 import css from './Tags.module.scss';
 
 interface ITagsProps {
-  repo: TOrgReposModel | null;
+  tags: string[];
 }
 
-const Tags: FC<ITagsProps> = ({ repo }) => {
+const Tags: FC<ITagsProps> = ({ tags }) => {
   return (
     <ul className={css.tags}>
-      {repo &&
-        repo.topics.map((el) => (
-          <li key={el} className={css.tag}>
-            {el}
-          </li>
-        ))}
+      {tags.map((el) => (
+        <li key={el} className={css.tag}>
+          {el}
+        </li>
+      ))}
     </ul>
   );
 };

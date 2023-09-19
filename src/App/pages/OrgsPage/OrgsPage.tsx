@@ -46,7 +46,6 @@ const OrgsPage: FC<OrgPageProps> = ({
   loadingReposList,
 }) => {
   const navigate = useNavigate();
-
   useQueryParamsStoreInit();
 
   const { isFirstPage, isLastPage, offset, paginationNums, totalPagesCount, onChange, handleOffsetToStart, setOrgLen } =
@@ -57,7 +56,6 @@ const OrgsPage: FC<OrgPageProps> = ({
       getReposData(orgName, orgType, ITEM_PER_PAGE, offset);
 
       navigate({
-        pathname: '/',
         search: `?name=${orgName}&type=${orgType}&offset=${offset}`,
       });
     }
@@ -85,14 +83,7 @@ const OrgsPage: FC<OrgPageProps> = ({
       <NavInputs setOrgName={setOrgName} setOrgType={setOrgType} handleOffsetToStart={handleOffsetToStart} />
       {error}
 
-      {orgRepos.length > 0 && (
-        <OrgsList
-          orgRepos={orgRepos}
-          orgReposLength={orgReposLength}
-          errorReposList={errorReposList}
-          loadingReposList={loadingReposList}
-        />
-      )}
+      <OrgsList orgRepos={orgRepos} errorReposList={errorReposList} loadingReposList={loadingReposList} />
 
       <Pagination
         offset={offset}

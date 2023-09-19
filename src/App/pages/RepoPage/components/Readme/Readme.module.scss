@@ -1,11 +1,17 @@
 @import "styles/mixins.scss";
 @import "styles/vars.scss";
+// @import "styles/";
 
 .readme {
   min-height: 560px;
   margin-top: $space-xl;
 
   @include border(1px, $border-color-light, 4px);
+
+  &__title {
+    padding: $space-m;
+  }
+
   &__status {
     @include flexbox(center, center);
     margin-top: $space-m;

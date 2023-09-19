@@ -12,16 +12,15 @@ import css from './OrgsList.module.scss';
 
 type OrgListProps = {
   orgRepos: TOrgReposModel[];
-  orgReposLength: number;
   errorReposList: string;
   loadingReposList: boolean;
 };
 
-const OrgsList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgReposLength, orgRepos }) => {
+const OrgsList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos }) => {
   const loader = loadingReposList && !errorReposList && <Loader color="accent" size="xl" />;
   const error = errorReposList && !loadingReposList && <div className={css.repos__error}>Error:{errorReposList}</div>;
-  const empty = !errorReposList && !loadingReposList && orgReposLength === 0 && (
-    <div className={css.repos__empty}>Don&apos;t have any repo</div>
+  const empty = !errorReposList && !loadingReposList && orgRepos.length === 0 && (
+    <div className={css.repos__empty}>Don&apos;t have repos</div>
   );
 
   return (
@@ -33,7 +32,8 @@ const OrgsList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos
       </div>
 
       <ul className={css.repos__list}>
-        {orgRepos.length !== 0 &&
+        {!errorReposList &&
+          !loadingReposList &&
           orgRepos.map(({ id, name, description, createdAt, owner: { avatarUrl }, stargazersCount }) => (
             <Link key={id} to={`/repo/${id}`}>
               <Card

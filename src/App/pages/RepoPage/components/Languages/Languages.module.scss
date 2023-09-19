@@ -7,6 +7,7 @@
     @include flexbox(center, center);
     @include typo(20px, 22px);
   }
+
   &__range {
     @include flexbox(center, flex-start, 2px);
 
@@ -17,6 +18,10 @@
 
     border-radius: $border-radius;
     overflow: hidden;
+
+    .range__item {
+      height: 100%;
+    }
   }
 
   .languages__list {
@@ -24,7 +29,7 @@
     grid-template-columns: repeat(2, minmax(0, auto));
     grid-gap: 4px 20px;
 
-    margin-top: $space-xxs;
+    margin-top: $space-m;
 
     .languages__item {
       @include flexbox(center, flex-start, 8px);

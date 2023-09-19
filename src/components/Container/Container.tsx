@@ -9,6 +9,7 @@ type TContainerProps = PropsWithChildren<{
 
 const Container: FC<TContainerProps> = ({ className, children }) => {
   const cnContainer = classNames(css.container, className);
+
   return <div className={cnContainer}>{children}</div>;
 };
 export default Container;

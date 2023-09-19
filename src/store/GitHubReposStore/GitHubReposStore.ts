@@ -11,9 +11,9 @@ import {
   normalizeContributor,
   normalizeReadme,
 } from 'store/models/repo';
+import { TTypes } from 'store/models/types';
 import { getData } from 'utils/fetchData';
 
-import { TTypes } from '../types/entities/types';
 import { CollectionModel, getCollection, getInitialCollectionModel } from './../shared/collection';
 
 export type PrivateFields = '_orgRepos';
@@ -34,16 +34,11 @@ export class GithubReposStore {
   constructor() {
     makeObservable<GithubReposStore, PrivateFields>(this, {
       _orgRepos: observable,
-      getReposData: action,
-      selectedRepo: observable,
-      readme: observable,
-      languages: observable,
       errorsRepo: observable,
       loadersRepo: observable,
-      contributors: observable,
-      orgReposLength: observable,
       errorReposList: observable,
       loadingReposList: observable,
+      getReposData: action,
       getFullRepoData: action,
     });
   }
@@ -84,20 +79,23 @@ export class GithubReposStore {
           this.loadingReposList = false;
         });
       } else {
-        runInAction(() => {
-          try {
-            const list = getCollection(data, (item) => item.id);
+        try {
+          const list = getCollection(data, (item) => item.id);
 
-            this._orgRepos = list;
+          runInAction(() => {
             this.loadingReposList = false;
-          } catch (err) {
+            this._orgRepos = list;
+          });
+        } catch (err) {
+          runInAction(() => {
+            this.loadingReposList = false;
             this._orgRepos = getInitialCollectionModel();
             this.errorReposList = "Can't load org repositories";
-            this.loadingReposList = false;
-          }
-        });
+          });
+        }
       }
     });
+
     getData<TOrgReposApi[], TOrgReposModel[]>(`orgs/${orgName}/repos?type=${orgType}`, normalizeOrgRepos).then(
       ({ isError, data }) => {
         if (isError) {

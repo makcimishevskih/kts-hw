@@ -31,7 +31,7 @@
   }
 
   .contributors__list {
-    margin-top: $space-l;
+    margin-top: $space-m;
 
     .contributors__item {
       @include flexbox(center, flex-start, 8px);

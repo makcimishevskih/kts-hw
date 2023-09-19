@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
@@ -47,4 +46,4 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
     </div>
   );
 };
-export default observer(Contributors);
+export default Contributors;

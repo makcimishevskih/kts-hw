@@ -20,7 +20,7 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
 
   return (
     <div className={css.readme}>
-      <Text tag="h5" view="p-12" weight="bold" mt="16px">
+      <Text className={css.readme__title} tag="h5" view="p-12" weight="bold">
         {readme?.name}
       </Text>
 
@@ -33,4 +33,4 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
     </div>
   );
 };
-export default observer(Readme);
+export default Readme;

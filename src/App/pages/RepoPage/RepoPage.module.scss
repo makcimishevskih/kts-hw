@@ -28,7 +28,6 @@
 
   &__info {
     @include flexbox(flex-start, flex-start, 80px);
-    margin-top: $space-l;
-    padding-bottom: $space-xxs;
+    margin-top: $space-xl;
   }
 }

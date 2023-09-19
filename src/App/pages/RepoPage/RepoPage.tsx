@@ -43,7 +43,7 @@ const RepoPage: FC<RepoPageProps> = ({
   const navigate = useNavigate();
 
   const goToBack = useCallback(() => {
-    navigate(-1);
+    navigate('/');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const { id } = useParams();
@@ -75,12 +75,20 @@ const RepoPage: FC<RepoPageProps> = ({
             </Text>
           </Link>
         ) : (
-          <div className={css.homepage__empty}>Don&apos;t have a link</div>
+          <div className={css.homepage__empty}>Don&apos;t have homepage</div>
         )}
       </div>
 
-      <Tags repo={repo} />
-      <Subs repo={repo} />
+      {repo && (
+        <>
+          <Tags tags={repo.topics} />
+          <Subs
+            forksCount={repo.forksCount}
+            watchersCount={repo.watchersCount}
+            stargazersCount={repo.stargazersCount}
+          />
+        </>
+      )}
 
       <div className={css.repo__info}>
         <Contributors contributors={contributors} error={errorsRepo.contributors} loading={loadersRepo.contributors} />
