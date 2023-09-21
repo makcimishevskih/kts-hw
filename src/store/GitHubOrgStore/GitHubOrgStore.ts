@@ -39,7 +39,7 @@ export class GithubOrgStore {
     this.orgName = name;
   };
 
-  getOrgData = () => {
+  getOrgData = async () => {
     this.orgError = '';
     this.orgLoading = true;
 

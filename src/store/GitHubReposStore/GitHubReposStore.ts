@@ -63,7 +63,7 @@ export class GithubReposStore {
     return this.selectedRepo;
   };
 
-  getReposData = (orgName: string, orgType: TTypes, perPage: number, offset: number) => {
+  getReposData = async (orgName: string, orgType: TTypes, perPage: number, offset: number) => {
     this.errorReposList = '';
     this.loadingReposList = true;
 
@@ -113,7 +113,7 @@ export class GithubReposStore {
     );
   };
 
-  getFullRepoData = (orgName: string, fileName: string) => {
+  getFullRepoData = async (orgName: string, fileName: string) => {
     const repoURL = this.selectedRepo && `repos/${orgName}/${this.selectedRepo?.name}`;
 
     this.errorsRepo = { contributors: '', readme: '', languages: '' };
