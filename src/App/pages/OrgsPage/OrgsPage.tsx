@@ -14,7 +14,7 @@ import { TOrgReposModel } from 'store/models/repo';
 import { TTypes } from 'store/models/types';
 
 import NavInputs from './components/NavInputs';
-import OrgsList from './components/OrgsList';
+import OrgReposList from './components/OrgReposList';
 
 import css from './OrgsPage.module.scss';
 
@@ -83,7 +83,7 @@ const OrgsPage: FC<OrgPageProps> = ({
       <NavInputs setOrgName={setOrgName} setOrgType={setOrgType} handleOffsetToStart={handleOffsetToStart} />
       {error}
 
-      <OrgsList orgRepos={orgRepos} errorReposList={errorReposList} loadingReposList={loadingReposList} />
+      <OrgReposList orgRepos={orgRepos} errorReposList={errorReposList} loadingReposList={loadingReposList} />
 
       <Pagination
         offset={offset}

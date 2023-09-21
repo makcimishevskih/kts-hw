@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, runInAction } from 'mobx';
+import { makeObservable, observable, action, runInAction, computed } from 'mobx';
 import {
   TOrgReposModel,
   TContributorModel,
@@ -40,6 +40,8 @@ export class GithubReposStore {
       loadingReposList: observable,
       getReposData: action,
       getFullRepoData: action,
+      orgRepos: computed,
+      setOrgType: action,
     });
   }
 

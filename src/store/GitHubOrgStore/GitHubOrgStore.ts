@@ -5,24 +5,24 @@ import { TTypes } from 'store/models/types';
 
 import { getData } from 'utils/fetchData';
 
-export type IPrivateFields = '_org';
+export type IPrivateFields = '_org' | '_orgName' | '_orgType';
 
 export class GithubOrgStore {
   private _org: TOrgModel | null = null;
-  orgName: string = '';
-  orgType: TTypes = 'all';
+  private _orgName: string = '';
+  private _orgType: TTypes = 'all';
   orgError: string = '';
   orgLoading: boolean = false;
 
   constructor() {
     makeObservable<GithubOrgStore, IPrivateFields>(this, {
       _org: observable,
-      orgName: observable,
-      orgType: observable,
+      _orgName: observable,
+      _orgType: observable,
       orgError: observable,
       orgLoading: observable,
-      setOrgName: action,
       setOrgType: action,
+      setOrgName: action,
       getOrgData: action,
     });
   }
@@ -31,19 +31,27 @@ export class GithubOrgStore {
     return this._org;
   }
 
-  setOrgType = (type: TTypes) => {
-    this.orgType = type;
-  };
+  get orgName() {
+    return this._orgName;
+  }
 
   setOrgName = (name: string) => {
-    this.orgName = name;
+    this._orgName = name;
+  };
+
+  get orgType() {
+    return this._orgType;
+  }
+
+  setOrgType = (type: TTypes) => {
+    this._orgType = type;
   };
 
   getOrgData = async () => {
     this.orgError = '';
     this.orgLoading = true;
 
-    getData<TOrgApi, TOrgModel>(`orgs/${this.orgName}`, normalizeOrg).then(({ isError, data }) => {
+    getData<TOrgApi, TOrgModel>(`orgs/${this._orgName}`, normalizeOrg).then(({ isError, data }) => {
       if (isError) {
         runInAction(() => {
           this.orgLoading = false;

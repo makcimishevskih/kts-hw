@@ -8,7 +8,7 @@ import Loader from 'components/Loader';
 import { TOrgReposModel } from 'store/models/repo';
 import { getFormattedDate } from 'utils/formatDate';
 
-import css from './OrgsList.module.scss';
+import css from './OrgReposList.module.scss';
 
 type OrgListProps = {
   orgRepos: TOrgReposModel[];
@@ -16,7 +16,7 @@ type OrgListProps = {
   loadingReposList: boolean;
 };
 
-const OrgsList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos }) => {
+const OrgReposList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos }) => {
   const loader = loadingReposList && !errorReposList && <Loader color="accent" size="xl" />;
   const error = errorReposList && !loadingReposList && <div className={css.repos__error}>Error:{errorReposList}</div>;
   const empty = !errorReposList && !loadingReposList && orgRepos.length === 0 && (
@@ -54,4 +54,4 @@ const OrgsList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos
   );
 };
 
-export default observer(OrgsList);
+export default observer(OrgReposList);

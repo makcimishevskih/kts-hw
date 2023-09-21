@@ -21,6 +21,7 @@ class PaginationStore {
       paginationNums: computed,
       totalPagesCount: computed,
 
+      onChange: action,
       setOrgLen: action,
     });
   }
