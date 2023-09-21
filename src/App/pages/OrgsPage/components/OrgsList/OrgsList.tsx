@@ -1,5 +1,5 @@
 import { observer } from 'mobx-react-lite';
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 
 import Card from 'components/Card';
@@ -54,4 +54,4 @@ const OrgsList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos
   );
 };
 
-export default memo(observer(OrgsList));
+export default observer(OrgsList);
