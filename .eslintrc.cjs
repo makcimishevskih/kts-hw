@@ -30,7 +30,7 @@ module.exports = {
   plugins: ['@typescript-eslint', 'import', 'prettier', 'react', 'react-hooks'],
   rules: {
     'react/react-in-jsx-scope': 'off',
-
+    'react-hooks/exhaustive-deps': 'off',
     'no-console': 'warn',
     'import/order': [
       'error',

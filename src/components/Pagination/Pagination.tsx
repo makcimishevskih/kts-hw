@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import classNames from 'classnames';
+import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
@@ -12,7 +13,7 @@ type TPaginationProps = {
   isFirstPage: boolean;
   totalPagesCount: number;
   paginationNums: (string | number)[];
-  onChange: (n: number) => void;
+  onChange: (pageNumb: number) => void;
 };
 
 const Pagination: FC<TPaginationProps> = ({
@@ -69,4 +70,4 @@ const Pagination: FC<TPaginationProps> = ({
     </div>
   );
 };
-export default Pagination;
+export default observer(Pagination);

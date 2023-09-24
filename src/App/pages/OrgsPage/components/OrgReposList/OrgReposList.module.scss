@@ -4,12 +4,12 @@
 .repos__status {
   margin-top: $space-l;
   @include flexbox(center, center);
-  .repos__empty {
+  &_empty {
     margin-top: $space-xxl;
     @include typo(24px, 26px, 500);
     @include flexbox(center, center);
   }
-  .repos__error {
+  &_error {
     @include typo(24px, 26px, 500);
     @include flexbox(center, center);
     color: red;

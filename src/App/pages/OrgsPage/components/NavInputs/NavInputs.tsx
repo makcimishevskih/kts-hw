@@ -6,24 +6,17 @@ import MultiDropdown, { Option } from 'components/MultiDropdown';
 import Loupe from 'components/icons/Loupe';
 
 import { TTypes } from 'store/models/types';
+import { typeOptions } from './config';
+
 import css from './NavInputs.module.scss';
 
 interface INavInputsProps {
   handleOffsetToStart: () => void;
   setOrgName: (name: string) => void;
-  setOrgType: (type: TTypes) => void;
+  setReposFilterType: (type: TTypes) => void;
 }
 
-const typeOptions: Option[] = [
-  { key: 'all', value: 'all' },
-  { key: 'public', value: 'public' },
-  { key: 'private', value: 'private' },
-  { key: 'forks', value: 'forks' },
-  { key: 'sources', value: 'sources' },
-  { key: 'member', value: 'member' },
-];
-
-const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setOrgType }) => {
+const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setReposFilterType }) => {
   const [searchInputValue, setSearchInputValue] = useState('ktsstudio');
   const [optionsValue, setValue] = useState<Option[]>([typeOptions[0]]);
 
@@ -35,14 +28,16 @@ const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setOr
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     if (!searchInputValue) {
       return;
     }
+
     const type: TTypes = optionsValue[0].value as TTypes;
 
     handleOffsetToStart();
     setOrgName(searchInputValue);
-    setOrgType(type);
+    setReposFilterType(type);
   };
 
   const getTitle = () => (optionsValue.length ? optionsValue.map((el) => el.value).join(', ') : 'Select org type');

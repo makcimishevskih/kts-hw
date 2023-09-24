@@ -51,7 +51,7 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
     setInputText(v);
   };
 
-  const filtered = options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase()));
+  const filteredOptions = options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase()));
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -68,6 +68,15 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
     return () => document.removeEventListener('click', handleClick);
   }, [disabled]);
 
+  const localOnChange = (el: Option) => {
+    if (type === 'multi') {
+      onChange(!value.includes(el) ? [...value, el] : value.filter((filterEl) => filterEl.key !== el.key));
+    } else {
+      onChange(!value.includes(el) ? [el] : []);
+      setIsOpen(false);
+    }
+  };
+
   return (
     <div className={cx} ref={ref} onClick={onClick}>
       <Input
@@ -82,17 +91,13 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
 
       {isOpen && !disabled ? (
         <ul className={css.list}>
-          {filtered.map((el) => (
+          {filteredOptions.map((option) => (
             <li
-              onClick={() => {
-                type === 'multi'
-                  ? onChange(!value.includes(el) ? [...value, el] : value.filter((filterEl) => filterEl.key !== el.key))
-                  : onChange(!value.includes(el) ? [el] : []);
-              }}
-              key={el.key}
-              className={`${css.item} ${value.includes(el) ? css.item_checked : ''}`}
+              onClick={() => localOnChange(option)}
+              key={option.key}
+              className={`${css.item} ${value.includes(option) ? css.item_checked : ''}`}
             >
-              {el.value}
+              {option.value}
             </li>
           ))}
         </ul>

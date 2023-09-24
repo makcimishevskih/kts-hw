@@ -1,4 +1,3 @@
-import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 
 import Loader from 'components/Loader';
@@ -25,7 +24,7 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
       </Text>
 
       <div className={css.readme__status}>
-        {error && <div className={css.error}>{error}</div>}
+        {error && <div className={css.readme__status_error}>{error}</div>}
         {loading && !error && <Loader color="accent" size="l" />}
       </div>
 

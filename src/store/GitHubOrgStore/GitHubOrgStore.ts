@@ -1,70 +1,126 @@
-import { makeObservable, observable, action, runInAction } from 'mobx';
-
-import { normalizeOrg, TOrgApi, TOrgModel } from 'store/models/org';
+import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { normalizeOrgRepos, TOrgReposApi, TOrgReposModel } from 'store/models/repo';
 import { TTypes } from 'store/models/types';
-
 import { getData } from 'utils/fetchData';
+import { CollectionModel, getCollection, getInitialCollectionModel } from './../shared/collection';
 
-export type IPrivateFields = '_org' | '_orgName' | '_orgType';
+export type IPrivateFields = '_orgName' | '_orgRepos' | '_reposFilterType';
 
 export class GithubOrgStore {
-  private _org: TOrgModel | null = null;
-  private _orgName: string = '';
-  private _orgType: TTypes = 'all';
+  private _orgName: string = 'ktsstudio';
+  private _orgRepos: CollectionModel<number | string, TOrgReposModel> = getInitialCollectionModel();
+  private _reposFilterType: TTypes = 'all';
+
   orgError: string = '';
   orgLoading: boolean = false;
+  orgReposLength: number = 0;
+
+  errorReposList = '';
+  loadingReposList = false;
+
+  selectedRepo: TOrgReposModel | null = null;
 
   constructor() {
     makeObservable<GithubOrgStore, IPrivateFields>(this, {
-      _org: observable,
       _orgName: observable,
-      _orgType: observable,
+      _reposFilterType: observable,
+      _orgRepos: observable,
+
       orgError: observable,
       orgLoading: observable,
-      setOrgType: action,
-      setOrgName: action,
-      getOrgData: action,
+      errorReposList: observable,
+      loadingReposList: observable,
+
+      orgRepos: computed,
+      getReposData: action,
+      findRepoById: action,
+      setReposFilterType: action,
     });
   }
 
-  get org() {
-    return this._org;
-  }
+  findRepoById = (paramId: string): TOrgReposModel | null => {
+    if (paramId) {
+      this.selectedRepo = this._orgRepos.entities[+paramId];
+    }
+    return this.selectedRepo || null;
+  };
 
   get orgName() {
     return this._orgName;
   }
 
   setOrgName = (name: string) => {
+    this.errorReposList = '';
     this._orgName = name;
   };
 
-  get orgType() {
-    return this._orgType;
+  get reposFilterType() {
+    return this._reposFilterType;
   }
 
-  setOrgType = (type: TTypes) => {
-    this._orgType = type;
+  get orgRepos(): TOrgReposModel[] {
+    return this._orgRepos.order.map((id) => this._orgRepos.entities[id]);
+  }
+
+  setReposFilterType = (filterType: TTypes) => {
+    this._reposFilterType = filterType;
   };
 
-  getOrgData = async () => {
-    this.orgError = '';
-    this.orgLoading = true;
+  getReposData = async (perPage: number, offset: number) => {
+    this._orgRepos = getInitialCollectionModel();
+    this.errorReposList = '';
+    this.loadingReposList = true;
 
-    getData<TOrgApi, TOrgModel>(`orgs/${this._orgName}`, normalizeOrg).then(({ isError, data }) => {
-      if (isError) {
+    const requests = [
+      getData<TOrgReposApi[], TOrgReposModel[]>(
+        `orgs/${this.orgName}/repos?type=${this.reposFilterType}&per_page=${perPage}&page=${offset}`,
+        normalizeOrgRepos,
+      ),
+      getData<TOrgReposApi[], TOrgReposModel[]>(
+        `orgs/${this.orgName}/repos?type=${this.reposFilterType}`,
+        normalizeOrgRepos,
+      ),
+    ];
+
+    const [reposResponse, reposLengthResponse] = await Promise.all(requests);
+
+    if (reposResponse.isError) {
+      runInAction(() => {
+        this.loadingReposList = false;
+        this.orgReposLength = 0;
+        this.errorReposList = "Can't load org repositories";
+      });
+    } else {
+      try {
+        const list = getCollection(reposResponse.data, (item) => item.id);
+
         runInAction(() => {
-          this.orgLoading = false;
-          this.orgError = "Can't find org. Try again!";
+          this.loadingReposList = false;
+          this._orgRepos = list;
         });
-      } else {
+      } catch (err) {
         runInAction(() => {
-          this._org = data;
-          this.orgLoading = false;
+          this.loadingReposList = false;
+          this.orgReposLength = 0;
+          this.errorReposList = "Can't load org repositories";
+          this._orgRepos = getInitialCollectionModel();
         });
       }
-    });
+    }
+
+    if (reposLengthResponse.isError) {
+      runInAction(() => {
+        this.loadingReposList = false;
+        this.orgReposLength = 0;
+        this.errorReposList = "Can't load org repositories";
+      });
+    } else {
+      runInAction(() => {
+        this.orgReposLength = reposLengthResponse.data.length;
+        this.loadingReposList = false;
+      });
+    }
   };
 }
 
-export default GithubOrgStore;
+export default new GithubOrgStore();

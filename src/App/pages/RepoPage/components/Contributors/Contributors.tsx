@@ -25,20 +25,22 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
       </Text>
 
       <div className={css.contributors__status}>
-        {error && <div className={css.error}>{error}</div>}
-        {!loading && !error && !contributors.length && <div className={css.emptyContributors}>No conributors yet</div>}
+        {error && <div className={css.contributors__status_error}>{error}</div>}
+        {!loading && !error && !contributors.length && (
+          <div className={css.contributors__status_empty}>No conributors yet</div>
+        )}
         {loading && !error && <Loader color="accent" size="l" />}
       </div>
 
       <ul className={css.contributors__list}>
         {contributors.map((cont) => (
-          <li key={cont.nodeId} className={css.contributors__item}>
+          <li key={cont.id} className={css.contributors__item}>
             <img className={css.contributors__avatar} width="32" height="32" src={cont.avatarUrl} alt="avatar" />
             <Text tag="h4" view="p-16" weight="bold">
               {cont.login}
             </Text>
             <Text tag="h4" view="p-16" color="secondary">
-              {cont.nodeId}
+              contributions: {cont.contributions}
             </Text>
           </li>
         ))}

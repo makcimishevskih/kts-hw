@@ -2,8 +2,9 @@ import { makeObservable, observable, computed, action } from 'mobx';
 
 class PaginationStore {
   offset: number = 1;
-  ITEM_PER_PAGE: number = 0;
+  ITEM_PER_PAGE: number = 1;
   orgReposCount: number = 0;
+  isLoading: boolean = false;
   _isLastPage: boolean = false;
   _isFirstPage: boolean = false;
 
@@ -14,6 +15,7 @@ class PaginationStore {
       offset: observable,
       isLastPage: computed,
       isFirstPage: computed,
+      isLoading: observable,
       ITEM_PER_PAGE: observable,
       orgReposCount: observable,
 
@@ -22,18 +24,23 @@ class PaginationStore {
       totalPagesCount: computed,
 
       onChange: action,
-      setOrgLen: action,
+      setReposLen: action,
+      setIsLoading: action,
     });
   }
 
-  setOrgLen = (orgLen: number) => {
+  setReposLen = (orgLen: number) => {
     if (orgLen !== this.orgReposCount) {
       this.orgReposCount = orgLen;
     }
   };
 
+  setIsLoading = (isLoading: boolean) => {
+    this.isLoading = isLoading;
+  };
+
   get totalPagesCount() {
-    return Math.ceil(this.orgReposCount / this.ITEM_PER_PAGE) || 0;
+    return Math.ceil(this.orgReposCount / this.ITEM_PER_PAGE);
   }
 
   get pageNumbers() {
@@ -77,6 +84,7 @@ class PaginationStore {
     } else if (this.offset > 3) {
       return [first, SEPARATOR, ...this.pageNumbers.slice(this.offset - 2, this.offset + 1), SEPARATOR, last];
     }
+
     return this.pageNumbers;
   }
 }

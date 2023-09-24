@@ -17,18 +17,14 @@ type OrgListProps = {
 };
 
 const OrgReposList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos }) => {
-  const loader = loadingReposList && !errorReposList && <Loader color="accent" size="xl" />;
-  const error = errorReposList && !loadingReposList && <div className={css.repos__error}>Error:{errorReposList}</div>;
-  const empty = !errorReposList && !loadingReposList && orgRepos.length === 0 && (
-    <div className={css.repos__empty}>Don&apos;t have repos</div>
-  );
-
   return (
     <>
       <div className={css.repos__status}>
-        {loader}
-        {error}
-        {empty}
+        {loadingReposList && !errorReposList && <Loader color="accent" size="xl" />}
+        {errorReposList && !loadingReposList && <div className={css.repos__status_error}>Error:{errorReposList}</div>}
+        {!errorReposList && !loadingReposList && orgRepos.length === 0 && (
+          <div className={css.repos__status_empty}>Don&apos;t have repos</div>
+        )}
       </div>
 
       <ul className={css.repos__list}>

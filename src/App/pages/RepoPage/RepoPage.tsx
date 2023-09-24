@@ -1,13 +1,16 @@
 import { observer } from 'mobx-react-lite';
-import { FC, useCallback, useEffect } from 'react';
+import { FC, useCallback } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import link from 'assets/link.svg';
 
 import Text from 'components/Text';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
+import useLocalStore from 'hooks/useLocalStore';
+import GitHubOrgStore from 'store/GitHubOrgStore';
+import GitHubReposStore from 'store/GitHubReposStore';
 
-import { TLanguagesModel, TOrgReposModel, TReadmeModel, TContributorModel } from 'store/models/repo';
+import { TOrgReposModel } from 'store/models/repo';
 
 import Contributors from './components/Contributors';
 import Languages from './components/Languages';
@@ -17,48 +20,24 @@ import Tags from './components/Tags';
 
 import css from './RepoPage.module.scss';
 
-type RepoPageProps = {
-  orgName: string;
-  readme: TReadmeModel | null;
-  languages: TLanguagesModel | null;
-  contributors: TContributorModel[];
-  errorsRepo: { contributors: string; readme: string; languages: string };
-  loadersRepo: { contributors: boolean; readme: boolean; languages: boolean };
-  getFullRepoData: (orgName: string, fileName: string) => void;
-  findRepoById: (id: string) => TOrgReposModel | null;
-};
-
-const FILE_NAME = 'README.md';
-
-const RepoPage: FC<RepoPageProps> = ({
-  orgName,
-  errorsRepo,
-  loadersRepo,
-  readme,
-  languages,
-  contributors,
-  findRepoById,
-  getFullRepoData,
-}) => {
-  const navigate = useNavigate();
-
-  const goToBack = useCallback(() => {
-    navigate('/');
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+const RepoPage: FC = () => {
+  const { orgName, findRepoById, reposFilterType } = GitHubOrgStore;
   const { id } = useParams();
 
   const repo: TOrgReposModel | null = (id && findRepoById(id)) || null;
 
-  useEffect(() => {
-    if (repo && orgName) {
-      getFullRepoData(orgName, FILE_NAME);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orgName, repo]);
+  const navigate = useNavigate();
+
+  const goToBack = useCallback(() => {
+    navigate(-1);
+  }, []);
+
+  const { readme, languages, contributors, errorsRepo, loadersRepo } = useLocalStore<GitHubReposStore>(
+    () => new GitHubReposStore(orgName, reposFilterType, repo?.name),
+  );
 
   return (
-    <div className={css.repo}>
+    <section className={css.repo}>
       <header className={css.repo__header}>
         <ArrowBackIcon width="32" height="32" onClick={goToBack} color="accent" />
         <img src={repo?.owner.avatarUrl} width="40" height="40" alt="repo-avatar" />
@@ -95,7 +74,7 @@ const RepoPage: FC<RepoPageProps> = ({
         <Languages languages={languages} error={errorsRepo.languages} loading={loadersRepo.languages} />
       </div>
       <Readme readme={readme} error={errorsRepo.readme} loading={loadersRepo.readme} />
-    </div>
+    </section>
   );
 };
 
