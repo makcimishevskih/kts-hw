@@ -27,10 +27,9 @@ const OrgsPage: FC = () => {
     setReposFilterType,
     setOrgName,
     getReposData,
-  } = GitHubOrgStore;
+  } = useLocalStore<GitHubOrgStore>(() => new GitHubOrgStore());
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setQueryParams] = useSearchParams();
+  const [, setQueryParams] = useSearchParams();
 
   const {
     isFirstPage,

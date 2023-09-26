@@ -1,4 +1,6 @@
-import { makeObservable, observable, action, runInAction, autorun } from 'mobx';
+import { makeObservable, observable, action, runInAction } from 'mobx';
+import { ILocalStore } from 'hooks/useLocalStore';
+
 import {
   TContributorModel,
   TLanguagesModel,
@@ -11,7 +13,13 @@ import {
 import { TTypes } from 'store/models/types';
 import { getData } from 'utils/fetchData';
 
-export class GithubReposStore {
+type GitHubRepoStoreConstructor = {
+  name: string;
+  reposFilterType: TTypes;
+  repoName: string | undefined;
+};
+
+export class GitHubRepoStore implements ILocalStore {
   readme: TReadmeModel | null = null;
   contributors: TContributorModel[] = [];
   languages: TLanguagesModel | null = null;
@@ -22,37 +30,33 @@ export class GithubReposStore {
   reposFilterType: TTypes;
   repoName: string | undefined;
 
-  constructor(name: string, reposFilterType: TTypes, repoName: string | undefined) {
-    this.orgName = name;
-    this.reposFilterType = reposFilterType;
-    this.repoName = repoName;
-
-    autorun(() => {
-      if (this.repoName && this.orgName) {
-        this.getFullRepoData(this.orgName, this.repoName);
-      }
-    });
-
-    makeObservable<GithubReposStore>(this, {
-      getFullRepoData: action,
+  constructor({ name, reposFilterType, repoName }: GitHubRepoStoreConstructor) {
+    makeObservable<GitHubRepoStore>(this, {
       errorsRepo: observable,
       loadersRepo: observable,
+      getFullRepoData: action,
     });
+
+    this.orgName = name;
+    this.repoName = repoName;
+    this.reposFilterType = reposFilterType;
+
+    if (this.repoName && this.orgName) {
+      this.getFullRepoData();
+    }
   }
 
-  getFullRepoData = async (orgName: string, repoName: string) => {
-    const repoURL = `repos/${orgName}/${repoName}`;
+  getFullRepoData = async () => {
+    const repoURL = `repos/${this.orgName}/${this.repoName}`;
 
     this.errorsRepo = { contributors: '', readme: '', languages: '' };
     this.loadersRepo = { contributors: true, readme: true, languages: true };
 
-    const requestList = [
+    const [contributors, languages, readme] = await Promise.all([
       getData<TContributorApi[], TContributorModel[]>(`${repoURL}/contributors`, normalizeContributor),
       getData<TLanguagesModel, TLanguagesModel>(`${repoURL}/languages`, (data) => data),
       getData<TReadmeApi, TReadmeModel>(`${repoURL}/contents/README.md`, normalizeReadme),
-    ];
-
-    const [contributors, languages, readme] = await Promise.all(requestList);
+    ]);
 
     runInAction(() => {
       if (contributors.isError) {
@@ -77,6 +81,13 @@ export class GithubReposStore {
       }
     });
   };
+  destroy = () => {
+    this.readme = null;
+    this.contributors = [];
+    this.languages = null;
+    this.errorsRepo = { contributors: '', readme: '', languages: '' };
+    this.loadersRepo = { contributors: false, readme: false, languages: false };
+  };
 }
 
-export default GithubReposStore;
+export default GitHubRepoStore;

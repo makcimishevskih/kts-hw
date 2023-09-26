@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
 import Input from '../Input';
 import ArrowDownIcon from '../icons/ArrowDownIcon';
-import css from './MultiDropdown.module.scss';
+import css from './Dropdown.module.scss';
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
@@ -12,7 +12,7 @@ export type Option = {
 };
 
 /** Пропсы, которые принимает компонент Dropdown */
-export type MultiDropdownProps = {
+export type DropdownProps = {
   className?: string;
   /** Текущие выбранные значения поля, может быть пустым */
   value: Option[];
@@ -27,7 +27,7 @@ export type MultiDropdownProps = {
   onClick?: () => void;
   type?: 'multi' | 'single';
 };
-const MultiDropdown: FC<MultiDropdownProps> = ({
+const Dropdown: FC<DropdownProps> = ({
   type = 'multi',
   value,
   options,
@@ -37,7 +37,7 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
   onChange,
   onClick,
 }) => {
-  const cx = classNames(css.wrapperMultiDropDown, className);
+  const cx = classNames(css.wrapperDropDown, className);
 
   const [inputText, setInputText] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -106,4 +106,4 @@ const MultiDropdown: FC<MultiDropdownProps> = ({
   );
 };
 
-export default MultiDropdown;
+export default Dropdown;

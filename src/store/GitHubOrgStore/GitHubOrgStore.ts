@@ -1,4 +1,5 @@
 import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { ILocalStore } from 'hooks/useLocalStore';
 import { normalizeOrgRepos, TOrgReposApi, TOrgReposModel } from 'store/models/repo';
 import { TTypes } from 'store/models/types';
 import { getData } from 'utils/fetchData';
@@ -6,7 +7,7 @@ import { CollectionModel, getCollection, getInitialCollectionModel } from './../
 
 export type IPrivateFields = '_orgName' | '_orgRepos' | '_reposFilterType';
 
-export class GithubOrgStore {
+export class GithubOrgStore implements ILocalStore {
   private _orgName: string = 'ktsstudio';
   private _orgRepos: CollectionModel<number | string, TOrgReposModel> = getInitialCollectionModel();
   private _reposFilterType: TTypes = 'all';
@@ -14,7 +15,6 @@ export class GithubOrgStore {
   orgError: string = '';
   orgLoading: boolean = false;
   orgReposLength: number = 0;
-
   errorReposList = '';
   loadingReposList = false;
 
@@ -24,7 +24,7 @@ export class GithubOrgStore {
     makeObservable<GithubOrgStore, IPrivateFields>(this, {
       _orgName: observable,
       _reposFilterType: observable,
-      _orgRepos: observable,
+      _orgRepos: observable.ref,
 
       orgError: observable,
       orgLoading: observable,
@@ -45,7 +45,7 @@ export class GithubOrgStore {
     return this.selectedRepo || null;
   };
 
-  get orgName() {
+  get orgName(): string {
     return this._orgName;
   }
 
@@ -54,7 +54,7 @@ export class GithubOrgStore {
     this._orgName = name;
   };
 
-  get reposFilterType() {
+  get reposFilterType(): TTypes {
     return this._reposFilterType;
   }
 
@@ -71,7 +71,7 @@ export class GithubOrgStore {
     this.errorReposList = '';
     this.loadingReposList = true;
 
-    const requests = [
+    const [reposResponse, reposLengthResponse] = await Promise.all([
       getData<TOrgReposApi[], TOrgReposModel[]>(
         `orgs/${this.orgName}/repos?type=${this.reposFilterType}&per_page=${perPage}&page=${offset}`,
         normalizeOrgRepos,
@@ -80,9 +80,7 @@ export class GithubOrgStore {
         `orgs/${this.orgName}/repos?type=${this.reposFilterType}`,
         normalizeOrgRepos,
       ),
-    ];
-
-    const [reposResponse, reposLengthResponse] = await Promise.all(requests);
+    ]);
 
     if (reposResponse.isError) {
       runInAction(() => {
@@ -121,6 +119,19 @@ export class GithubOrgStore {
       });
     }
   };
+
+  destroy = () => {
+    this._orgName = 'ktsstudio';
+    this._orgRepos = getInitialCollectionModel();
+    this._reposFilterType = 'all';
+    this.orgError = '';
+    this.orgLoading = false;
+    this.orgReposLength = 0;
+    this.errorReposList = '';
+    this.loadingReposList = false;
+    this.selectedRepo = null;
+  };
 }
 
 export default new GithubOrgStore();
+// export default GithubOrgStore;

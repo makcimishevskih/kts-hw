@@ -1,8 +1,8 @@
 import { FC, FormEvent, useCallback, useRef, useState } from 'react';
 
 import Button from 'components/Button';
+import Dropdown, { Option } from 'components/Dropdown';
 import Input from 'components/Input';
-import MultiDropdown, { Option } from 'components/MultiDropdown';
 import Loupe from 'components/icons/Loupe';
 
 import { TTypes } from 'store/models/types';
@@ -50,7 +50,7 @@ const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setRe
 
   return (
     <div className={css.orgs__navInputs}>
-      <MultiDropdown
+      <Dropdown
         type="single"
         value={optionsValue}
         onChange={handleOptionValues}

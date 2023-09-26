@@ -8,7 +8,7 @@ import Text from 'components/Text';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
 import useLocalStore from 'hooks/useLocalStore';
 import GitHubOrgStore from 'store/GitHubOrgStore';
-import GitHubReposStore from 'store/GitHubReposStore';
+import GitHubRepoStore from 'store/GitHubRepoStore';
 
 import { TOrgReposModel } from 'store/models/repo';
 
@@ -32,8 +32,8 @@ const RepoPage: FC = () => {
     navigate(-1);
   }, []);
 
-  const { readme, languages, contributors, errorsRepo, loadersRepo } = useLocalStore<GitHubReposStore>(
-    () => new GitHubReposStore(orgName, reposFilterType, repo?.name),
+  const { readme, languages, contributors, errorsRepo, loadersRepo } = useLocalStore<GitHubRepoStore>(
+    () => new GitHubRepoStore({ name: orgName, reposFilterType, repoName: repo?.name }),
   );
 
   return (

@@ -1,4 +1,4 @@
-import { Option } from 'components/MultiDropdown';
+import { Option } from 'components/Dropdown';
 
 export const typeOptions: Option[] = [
   { key: 'all', value: 'all' },

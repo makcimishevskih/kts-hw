@@ -13,6 +13,7 @@ import css from './App.module.scss';
 
 // Optimize requests
 // Reorg store
+// Replace @imports to @import forward
 
 const App = () => {
   return (

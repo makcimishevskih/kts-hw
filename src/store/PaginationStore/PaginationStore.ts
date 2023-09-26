@@ -87,5 +87,13 @@ class PaginationStore {
 
     return this.pageNumbers;
   }
+
+  destroy = () => {
+    this.offset = 1;
+    this.orgReposCount = 0;
+    this.isLoading = false;
+    this._isLastPage = false;
+    this._isFirstPage = false;
+  };
 }
 export default PaginationStore;
