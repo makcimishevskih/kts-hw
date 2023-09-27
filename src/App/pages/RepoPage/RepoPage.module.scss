@@ -5,6 +5,19 @@
   height: 100%;
   padding: $space-xxxl 0;
 
+  &__status {
+    margin-top: $space-xxs;
+    @include flexbox(center, center);
+    @include typo(20px, 22px);
+    &_empty {
+      width: 30vw;
+      display: flex;
+      align-items: center;
+
+      justify-content: space-between;
+    }
+  }
+
   &__header {
     @include flexbox(center, flex-start, $space-m);
     img {

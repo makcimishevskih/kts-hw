@@ -71,7 +71,12 @@ const OrgsPage: FC = () => {
 
       {orgError && <div className={css.orgs_error}>{orgError}</div>}
 
-      <OrgReposList orgRepos={orgRepos} errorReposList={errorReposList} loadingReposList={loadingReposList} />
+      <OrgReposList
+        orgName={orgName}
+        orgRepos={orgRepos}
+        errorReposList={errorReposList}
+        loadingReposList={loadingReposList}
+      />
 
       <Pagination
         offset={offset}

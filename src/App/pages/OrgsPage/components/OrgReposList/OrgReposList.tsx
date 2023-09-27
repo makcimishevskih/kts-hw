@@ -11,12 +11,13 @@ import { getFormattedDate } from 'utils/formatDate';
 import css from './OrgReposList.module.scss';
 
 type OrgListProps = {
+  orgName: string;
   orgRepos: TOrgReposModel[];
   errorReposList: string;
   loadingReposList: boolean;
 };
 
-const OrgReposList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgRepos }) => {
+const OrgReposList: FC<OrgListProps> = ({ orgName, loadingReposList, errorReposList, orgRepos }) => {
   return (
     <>
       <div className={css.repos__status}>
@@ -31,7 +32,7 @@ const OrgReposList: FC<OrgListProps> = ({ loadingReposList, errorReposList, orgR
         {!errorReposList &&
           !loadingReposList &&
           orgRepos.map(({ id, name, description, createdAt, owner: { avatarUrl }, stargazersCount }) => (
-            <Link key={id} to={`/repo/${id}`}>
+            <Link key={id} to={`/repo/${orgName}/${name}`}>
               <Card
                 captionSlot={
                   <>

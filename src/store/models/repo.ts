@@ -154,24 +154,47 @@ export type TContributorModel = {
 
 export type TLanguagesModel = Record<string, number>;
 
-export const normalizeOrgRepos = (arr: TOrgReposApi[]): TOrgReposModel[] =>
-  arr.map((from) => ({
-    owner: normalizeOwner(from.owner),
-    id: from.id,
-    name: from.name,
-    forks: from.forks,
-    topics: from.topics,
-    homepage: from.homepage,
-    watchers: from.watchers,
-    fullName: from.full_name,
-    updatedAt: from.updated_at,
-    createdAt: from.created_at,
-    forksCount: from.forks_count,
-    description: from.description,
-    permissions: from.permissions,
-    watchersCount: from.watchers_count,
-    stargazersCount: from.stargazers_count,
-  }));
+export const normalizeOrgRepos = (repo: TOrgReposApi[] | TOrgReposApi): TOrgReposModel[] => {
+  if (Array.isArray(repo)) {
+    return repo.map((from) => ({
+      owner: normalizeOwner(from.owner),
+      id: from.id,
+      name: from.name,
+      forks: from.forks,
+      topics: from.topics,
+      homepage: from.homepage,
+      watchers: from.watchers,
+      fullName: from.full_name,
+      updatedAt: from.updated_at,
+      createdAt: from.created_at,
+      forksCount: from.forks_count,
+      description: from.description,
+      permissions: from.permissions,
+      watchersCount: from.watchers_count,
+      stargazersCount: from.stargazers_count,
+    }));
+  } else {
+    return [
+      {
+        owner: normalizeOwner(repo.owner),
+        id: repo.id,
+        name: repo.name,
+        forks: repo.forks,
+        topics: repo.topics,
+        homepage: repo.homepage,
+        watchers: repo.watchers,
+        fullName: repo.full_name,
+        updatedAt: repo.updated_at,
+        createdAt: repo.created_at,
+        forksCount: repo.forks_count,
+        description: repo.description,
+        permissions: repo.permissions,
+        watchersCount: repo.watchers_count,
+        stargazersCount: repo.stargazers_count,
+      },
+    ];
+  }
+};
 
 export const normalizeOwner = (from: TOwnerApi): TOwnerModel => ({
   id: from.id,

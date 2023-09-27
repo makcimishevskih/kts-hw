@@ -9,13 +9,15 @@ import {
   TReadmeModel,
   normalizeContributor,
   normalizeReadme,
+  TOrgReposApi,
+  TOrgReposModel,
+  normalizeOrgRepos,
 } from 'store/models/repo';
-import { TTypes } from 'store/models/types';
+
 import { getData } from 'utils/fetchData';
 
 type GitHubRepoStoreConstructor = {
-  name: string;
-  reposFilterType: TTypes;
+  orgName: string | undefined;
   repoName: string | undefined;
 };
 
@@ -26,25 +28,52 @@ export class GitHubRepoStore implements ILocalStore {
   errorsRepo = { contributors: '', readme: '', languages: '' };
   loadersRepo = { contributors: false, readme: false, languages: false };
 
-  orgName: string;
-  reposFilterType: TTypes;
-  repoName: string | undefined;
+  orgName: string | undefined = '';
+  repoName: string | undefined = '';
 
-  constructor({ name, reposFilterType, repoName }: GitHubRepoStoreConstructor) {
+  repo: TOrgReposModel | null = null;
+  repoLoading: boolean = false;
+  repoError: string = '';
+
+  constructor({ orgName, repoName }: GitHubRepoStoreConstructor) {
     makeObservable<GitHubRepoStore>(this, {
+      repo: observable,
+      repoError: observable,
+      repoLoading: observable,
+
       errorsRepo: observable,
       loadersRepo: observable,
       getFullRepoData: action,
+      getSelectedRepoData: action,
     });
 
-    this.orgName = name;
+    this.orgName = orgName;
     this.repoName = repoName;
-    this.reposFilterType = reposFilterType;
 
     if (this.repoName && this.orgName) {
+      this.getSelectedRepoData();
       this.getFullRepoData();
     }
   }
+
+  getSelectedRepoData = async () => {
+    this.repoLoading = true;
+    this.repoError = '';
+    const repoURL = `repos/${this.orgName}/${this.repoName}`;
+
+    const { data, isError } = await getData<TOrgReposApi[], TOrgReposModel[]>(repoURL, normalizeOrgRepos);
+
+    runInAction(() => {
+      if (isError) {
+        this.repo = null;
+        this.repoError = "Can't load selected repo";
+        this.repoLoading = false;
+      } else {
+        this.repo = data[0] as TOrgReposModel;
+        this.repoLoading = false;
+      }
+    });
+  };
 
   getFullRepoData = async () => {
     const repoURL = `repos/${this.orgName}/${this.repoName}`;
@@ -81,12 +110,12 @@ export class GitHubRepoStore implements ILocalStore {
       }
     });
   };
+
   destroy = () => {
+    this.repo = null;
     this.readme = null;
     this.contributors = [];
     this.languages = null;
-    this.errorsRepo = { contributors: '', readme: '', languages: '' };
-    this.loadersRepo = { contributors: false, readme: false, languages: false };
   };
 }
 

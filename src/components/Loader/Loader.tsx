@@ -11,7 +11,6 @@ export type LoaderProps = {
 const Loader: React.FC<LoaderProps> = ({ color = 'accent', size, className }) => {
   const cxLoader = classNames(css.loaderWrapper, className && css[className], size && css[size]);
 
-  // logic to icon wrapper
   const fillColorClass = {
     primary: css.fill_primary,
     secondary: css.fill_secondary,

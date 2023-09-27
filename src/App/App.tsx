@@ -11,9 +11,14 @@ import { ROUTES } from 'config/routes';
 
 import css from './App.module.scss';
 
-// Optimize requests
-// Reorg store
-// Replace @imports to @import forward
+// Checklist:
+// 1. Optimize requests
+// 2. Reorg store
+// 3. Replace @imports to @import forward
+// 4. Status component
+// 5. Hover button effects
+// 6. MB animations
+// 7. logic to icon wrapper
 
 const App = () => {
   return (
@@ -30,7 +35,7 @@ const App = () => {
           }
         />
         <Route
-          path={`${ROUTES.REPO_PAGE}/:id`}
+          path={`${ROUTES.REPO_PAGE}/:orgName/:repoName`}
           element={
             <Container>
               <RepoPage />

@@ -24,7 +24,7 @@ export type TOrgApi = {
   public_gists: number;
   followers: number;
   following: number;
-  html_url: 'https://github.com/ktsstudio';
+  html_url: string;
   created_at: Date;
   updated_at: Date;
   archived_at: Date | null;
@@ -57,7 +57,7 @@ export type TOrgModel = {
   publicGists: number;
   followers: number;
   following: number;
-  htmlUrl: 'https://github.com/ktsstudio';
+  htmlUrl: string;
   createdAt: Date;
   updatedAt: Date;
   archivedAt: Date | null;

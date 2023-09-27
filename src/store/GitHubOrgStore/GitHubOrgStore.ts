@@ -133,5 +133,4 @@ export class GithubOrgStore implements ILocalStore {
   };
 }
 
-export default new GithubOrgStore();
-// export default GithubOrgStore;
+export default GithubOrgStore;
