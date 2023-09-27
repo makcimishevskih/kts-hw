@@ -1,49 +1,59 @@
-import { FC, useEffect, useState } from 'react';
-import Loader from 'components/Loader';
+import { observer } from 'mobx-react-lite';
+import { FC, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
+
 import Pagination from 'components/Pagination';
 import Text from 'components/Text';
 
-import { TOrg } from 'entities/org';
-import { TOrgRepo } from 'entities/repo';
-import usePagination from 'hooks/usePagination';
-import { getData } from 'utils/fetchData';
+import useLocalStore from 'hooks/useLocalStore';
+
+import GitHubOrgStore from 'store/GitHubOrgStore';
+import PaginationStore from 'store/PaginationStore';
 
 import NavInputs from './components/NavInputs';
-import OrgsList from './components/OrgsList';
+import OrgReposList from './components/OrgReposList';
+
 import css from './OrgsPage.module.scss';
 
-type OrganisationsPageProps = {
-  repos: TOrgRepo[];
-  org: TOrg | null;
+const OrgsPage: FC = () => {
+  const {
+    orgName,
+    orgError,
+    orgRepos,
+    orgReposLength,
+    errorReposList,
+    loadingReposList,
+    reposFilterType,
+    setReposFilterType,
+    setOrgName,
+    getReposData,
+  } = useLocalStore<GitHubOrgStore>(() => new GitHubOrgStore());
 
-  handleRepos: (repos: TOrgRepo[]) => void;
-  changeOrgName: (name: string) => void;
-};
+  const [, setQueryParams] = useSearchParams();
 
-const REPO_PER_PAGE = 9;
-
-const OrgsPage: FC<OrganisationsPageProps> = ({ org, repos, changeOrgName, handleRepos }) => {
-  const { offset, paginationNums, totalPagesCount, onChange } = usePagination(org?.public_repos, REPO_PER_PAGE);
-  const [orgReposError, setOrgReposError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const {
+    isFirstPage,
+    isLastPage,
+    offset,
+    paginationNums,
+    totalPagesCount,
+    onChange,
+    handleOffsetToStart,
+    setReposLen,
+    ITEM_PER_PAGE,
+  } = useLocalStore<PaginationStore>(() => new PaginationStore(7));
 
   useEffect(() => {
-    if (org) {
-      setLoading(true);
-      getData<TOrgRepo[]>(`orgs/${org.login}/repos?per_page=${REPO_PER_PAGE}&page=${offset}`).then((response) => {
-        if (response.isError) {
-          setOrgReposError("Can't load org repositories");
-        } else {
-          handleRepos(response.data);
-          setLoading(false);
-        }
-      });
-    }
-  }, [org, offset, handleRepos]);
+    getReposData(ITEM_PER_PAGE, offset);
+    setQueryParams(`?name=${orgName}&type=${reposFilterType}&offset=${offset}`);
+  }, [offset, orgName, reposFilterType]);
+
+  useEffect(() => {
+    setReposLen(orgReposLength);
+  }, [orgReposLength]);
 
   return (
     <section className={css.orgs}>
-      {orgReposError && <div>{orgReposError}</div>}
       <header className={css.orgs__header}>
         <Text tag="h2" view="title">
           List organization repositories
@@ -53,22 +63,31 @@ const OrgsPage: FC<OrganisationsPageProps> = ({ org, repos, changeOrgName, handl
         </Text>
       </header>
 
-      <NavInputs changeOrgName={changeOrgName} />
+      <NavInputs
+        setOrgName={setOrgName}
+        setReposFilterType={setReposFilterType}
+        handleOffsetToStart={handleOffsetToStart}
+      />
 
-      <div className={css.orgs__status}>
-        {loading && !orgReposError && <Loader color="accent" size="l" />}
-        {orgReposError && <div className={css.error}>{orgReposError}</div>}
-      </div>
+      {orgError && <div className={css.orgs_error}>{orgError}</div>}
 
-      {org ? <OrgsList repos={repos} /> : <div className={css.orgs__empty}>Please type organization</div>}
+      <OrgReposList
+        orgName={orgName}
+        orgRepos={orgRepos}
+        errorReposList={errorReposList}
+        loadingReposList={loadingReposList}
+      />
 
       <Pagination
         offset={offset}
-        paginationNums={paginationNums}
         onChange={onChange}
+        isLastPage={isLastPage}
+        isFirstPage={isFirstPage}
+        paginationNums={paginationNums}
         totalPagesCount={totalPagesCount}
       />
     </section>
   );
 };
-export default OrgsPage;
+
+export default observer(OrgsPage);

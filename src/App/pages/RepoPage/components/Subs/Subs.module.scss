@@ -1,0 +1,47 @@
+@import "styles/vars.scss";
+
+.subs {
+  margin-top: $space-l;
+
+  .subs__tag {
+    position: relative;
+
+    margin-top: $space-xxs;
+    padding-left: $space-xl;
+
+    .subs__count {
+      margin-right: $space-xxs;
+      font-weight: 700;
+    }
+
+    &.stars {
+      margin-top: 0;
+    }
+    &.stars::before,
+    &.watchers::before,
+    &.forks::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+
+      width: 16px;
+      height: 16px;
+
+      background-repeat: no-repeat;
+    }
+
+    &.stars::before {
+      background-image: url("assets/star.svg");
+    }
+
+    &.watchers::before {
+      background-image: url("assets/eye.svg");
+    }
+
+    &.forks::before {
+      background-image: url("assets/fork.svg");
+    }
+  }
+}

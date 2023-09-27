@@ -8,6 +8,10 @@
   justify-content: center;
   animation: spin 0.6s infinite linear;
 
+  &.xl {
+    width: 100px;
+    height: 100px;
+  }
   &.l {
     width: 60px;
     height: 60px;

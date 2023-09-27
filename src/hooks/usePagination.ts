@@ -8,6 +8,9 @@ const usePagination = (itemsCount: number | undefined, itemPerPage: number) => {
   const onChange = useCallback((n: number) => {
     setOffset(n);
   }, []);
+  const handleOffsetToStart = useCallback(() => {
+    setOffset(1);
+  }, []);
 
   const getPagesValues = useCallback((offset: number, pageNumbers: number[]) => {
     const first = pageNumbers[0];
@@ -40,6 +43,7 @@ const usePagination = (itemsCount: number | undefined, itemPerPage: number) => {
     paginationNums,
     totalPagesCount,
     onChange,
+    handleOffsetToStart,
   };
 };
 

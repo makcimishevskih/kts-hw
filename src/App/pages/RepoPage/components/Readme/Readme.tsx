@@ -3,15 +3,15 @@ import { FC } from 'react';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
-import { TReadme } from 'entities/repo';
+import { TReadmeModel } from 'store/models/repo';
 import { decodeFromUint8Array } from 'utils/encode';
 
 import css from './Readme.module.scss';
 
 type TReadmeProps = {
-  readme: TReadme | null;
   error: string;
   loading: boolean;
+  readme: TReadmeModel | null;
 };
 
 const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
@@ -19,12 +19,12 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
 
   return (
     <div className={css.readme}>
-      <Text tag="h5" view="p-12" weight="bold" mt="16px">
+      <Text className={css.readme__title} tag="h5" view="p-12" weight="bold">
         {readme?.name}
       </Text>
 
       <div className={css.readme__status}>
-        {error && <div className={css.error}>{error}</div>}
+        {error && <div className={css.readme__status_error}>{error}</div>}
         {loading && !error && <Loader color="accent" size="l" />}
       </div>
 

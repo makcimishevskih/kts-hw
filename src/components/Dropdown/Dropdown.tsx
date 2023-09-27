@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
 import Input from '../Input';
 import ArrowDownIcon from '../icons/ArrowDownIcon';
-import css from './MultiDropdown.module.scss';
+import css from './Dropdown.module.scss';
 
 export type Option = {
   /** Ключ варианта, используется для отправки на бек/использования в коде */
@@ -12,7 +12,7 @@ export type Option = {
 };
 
 /** Пропсы, которые принимает компонент Dropdown */
-export type MultiDropdownProps = {
+export type DropdownProps = {
   className?: string;
   /** Текущие выбранные значения поля, может быть пустым */
   value: Option[];
@@ -24,9 +24,20 @@ export type MultiDropdownProps = {
   onChange: (value: Option[]) => void;
   /** Возвращает строку которая будет выводится в инпуте. В случае если опции не выбраны, строка должна отображаться как placeholder. */
   getTitle: (value: Option[]) => string;
+  onClick?: () => void;
+  type?: 'multi' | 'single';
 };
-const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTitle, onChange, className }) => {
-  const cx = classNames(css.wrapperMultiDropDown, className);
+const Dropdown: FC<DropdownProps> = ({
+  type = 'multi',
+  value,
+  options,
+  disabled,
+  className,
+  getTitle,
+  onChange,
+  onClick,
+}) => {
+  const cx = classNames(css.wrapperDropDown, className);
 
   const [inputText, setInputText] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -40,7 +51,7 @@ const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTi
     setInputText(v);
   };
 
-  const filtered = options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase()));
+  const filteredOptions = options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase()));
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -57,8 +68,17 @@ const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTi
     return () => document.removeEventListener('click', handleClick);
   }, [disabled]);
 
+  const localOnChange = (el: Option) => {
+    if (type === 'multi') {
+      onChange(!value.includes(el) ? [...value, el] : value.filter((filterEl) => filterEl.key !== el.key));
+    } else {
+      onChange(!value.includes(el) ? [el] : []);
+      setIsOpen(false);
+    }
+  };
+
   return (
-    <div className={cx} ref={ref}>
+    <div className={cx} ref={ref} onClick={onClick}>
       <Input
         width="m"
         value={!isOpen && value.length !== 0 ? getTitle(value) : inputText}
@@ -71,15 +91,13 @@ const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTi
 
       {isOpen && !disabled ? (
         <ul className={css.list}>
-          {filtered.map((el) => (
+          {filteredOptions.map((option) => (
             <li
-              onClick={() => {
-                onChange(!value.includes(el) ? [...value, el] : options.filter((filterEl) => filterEl.key !== el.key));
-              }}
-              key={el.key}
-              className={`${css.item} ${value.includes(el) ? css.itemChecked : ''}`}
+              onClick={() => localOnChange(option)}
+              key={option.key}
+              className={`${css.item} ${value.includes(option) ? css.item_checked : ''}`}
             >
-              {el.value}
+              {option.value}
             </li>
           ))}
         </ul>
@@ -88,4 +106,4 @@ const MultiDropdown: FC<MultiDropdownProps> = ({ options, value, disabled, getTi
   );
 };
 
-export default MultiDropdown;
+export default Dropdown;

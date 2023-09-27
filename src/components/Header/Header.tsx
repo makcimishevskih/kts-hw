@@ -1,4 +1,4 @@
-import { FC, memo } from 'react';
+import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import user from 'assets/header.png';
 import logo from 'assets/logo.svg';
@@ -32,4 +32,4 @@ const Header: FC<IHeaderProps> = () => {
     </header>
   );
 };
-export default memo(Header);
+export default Header;

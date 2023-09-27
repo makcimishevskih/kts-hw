@@ -6,6 +6,11 @@
   margin-top: $space-xl;
 
   @include border(1px, $border-color-light, 4px);
+
+  &__title {
+    padding: $space-m;
+  }
+
   &__status {
     @include flexbox(center, center);
     margin-top: $space-m;

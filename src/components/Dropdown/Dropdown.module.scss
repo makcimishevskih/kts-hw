@@ -1,10 +1,15 @@
 @import "styles/mixins.scss";
 @import "styles/vars.scss";
 
-.wrapperMultiDropDown {
+.wrapperDropDown {
   width: 400px;
+  position: relative;
 
   .list {
+    position: absolute;
+    top: 50px;
+    left: 0;
+
     width: 400px;
     margin-top: $space-xxs;
 
@@ -17,7 +22,7 @@
 
       cursor: pointer;
 
-      &.itemChecked {
+      &_checked {
         color: $brand;
       }
 

@@ -9,13 +9,11 @@
 
   min-height: calc(100vh - 66px);
 
-  &__status {
-    margin-top: $space-xxxl;
-    @include flexbox(center, center);
-  }
-  &__empty {
+  &_error {
+    margin-top: 20px;
     @include typo(24px, 26px, 500);
     @include flexbox(center, center);
+    color: red;
   }
 
   &__header {

@@ -1,13 +1,8 @@
 import { FC, ReactNode } from 'react';
 
-import { BrowserRouter } from 'react-router-dom';
+import RouterProvider from './RouterProvider';
 
-interface IProvidersProps {
-  children: ReactNode;
-}
-
-const Providers: FC<IProvidersProps> = ({ children }) => {
-  return <BrowserRouter>{children}</BrowserRouter>;
+const Providers: FC<{ children: ReactNode }> = ({ children }) => {
+  return <RouterProvider>{children}</RouterProvider>;
 };
-
 export default Providers;
