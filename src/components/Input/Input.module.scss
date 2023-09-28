@@ -1,5 +1,4 @@
-@import "styles/mixins.scss";
-@import "styles/vars.scss";
+@import "styles/forwarded";
 
 .inputWrapper {
   @include flexbox(center, space-between);
@@ -23,7 +22,6 @@
     width: 100%;
 
     gap: 8px;
-
     @include typo(16px, 20px);
     @include border(1px, $input-border);
 

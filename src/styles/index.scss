@@ -11,6 +11,6 @@ body {
 #root {
   max-width: 1440px;
   margin: 0 auto;
-
-  background-color: #f6f8fa;
+  background-color: $background-color;
+  color: $text-primary;
 }

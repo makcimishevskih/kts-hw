@@ -1,21 +1,29 @@
-@import "styles/mixins.scss";
-@import "styles/vars.scss";
+@import "styles/forwarded";
 
-.arrow {
+.arrowWrapper {
   @include flexbox(center, center);
+
+  .arrow {
+    &:hover .stroke_accent,
+    &:hover .stroke_primary,
+    &:hover .stroke_secondary {
+      stroke: $text-secondary;
+    }
+  }
+
   &__back {
     transform: rotate(180deg);
     &__transparent {
-      opacity: 0.2;
+      opacity: 0.5;
     }
+  }
+  .stroke_accent {
+    stroke: $text-accent;
   }
   .stroke_primary {
     stroke: $text-primary;
   }
   .stroke_secondary {
     stroke: $text-secondary;
-  }
-  .stroke_accent {
-    stroke: $text-accent;
   }
 }

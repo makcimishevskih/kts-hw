@@ -1,5 +1,4 @@
-@import "styles/mixins.scss";
-@import "styles/vars.scss";
+@import "styles/forwarded";
 
 .pagination {
   position: absolute;
@@ -29,8 +28,11 @@
       &_current {
         padding: 10px;
 
-        background-color: green;
+        background-color: $button-primary-bg;
         color: $button-primary-text;
+      }
+      &:hover {
+        color: $text-secondary;
       }
     }
   }
