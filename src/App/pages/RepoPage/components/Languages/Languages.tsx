@@ -1,5 +1,4 @@
 import { toJS } from 'mobx';
-import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 
 import Loader from 'components/Loader';
