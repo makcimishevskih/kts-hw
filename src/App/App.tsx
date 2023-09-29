@@ -14,11 +14,11 @@ import css from './App.module.scss';
 // Checklist:
 // 1. Optimize requests
 // 2. Reorg store
-// 3. Replace @imports to @import forward
-// 4. Status component
-// 5. Hover button effects
-// 6. MB animations
-// 7. logic to icon wrapper
+// 3. Status component
+// 4. Hover button effects
+// 5. Animations
+// 6. Logic to icon wrapper
+// 7. I18n
 
 const App = () => {
   return (
@@ -27,7 +27,7 @@ const App = () => {
 
       <Routes>
         <Route
-          path={ROUTES.ORGS_PAGE}
+          path={ROUTES.ORG_PAGE}
           element={
             <Container>
               <OrgsPage />

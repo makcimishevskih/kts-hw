@@ -2,6 +2,8 @@
 :root {
   --background-color: #f6f8fa;
 
+  --border-color-light: #d9d9d9;
+
   --text-primary: #000000;
   --text-secondary: #afadb5;
   --text-accent: #518581;
@@ -79,7 +81,7 @@ html[data-theme="dark"] {
   --input-text-disabled: #ffffff33;
   --input-border-disabled: #000000;
 
-  --card-bg: #000000;
+  --card-bg: #18123b;
   --card-image-bg: #d9d9d9;
   --card-hover-shadow: 0px 4px 10px 0px #ffffff59;
 
