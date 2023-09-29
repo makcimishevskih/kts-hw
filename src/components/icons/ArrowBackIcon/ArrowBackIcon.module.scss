@@ -3,6 +3,8 @@
 .arrowWrapper {
   @include flexbox(center, center);
 
+  transition: box-shadow 0.1s linear;
+
   .arrow {
     &:hover .stroke_accent,
     &:hover .stroke_primary,

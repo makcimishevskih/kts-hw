@@ -1,14 +1,14 @@
-import classNames from 'classnames';
 import { observer } from 'mobx-react-lite';
-import { FC, useEffect, useState } from 'react';
+import { FC, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
+import PageUp from 'components/PageUp';
 import Pagination from 'components/Pagination';
 import Text from 'components/Text';
 
-import ArrowBackIcon from 'components/icons/ArrowDownIcon';
 import useLocalStore from 'hooks/useLocalStore';
 
+import useScroll from 'hooks/useScroll';
 import GitHubOrgStore from 'store/GitHubOrgStore';
 import PaginationStore from 'store/PaginationStore';
 
@@ -3330,6 +3330,9 @@ import css from './OrgsPage.module.scss';
 // ];
 
 const OrgsPage: FC = () => {
+  const { isScrollVisible } = useScroll();
+  const [, setQueryParams] = useSearchParams();
+
   const {
     orgName,
     orgError,
@@ -3342,10 +3345,6 @@ const OrgsPage: FC = () => {
     setOrgName,
     getReposData,
   } = useLocalStore<GitHubOrgStore>(() => new GitHubOrgStore());
-
-  const [scrollY, setScrollY] = useState(false);
-
-  const [, setQueryParams] = useSearchParams();
 
   const {
     isFirstPage,
@@ -3368,23 +3367,6 @@ const OrgsPage: FC = () => {
   useEffect(() => {
     setReposLen(orgReposLength);
   }, [orgReposLength]);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      const coordY = window.scrollY;
-      const height = document.documentElement.scrollHeight;
-      const innerHeight = window.innerHeight;
-
-      if (height > innerHeight * 2 && coordY > innerHeight) {
-        setScrollY(true);
-      } else {
-        setScrollY(false);
-      }
-    };
-    window.addEventListener('scroll', handleScroll);
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   return (
     <section className={css.orgs}>
@@ -3421,14 +3403,7 @@ const OrgsPage: FC = () => {
         totalPagesCount={totalPagesCount}
       />
 
-      {/* {scrollY && ( */}
-      <div
-        className={classNames(css.pageUp, scrollY ? css.fadeIn : css.fadeOut)}
-        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      >
-        <ArrowBackIcon width={60} height={60} />
-      </div>
-      {/* )} */}
+      <PageUp isScrollVisible={isScrollVisible} size={60} />
     </section>
   );
 };

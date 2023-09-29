@@ -1,0 +1,54 @@
+@import "styles/forwarded";
+
+.pageUp {
+  @include flexbox(center, center);
+
+  position: fixed;
+  bottom: 100px;
+  right: 100px;
+
+  height: 70px;
+  width: 70px;
+
+  background-color: $brand;
+  border-radius: 50%;
+  transform: rotate(180deg);
+  opacity: 0;
+  visibility: hidden;
+
+  transition: box-shadow 0.15s ease;
+
+  &:hover {
+    box-shadow: 0 0 20px 4px $brand;
+  }
+
+  &.fadeIn {
+    animation: fadeIn 300ms ease-in-out forwards;
+  }
+
+  &.fadeOut {
+    animation: fadeOut 150ms ease-in-out forwards;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    visibility: hidden;
+  }
+  to {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    visibility: visible;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}

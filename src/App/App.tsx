@@ -13,12 +13,11 @@ import css from './App.module.scss';
 
 // Checklist:
 // 1. Optimize requests
-// 2. Reorg store
-// 3. Status component
-// 4. Hover button effects
-// 5. Animations
-// 6. Logic to icon wrapper
-// 7. I18n
+// 2. Status component
+// 3. Hover button effects
+// 4. Animations
+// 5. Logic to icon wrapper
+// 6. I18n
 
 const App = () => {
   return (

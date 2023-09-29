@@ -5,9 +5,13 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 import link from 'assets/link.svg';
 
 import Loader from 'components/Loader';
+import PageUp from 'components/PageUp';
 import Text from 'components/Text';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
+
 import useLocalStore from 'hooks/useLocalStore';
+import useScroll from 'hooks/useScroll';
+
 import GitHubRepoStore from 'store/GitHubRepoStore';
 
 import Contributors from './components/Contributors';
@@ -19,6 +23,8 @@ import Tags from './components/Tags';
 import css from './RepoPage.module.scss';
 
 const RepoPage: FC = () => {
+  const { isScrollVisible } = useScroll();
+
   const { orgName, repoName } = useParams();
 
   const navigate = useNavigate();
@@ -86,6 +92,8 @@ const RepoPage: FC = () => {
           <Readme readme={readme} error={errorsRepo.readme} loading={loadersRepo.readme} />
         </>
       )}
+
+      <PageUp isScrollVisible={isScrollVisible} size={60} />
     </section>
   );
 };
