@@ -33,14 +33,17 @@
     margin-top: $space-m;
 
     .contributors__item {
-      @include flexbox(center, flex-start, 8px);
+      @include flexbox(center, flex-start, 12px);
       margin-top: $space-xxs;
+      .info {
+        @include flexbox(center, flex-start, 8px);
+        cursor: pointer;
+        &__avatar {
+          width: 32px;
+          height: 32px;
 
-      .contributors__avatar {
-        width: 32px;
-        height: 32px;
-
-        border-radius: 50%;
+          border-radius: 50%;
+        }
       }
     }
   }

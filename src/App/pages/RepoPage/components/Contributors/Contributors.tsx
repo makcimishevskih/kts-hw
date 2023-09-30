@@ -35,10 +35,12 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
       <ul className={css.contributors__list}>
         {contributors.map((cont) => (
           <li key={cont.id} className={css.contributors__item}>
-            <img className={css.contributors__avatar} width="32" height="32" src={cont.avatarUrl} alt="avatar" />
-            <Text tag="h4" view="p-16" weight="bold">
-              {cont.login}
-            </Text>
+            <div className={css.info}>
+              <img className={css.info__avatar} width="32" height="32" src={cont.avatarUrl} alt="avatar" />
+              <Text tag="h4" view="p-16" weight="bold">
+                {cont.login}
+              </Text>
+            </div>
             <Text tag="h4" view="p-16" color="secondary">
               contributions: {cont.contributions}
             </Text>
