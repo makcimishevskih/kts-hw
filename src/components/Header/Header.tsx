@@ -5,22 +5,18 @@ import { Link } from 'react-router-dom';
 import user from 'assets/header.png';
 import logo from 'assets/logo.svg';
 
-import Button from 'components/Button';
 import Container from 'components/Container';
+import LangButton from 'components/LangButton';
 import Text from 'components/Text';
+import ThemeButton from 'components/ThemeButton';
 
 import { ROUTES } from 'config/routes';
-
-import useLocalStore from 'hooks/useLocalStore';
-import ThemeStore from 'store/ThemeStore';
 
 import css from './Header.module.scss';
 
 interface IHeaderProps {}
 
 const Header: FC<IHeaderProps> = () => {
-  const { changeTheme } = useLocalStore<ThemeStore>(() => new ThemeStore());
-
   return (
     <header className={css.header}>
       <Container>
@@ -30,12 +26,14 @@ const Header: FC<IHeaderProps> = () => {
               <img className={css.nav__logo} src={logo} alt="logo" />
             </Link>
             <Text tag="h1" view="p-20" weight="bold">
-              GitHub Client
+              GitHub
             </Text>
           </div>
 
           <div className={css.nav__right}>
-            <Button onClick={changeTheme}>Theme Switcher</Button>
+            <LangButton />
+            <ThemeButton />
+
             <Link to={ROUTES.ORG_PAGE} className={css.nav__logoWrapper}>
               <img className={css.nav__userLogo} src={user} alt="user" />
             </Link>

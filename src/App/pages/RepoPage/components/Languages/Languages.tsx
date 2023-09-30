@@ -1,6 +1,7 @@
 import { toJS } from 'mobx';
 import { FC } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
@@ -16,6 +17,8 @@ interface ILanguagesProps {
 }
 
 const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
+  const { t } = useTranslation('repoPage');
+
   const langValues: number[] = (languages && Object.values(toJS(languages))) || [];
   const oneLanguagesSum = langValues.reduce((acc, count) => acc + count, 0) / 100;
   const languagesWithPercent =
@@ -30,14 +33,14 @@ const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
     <>
       <div className={css.languages}>
         <Text tag="h4" weight="bold" view="p-18">
-          Languages
+          {t('languages.languages-title')}
         </Text>
 
         <div className={css.languages__status}>
           {loading && !error && <Loader color="accent" size="l" />}
           {error && !loading && <div className={css.languages__status_error}>{error}</div>}
           {!loading && !error && languages === null && (
-            <div className={css.languages__status_empty}>No languages data </div>
+            <div className={css.languages__status_empty}>{t('languages.no-data-languages')}</div>
           )}
         </div>
 

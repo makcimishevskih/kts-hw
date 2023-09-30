@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import { FC, useCallback } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import link from 'assets/link.svg';
@@ -23,6 +24,8 @@ import Tags from './components/Tags';
 import css from './RepoPage.module.scss';
 
 const RepoPage: FC = () => {
+  const { t } = useTranslation('repoPage');
+
   const { isScrollVisible } = useScroll();
 
   const { orgName, repoName } = useParams();
@@ -43,34 +46,35 @@ const RepoPage: FC = () => {
         {repoError && !repoLoading && <div className={css.languages__status_error}>{repoError}</div>}
         {!repoLoading && !repoError && !repo && (
           <div className={css.repo__status_empty}>
-            <ArrowBackIcon width="32" height="32" onClick={goToBack} color="accent" />
-            <div>
-              <p>Don&apos;t have repo data</p>
-              <p>click arrow button to go back</p>
-            </div>
+            <ArrowBackIcon width="45" height="45" onClick={goToBack} color="accent" />
+            <p>{t('no-data-repo-page')}</p>
           </div>
         )}
       </div>
 
       {repo && (
         <>
-          <header className={css.repo__header}>
+          <header className={css.header}>
             <ArrowBackIcon width="32" height="32" onClick={goToBack} color="accent" />
-            <img src={repo?.owner?.avatarUrl} width="40" height="40" alt="repo-avatar" />
+            <img className={css.header__avatar} src={repo?.owner?.avatarUrl} width="40" height="40" alt="repo-avatar" />
             <Text tag="h2" view="title">
               {repo?.name}
             </Text>
           </header>
-          <div className={css.repo__homepage}>
-            <img width="16px" height="16px" src={link} alt="link-logo" />
+
+          <div className={css.homepage}>
+            <div className={css.homepage__imgWrapper}>
+              <img className={css.homepage__img} width="20px" height="20px" src={link} alt="link-logo" />
+            </div>
+
             {repo?.homepage ? (
-              <Link className={css.homepage__link} to={repo?.homepage}>
+              <Link className={css.homepage__link} to={repo.homepage}>
                 <Text tag="span" view="p-16" weight="bold">
-                  {repo?.homepage}
+                  {repo.homepage}
                 </Text>
               </Link>
             ) : (
-              <div className={css.homepage__empty}>Don&apos;t have homepage</div>
+              <div className={css.homepage_empty}>{t('no-data-homepage')}</div>
             )}
           </div>
 

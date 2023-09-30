@@ -7,11 +7,11 @@ body {
   font-size: 16px;
   font-weight: 400;
   scroll-behavior: smooth;
+  background-color: $background-color;
 }
 
 #root {
   max-width: 1440px;
   margin: 0 auto;
-  background-color: $background-color;
   color: $text-primary;
 }

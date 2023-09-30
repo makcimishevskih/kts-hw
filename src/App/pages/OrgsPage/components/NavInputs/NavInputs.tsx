@@ -1,5 +1,6 @@
 import { FC, FormEvent, useCallback, useRef, useState } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
 import Dropdown, { Option } from 'components/Dropdown';
 import Input from 'components/Input';
@@ -18,7 +19,7 @@ interface INavInputsProps {
 
 const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setReposFilterType }) => {
   const [searchInputValue, setSearchInputValue] = useState('ktsstudio');
-  const [optionsValue, setValue] = useState<Option[]>([typeOptions[0]]);
+  const [optionsValue, setOptionsValue] = useState<Option[]>([typeOptions[0]]);
 
   const repoTypeInput = useRef<HTMLInputElement | null>(null);
   const searchInput = useRef<HTMLInputElement | null>(null);
@@ -40,11 +41,13 @@ const NavInputs: FC<INavInputsProps> = ({ handleOffsetToStart, setOrgName, setRe
     setReposFilterType(type);
   };
 
-  const getTitle = () => (optionsValue.length ? optionsValue.map((el) => el.value).join(', ') : 'Select org type');
+  const { t } = useTranslation();
+
+  const getTitle = () => (optionsValue.length ? optionsValue.map((el) => t(el.value)).join(', ') : 'Select org type');
 
   const handleOptionValues = (value: Option[]) => {
     if (value.length) {
-      setValue(value);
+      setOptionsValue(value);
     }
   };
 

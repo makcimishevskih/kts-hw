@@ -1,6 +1,7 @@
 import './styles/index.scss';
 import 'config/configureMobX';
 import 'regenerator-runtime';
+import './i18n.js';
 
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';

@@ -1,6 +1,7 @@
 // css
 :root {
   --background-color: #f6f8fa;
+  --background-color-invert: #f6f8fa;
 
   --border-color-light: #d9d9d9;
 
@@ -13,7 +14,7 @@
   --button-primary-bg: #518581;
   --button-primary-text: #ffffff;
 
-  --brand: #518581;
+  --brand: #4fcec3;
   --brand-active: #487773ff;
   --brand-hover: #86aaa7ff;
 
@@ -44,19 +45,20 @@
   --button-primary-bg-active: #487773;
   --button-primary-text-active: #ffffff;
 
-  // --checkbox-bg: var(--checkbox-bg);
-  // --checkbox-border: var(--checkbox-border);
-  // --checkbox-bg-hover: var(--checkbox-bg-hover);
-  // --checkbox-border-hover: var(--text-accent);
-  // --checkbox-bg-disabled: #ffffff80;
-  // --checkbox-border-disabled: #ffffff00;
-  // --checkbox-check: var(--text-accent);
-  // --checkbox-check-hover: var(--text-accent);
-  // --checkbox-check-disabled: #00000033;
+  --checkbox-bg: var(--checkbox-bg);
+  --checkbox-border: var(--checkbox-border);
+  --checkbox-bg-hover: var(--checkbox-bg-hover);
+  --checkbox-border-hover: var(--text-accent);
+  --checkbox-bg-disabled: #ffffff80;
+  --checkbox-border-disabled: #ffffff00;
+  --checkbox-check: var(--text-accent);
+  --checkbox-check-hover: var(--text-accent);
+  --checkbox-check-disabled: #00000033;
 }
 
 html[data-theme="dark"] {
   --background-color: #090705;
+  --background-color-invert: #090705;
 
   --text-primary: #ffffff;
   --text-secondary: #afafaf;

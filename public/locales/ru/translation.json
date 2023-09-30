@@ -1,0 +1,8 @@
+{
+  "language-button-text": "{{lang}}",
+  "theme-button-text": "{{theme}}",
+
+  "main": {
+    "header": "Вложенность"
+  }
+}

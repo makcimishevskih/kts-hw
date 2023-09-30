@@ -5,41 +5,61 @@
   padding: $space-xxxl 0;
 
   &__status {
-    margin-top: $space-xxs;
     @include flexbox(center, center);
     @include typo(20px, 22px);
-    &_empty {
-      width: 30vw;
-      display: flex;
-      align-items: center;
+    margin-top: $space-xxs;
 
-      justify-content: space-between;
+    &_empty {
+      width: 35vw;
+      @include flexbox(center, space-between, 0px);
     }
   }
 
-  &__header {
+  .header {
     @include flexbox(center, flex-start, $space-m);
-    img {
+
+    &__avatar {
       border-radius: $border-radius;
     }
   }
 
-  &__homepage {
-    margin-top: $space-xl;
+  .homepage {
     @include flexbox(center, flex-start, $space-xxs);
+    margin-top: $space-xl;
 
-    .homepage__Link {
+    &__imgWrapper {
+      @include flexbox(center, center);
+
+      width: 30px;
+      height: 30px;
+
+      border-radius: 50%;
+      background-color: $brand;
+
+      .homepage__img {
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    &__Link {
       @include typo(16px, 18px, 700);
       color: $tag-color;
+      cursor: pointer;
+    }
+    &_empty {
+      @include flexbox(center, center);
+      @include typo(20px, 22px, 500);
     }
   }
-  .homepage__empty {
-    @include flexbox(center, center);
-    @include typo(20px, 22px, 500);
-  }
-
   &__info {
     @include flexbox(flex-start, flex-start, 80px);
     margin-top: $space-xl;
+  }
+}
+
+html[data-theme="dark"] {
+  .homepage__ImgWrapper {
+    background-color: $background-color-invert;
   }
 }

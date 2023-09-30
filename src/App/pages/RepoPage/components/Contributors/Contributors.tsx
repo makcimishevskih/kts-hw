@@ -1,4 +1,6 @@
 import { FC } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
@@ -13,11 +15,13 @@ interface IContributorsProps {
 }
 
 const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) => {
+  const { t } = useTranslation('repoPage');
+
   return (
     <div className={css.contributors}>
       <Text tag="h4" className={css.contributors__title}>
         <Text className={css.contributors__text} weight="bold" view="p-18" tag="span">
-          Contributors
+          {t('contributors.contributors-title')}
         </Text>
         <Text className={css.contributors__badge} tag="span">
           {contributors.length}
@@ -27,7 +31,7 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
       <div className={css.contributors__status}>
         {error && <div className={css.contributors__status_error}>{error}</div>}
         {!loading && !error && !contributors.length && (
-          <div className={css.contributors__status_empty}>No conributors yet</div>
+          <div className={css.contributors__status_empty}>{t('contributors.no-data-contributors')}</div>
         )}
         {loading && !error && <Loader color="accent" size="l" />}
       </div>
@@ -42,7 +46,7 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
               </Text>
             </div>
             <Text tag="h4" view="p-16" color="secondary">
-              contributions: {cont.contributions}
+              {t('contributors.contributions_interval', { postProcess: 'interval', count: cont.contributions })}
             </Text>
           </li>
         ))}

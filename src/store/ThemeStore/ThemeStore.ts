@@ -1,10 +1,10 @@
 import { action, makeObservable, observable } from 'mobx';
 import { ILocalStore } from 'hooks/useLocalStore';
 
-type Theme = 'light' | 'dark';
+export type Theme = 'light' | 'dark';
 
 class ThemeStore implements ILocalStore {
-  theme: Theme = 'dark';
+  theme: Theme = 'light';
 
   constructor() {
     makeObservable(this, {
@@ -13,6 +13,7 @@ class ThemeStore implements ILocalStore {
     });
 
     this.setTheme();
+    this.setLocalStorageTheme();
   }
 
   private setTheme = () => {
@@ -24,6 +25,11 @@ class ThemeStore implements ILocalStore {
   changeTheme = () => {
     this.theme === 'light' ? (this.theme = 'dark') : (this.theme = 'light');
     this.setTheme();
+    this.setLocalStorageTheme();
+  };
+
+  private setLocalStorageTheme = () => {
+    window.localStorage.setItem('theme', this.theme);
   };
 
   destroy = () => {};

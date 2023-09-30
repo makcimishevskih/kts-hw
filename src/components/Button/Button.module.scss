@@ -17,6 +17,14 @@
   color: $button-primary-text;
   background-color: $brand;
 
+  &.rounded {
+    border-radius: 50%;
+  }
+
+  &.rected {
+    padding: $space-s $space-s;
+  }
+
   &:active {
     background-color: $brand-active;
   }

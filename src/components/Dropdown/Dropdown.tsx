@@ -1,7 +1,10 @@
 import classNames from 'classnames';
 import { FC, useEffect, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+
 import Input from '../Input';
 import ArrowDownIcon from '../icons/ArrowDownIcon';
+
 import css from './Dropdown.module.scss';
 
 export type Option = {
@@ -39,19 +42,19 @@ const Dropdown: FC<DropdownProps> = ({
 }) => {
   const cx = classNames(css.wrapperDropDown, className);
 
-  const [inputText, setInputText] = useState('');
+  const [inputValue, setInputValue] = useState('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const ref = useRef<HTMLInputElement>(null);
 
   const handleText = (v: string) => {
-    if (options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase())).length !== 0) {
+    if (options.filter(({ value }) => value.toLowerCase().startsWith(inputValue.toLowerCase())).length !== 0) {
       setIsOpen(true);
     }
-    setInputText(v);
+    setInputValue(v);
   };
 
-  const filteredOptions = options.filter(({ value }) => value.toLowerCase().startsWith(inputText.toLowerCase()));
+  const filteredOptions = options.filter(({ value }) => value.toLowerCase().startsWith(inputValue.toLowerCase()));
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -77,15 +80,19 @@ const Dropdown: FC<DropdownProps> = ({
     }
   };
 
+  const { t } = useTranslation('orgPage');
+
+  const translatedValue = t(getTitle(value));
+
   return (
     <div className={cx} ref={ref} onClick={onClick}>
       <Input
         width="m"
-        value={!isOpen && value.length !== 0 ? getTitle(value) : inputText}
+        value={!isOpen && value.length !== 0 ? translatedValue : inputValue}
         disabled={disabled}
         onChange={handleText}
         afterSlot={<ArrowDownIcon />}
-        placeholder={getTitle(value)}
+        placeholder={translatedValue}
         onFocus={() => setIsOpen(true)}
       />
 
@@ -97,7 +104,7 @@ const Dropdown: FC<DropdownProps> = ({
               key={option.key}
               className={`${css.item} ${value.includes(option) ? css.item_checked : ''}`}
             >
-              {option.value}
+              {t(option.value)}
             </li>
           ))}
         </ul>

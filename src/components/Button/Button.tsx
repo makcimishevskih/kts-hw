@@ -10,10 +10,28 @@ export type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement> &
     className?: string;
     onClick?: () => void;
     disabled?: boolean;
+    isRound?: boolean;
+    isRect?: boolean;
   }>;
 
-const Button: React.FC<ButtonProps> = ({ onClick, loading, children, disabled, className, ...props }) => {
-  const cn = classNames(css.myBtn, className, loading && css.loading, disabled && css.disabled);
+const Button: React.FC<ButtonProps> = ({
+  onClick,
+  loading,
+  children,
+  disabled,
+  className,
+  isRound,
+  isRect,
+  ...props
+}) => {
+  const cn = classNames(
+    css.myBtn,
+    className,
+    loading && css.loading,
+    disabled && css.disabled,
+    isRect && css.rected,
+    isRound && css.rounded,
+  );
 
   return (
     <button className={cn} onClick={!loading ? onClick : undefined} disabled={disabled || loading} {...props}>
