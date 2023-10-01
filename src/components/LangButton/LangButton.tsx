@@ -19,7 +19,7 @@ const LangButton: FC<ILangButtonProps> = () => {
     }
   };
   return (
-    <Button color="white" onClick={changeLanguageHandler} isRound={true} isRect={true}>
+    <Button onClick={changeLanguageHandler} isRound={true} isRect={true}>
       {t('language-button-text', { lang })}
     </Button>
   );

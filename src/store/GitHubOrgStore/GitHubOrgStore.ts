@@ -8,7 +8,7 @@ import { CollectionModel, getCollection, getInitialCollectionModel } from './../
 export type IPrivateFields = '_orgName' | '_orgRepos' | '_reposFilterType';
 
 export class GithubOrgStore implements ILocalStore {
-  private _orgName: string = 'ktsstudio';
+  private _orgName: string = window.localStorage.getItem('orgName') || 'ktsstudio';
   private _orgRepos: CollectionModel<number | string, TOrgReposModel> = getInitialCollectionModel();
   private _reposFilterType: TTypes = 'all';
 
@@ -52,6 +52,11 @@ export class GithubOrgStore implements ILocalStore {
   setOrgName = (name: string) => {
     this.errorReposList = '';
     this._orgName = name;
+    this.setLocalStorageOrgName(name);
+  };
+
+  private setLocalStorageOrgName = (name: string) => {
+    window.localStorage.setItem('orgName', name);
   };
 
   get reposFilterType(): TTypes {
@@ -121,7 +126,7 @@ export class GithubOrgStore implements ILocalStore {
   };
 
   destroy = () => {
-    this._orgName = 'ktsstudio';
+    this._orgName = window.localStorage.getItem('orgName') || 'ktsstudio';
     this._orgRepos = getInitialCollectionModel();
     this._reposFilterType = 'all';
     this.orgError = '';

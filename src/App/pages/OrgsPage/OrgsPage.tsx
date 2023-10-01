@@ -8,8 +8,8 @@ import Pagination from 'components/Pagination';
 import Text from 'components/Text';
 
 import useLocalStore from 'hooks/useLocalStore';
-
 import useScroll from 'hooks/useScroll';
+
 import GitHubOrgStore from 'store/GitHubOrgStore';
 import PaginationStore from 'store/PaginationStore';
 
@@ -19,6 +19,7 @@ import OrgReposList from './components/OrgReposList';
 import css from './OrgsPage.module.scss';
 
 const OrgsPage: FC = () => {
+  const { t } = useTranslation('orgPage');
   const { isScrollVisible } = useScroll();
   const [, setQueryParams] = useSearchParams();
 
@@ -57,20 +58,16 @@ const OrgsPage: FC = () => {
     setReposLen(orgReposLength);
   }, [orgReposLength]);
 
-  const { t } = useTranslation('orgPage');
-
   return (
     <section className={css.orgs}>
       <header className={css.orgs__header}>
         <Text tag="h2" view="title">
           {t('title')}
         </Text>
-        <Text mt="24px" tag="p" view="p-20" color="secondary">
-          {t('subtitle')}
-        </Text>
       </header>
 
       <NavInputs
+        orgName={orgName}
         setOrgName={setOrgName}
         setReposFilterType={setReposFilterType}
         handleOffsetToStart={handleOffsetToStart}

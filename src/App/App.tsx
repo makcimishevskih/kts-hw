@@ -16,8 +16,6 @@ import css from './App.module.scss';
 // Checklist:
 // 1. Optimize requests
 // 2. Status component
-// 3. Hover button effects
-// 4. Animations
 // 5. Logic to icon wrapper
 // 6. I18n
 // 7. 404 page
@@ -27,16 +25,10 @@ const App = () => {
     <div className={css.app}>
       <Header />
 
-      <Suspense
-        fallback={
-          <div className={css.loaderWrapper}>
-            <Loader size="xl" />
-          </div>
-        }
-      >
+      <Suspense fallback={<Loader size="xl" />}>
         <Routes>
           <Route
-            path={ROUTES.ORG_PAGE}
+            path={ROUTES.orgs.mask}
             element={
               <Container>
                 <OrgsPage />
@@ -44,14 +36,14 @@ const App = () => {
             }
           />
           <Route
-            path={`${ROUTES.REPO_PAGE}/:orgName/:repoName`}
+            path={ROUTES.orgs.repo.mask}
             element={
               <Container>
                 <RepoPage />
               </Container>
             }
           />
-          <Route path={ROUTES.ERROR_PAGE} element={<ErrorPage />} />
+          <Route path={ROUTES.error.mask} element={<ErrorPage />} />
         </Routes>
       </Suspense>
     </div>

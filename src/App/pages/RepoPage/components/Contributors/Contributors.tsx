@@ -29,11 +29,21 @@ const Contributors: FC<IContributorsProps> = ({ contributors, error, loading }) 
       </Text>
 
       <div className={css.contributors__status}>
-        {error && <div className={css.contributors__status_error}>{error}</div>}
-        {!loading && !error && !contributors.length && (
-          <div className={css.contributors__status_empty}>{t('contributors.no-data-contributors')}</div>
-        )}
         {loading && !error && <Loader color="accent" size="l" />}
+        {error && (
+          <div className={css.contributors__status_error}>
+            <Text view="p-20" tag="p">
+              {error}
+            </Text>
+          </div>
+        )}
+        {!loading && !error && !contributors.length && (
+          <div className={css.contributors__status_empty}>
+            <Text view="p-20" tag="p">
+              {t('contributors.no-data-contributors')}
+            </Text>
+          </div>
+        )}
       </div>
 
       <ul className={css.contributors__list}>

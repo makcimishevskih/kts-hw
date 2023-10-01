@@ -43,11 +43,20 @@ const RepoPage: FC = () => {
     <section className={css.repo}>
       <div className={css.repo__status}>
         {repoLoading && !repoError && <Loader color="accent" size="xl" />}
-        {repoError && !repoLoading && <div className={css.languages__status_error}>{repoError}</div>}
+        {repoError && !repoLoading && (
+          <div className={css.repo__status_error}>
+            <ArrowBackIcon width="45" height="45" onClick={goToBack} color="accent" />
+            <Text view="p-20" tag="p">
+              {repoError}
+            </Text>
+          </div>
+        )}
         {!repoLoading && !repoError && !repo && (
           <div className={css.repo__status_empty}>
             <ArrowBackIcon width="45" height="45" onClick={goToBack} color="accent" />
-            <p>{t('no-data-repo-page')}</p>
+            <Text view="p-20" tag="p">
+              {t('no-data-repo-page')}
+            </Text>
           </div>
         )}
       </div>
@@ -68,7 +77,7 @@ const RepoPage: FC = () => {
             </div>
 
             {repo?.homepage ? (
-              <Link className={css.homepage__link} to={repo.homepage}>
+              <Link className={css.homepage__link} to={repo.homepage} target="_blank">
                 <Text tag="span" view="p-16" weight="bold">
                   {repo.homepage}
                 </Text>

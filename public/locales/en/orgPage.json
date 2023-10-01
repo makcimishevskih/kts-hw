@@ -1,6 +1,5 @@
 {
   "title": "List organization repositories",
-  "subtitle": "Lists repositories for the specified organization",
   "all": "all",
   "forks": "forks",
   "private": "private",

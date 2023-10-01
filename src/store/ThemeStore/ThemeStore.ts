@@ -23,7 +23,7 @@ class ThemeStore implements ILocalStore {
   };
 
   changeTheme = () => {
-    this.theme === 'light' ? (this.theme = 'dark') : (this.theme = 'light');
+    this.theme = this.theme === 'light' ? 'dark' : 'light';
     this.setTheme();
     this.setLocalStorageTheme();
   };

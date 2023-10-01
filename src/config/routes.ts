@@ -1,5 +1,13 @@
 export const ROUTES = {
-  ORG_PAGE: '/',
-  REPO_PAGE: '/repo',
-  ERROR_PAGE: '*',
+  orgs: {
+    mask: '/',
+    createRoute: (orgName: string, repoName: string) => `/repo/${orgName}/${repoName}`,
+    repo: {
+      mask: '/repo/:orgName/:repoName',
+      createRoute: (orgName: string, repoName: string) => `/repo/${orgName}/${repoName}`,
+    },
+  },
+  error: {
+    mask: '*',
+  },
 };

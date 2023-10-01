@@ -9,6 +9,7 @@
     @include typo(20px, 22px);
     margin-top: $space-xxs;
 
+    &_error,
     &_empty {
       width: 35vw;
       @include flexbox(center, space-between, 0px);

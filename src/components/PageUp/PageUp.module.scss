@@ -4,22 +4,22 @@
   @include flexbox(center, center);
 
   position: fixed;
-  bottom: 100px;
-  right: 100px;
+  bottom: 25px;
+  right: 50px;
 
-  height: 70px;
-  width: 70px;
+  height: 60px;
+  width: 60px;
 
   background-color: $brand;
   border-radius: 50%;
-  transform: rotate(180deg);
+  transform: rotate(180deg) translateY(-200px);
   opacity: 0;
   visibility: hidden;
 
-  transition: box-shadow 0.15s ease;
+  transition: box-shadow 0.1s ease;
 
   &:hover {
-    box-shadow: 0 0 20px 4px $brand;
+    box-shadow: 0 0 15px $brand;
   }
 
   &.fadeIn {
@@ -33,10 +33,12 @@
 
 @keyframes fadeIn {
   from {
+    transform: rotate(180deg) translateY(-200px);
     opacity: 0;
     visibility: hidden;
   }
   to {
+    transform: rotate(180deg) translateY(0px);
     opacity: 1;
     visibility: visible;
   }
@@ -44,11 +46,13 @@
 
 @keyframes fadeOut {
   from {
+    transform: rotate(180deg) translateY(0px);
     opacity: 1;
     visibility: visible;
   }
   to {
     opacity: 0;
+    transform: rotate(180deg) translateY(-200px);
     visibility: hidden;
   }
 }

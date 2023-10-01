@@ -24,8 +24,14 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
       </Text>
 
       <div className={css.readme__status}>
-        {error && <div className={css.readme__status_error}>{error}</div>}
         {loading && !error && <Loader color="accent" size="l" />}
+        {error && (
+          <div className={css.readme__status_error}>
+            <Text view="p-20" tag="p">
+              {error}
+            </Text>
+          </div>
+        )}
       </div>
 
       <pre className={css.content}>{readmeContent}</pre>

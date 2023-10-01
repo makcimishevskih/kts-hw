@@ -38,9 +38,19 @@ const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
 
         <div className={css.languages__status}>
           {loading && !error && <Loader color="accent" size="l" />}
-          {error && !loading && <div className={css.languages__status_error}>{error}</div>}
+          {error && !loading && (
+            <div className={css.languages__status_error}>
+              <Text view="p-20" tag="p">
+                {error}
+              </Text>
+            </div>
+          )}
           {!loading && !error && languages === null && (
-            <div className={css.languages__status_empty}>{t('languages.no-data-languages')}</div>
+            <div className={css.languages__status_empty}>
+              <Text view="p-20" tag="p">
+                {t('languages.no-data-languages')}
+              </Text>
+            </div>
           )}
         </div>
 

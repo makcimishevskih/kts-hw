@@ -2,6 +2,9 @@
   "no-data-homepage": "Don't have homepage",
   "no-data-repo-page": "Don't have repo data",
 
+  "reposlist": {
+    "no-data-repos-list": "Don't have repos with this org name or type of repos"
+  },
   "subs": {
     "stars_interval": "(0)[stars];(1)[star];(2-inf)[stars];",
     "watchers_interval": "(0)[watchers];(1)[watcher];(2-inf)[watchers]",
@@ -9,7 +12,7 @@
   },
   "contributors": {
     "contributors-title": "Contributors",
-    "contributions_interval": "(0)[Contributions: {{count}}];(1)[Contribution: {{counte}}];(2-inf)[Contributions: {{count}}];",
+    "contributions_interval": "(0)[Contributions: {{count}}];(1)[Contribution: {{count}}];(2-inf)[Contributions: {{count}}];",
     "no-data-contributors": "Can't load contributors"
   },
   "languages": {
