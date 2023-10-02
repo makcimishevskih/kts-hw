@@ -5,8 +5,8 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 
 import link from 'assets/link.svg';
 
-import Loader from 'components/Loader';
 import PageUp from 'components/PageUp';
+import Status from 'components/Status';
 import Text from 'components/Text';
 import ArrowBackIcon from 'components/icons/ArrowBackIcon';
 
@@ -30,38 +30,29 @@ const RepoPage: FC = () => {
 
   const { orgName, repoName } = useParams();
 
+  const { repo, repoLoading, repoError, readme, languages, contributors, errorsRepo, loadersRepo } =
+    useLocalStore<GitHubRepoStore>(() => new GitHubRepoStore({ orgName: orgName, repoName: repoName }));
+
   const navigate = useNavigate();
 
   const goToBack = useCallback(() => {
     navigate(-1);
   }, []);
 
-  const { repo, repoLoading, repoError, readme, languages, contributors, errorsRepo, loadersRepo } =
-    useLocalStore<GitHubRepoStore>(() => new GitHubRepoStore({ orgName: orgName, repoName: repoName }));
-
   return (
     <section className={css.repo}>
-      <div className={css.repo__status}>
-        {repoLoading && !repoError && <Loader color="accent" size="xl" />}
-        {repoError && !repoLoading && (
-          <div className={css.repo__status_error}>
-            <ArrowBackIcon width="45" height="45" onClick={goToBack} color="accent" />
-            <Text view="p-20" tag="p">
-              {repoError}
-            </Text>
-          </div>
-        )}
-        {!repoLoading && !repoError && !repo && (
-          <div className={css.repo__status_empty}>
-            <ArrowBackIcon width="45" height="45" onClick={goToBack} color="accent" />
-            <Text view="p-20" tag="p">
-              {t('no-data-repo-page')}
-            </Text>
-          </div>
-        )}
-      </div>
-
-      {repo && (
+      {!repo ? (
+        <Status
+          className={css.emptyWidth}
+          goTo={goToBack}
+          isLoading={repoLoading}
+          errorMessage={repoError}
+          isEmpty={!repo}
+          isBackButton={true}
+        >
+          {t('no-data-repo-page')}
+        </Status>
+      ) : (
         <>
           <header className={css.header}>
             <ArrowBackIcon width="32" height="32" onClick={goToBack} color="accent" />

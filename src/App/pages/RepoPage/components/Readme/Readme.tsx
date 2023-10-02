@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import Loader from 'components/Loader';
+import Status from 'components/Status';
 import Text from 'components/Text';
 
 import { TReadmeModel } from 'store/models/repo';
@@ -23,16 +23,7 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
         {readme?.name}
       </Text>
 
-      <div className={css.readme__status}>
-        {loading && !error && <Loader color="accent" size="l" />}
-        {error && (
-          <div className={css.readme__status_error}>
-            <Text view="p-20" tag="p">
-              {error}
-            </Text>
-          </div>
-        )}
-      </div>
+      <Status isLoading={loading} errorMessage={error} isEmpty={false}></Status>
 
       <pre className={css.content}>{readmeContent}</pre>
     </div>

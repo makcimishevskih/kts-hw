@@ -10,11 +10,6 @@
     padding: $space-m;
   }
 
-  &__status {
-    @include flexbox(center, center);
-    margin-top: $space-m;
-    @include typo(20px, 22px);
-  }
   .content {
     padding: $space-xxl;
 

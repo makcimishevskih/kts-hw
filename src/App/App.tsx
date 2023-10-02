@@ -14,10 +14,9 @@ import { ROUTES } from 'config/routes';
 import css from './App.module.scss';
 
 // Checklist:
-// 1. Status component
-// 2. Logic to icon wrapper
-// 3. i18n
-// 4. 404 page
+// 1. Logic to icon wrapper
+// 2. i18n
+// 3. 404 page
 
 const App = () => {
   return (

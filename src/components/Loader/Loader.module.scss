@@ -2,6 +2,7 @@
 
 .loaderWrapper {
   @include flexbox(center, center);
+  margin: 0 auto;
 
   .loader {
     width: 60px;

@@ -1,12 +1,6 @@
-@import "styles/forwarded";
+@import "styles/forwarded.scss";
 
 .contributors {
-  &__status {
-    margin-top: $space-xxs;
-    @include flexbox(center, center);
-    @include typo(20px, 22px);
-  }
-
   &__title {
     display: flex;
 

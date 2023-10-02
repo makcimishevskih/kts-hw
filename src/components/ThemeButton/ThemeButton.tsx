@@ -10,9 +10,7 @@ import ThemeStore from 'store/ThemeStore';
 
 import css from './ThemeButton.module.scss';
 
-interface IThemeButtonProps {}
-
-const ThemeButton: FC<IThemeButtonProps> = () => {
+const ThemeButton: FC = () => {
   const { theme, changeTheme } = useLocalStore<ThemeStore>(() => new ThemeStore());
 
   const themeImg = theme === 'dark' ? dark : light;

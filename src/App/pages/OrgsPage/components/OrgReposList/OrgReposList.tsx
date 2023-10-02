@@ -5,8 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 
 import Card from 'components/Card';
-import Loader from 'components/Loader';
-import Text from 'components/Text';
+import Status from 'components/Status';
 
 import { ROUTES } from 'config/routes';
 import { TOrgReposModel } from 'store/models/repo';
@@ -55,17 +54,9 @@ const OrgReposList: FC<OrgListProps> = ({ orgName, loadingReposList, errorReposL
   return (
     <>
       {reposListLen === 0 ? (
-        <div className={css.repos__status}>
-          {loadingReposList && !errorReposList && <Loader color="accent" size="xl" />}
-          {errorReposList && !loadingReposList && <div className={css.repos__status_error}>Error:{errorReposList}</div>}
-          {!errorReposList && !loadingReposList && (
-            <div className={css.repos__status_empty}>
-              <Text view="p-20" tag="p">
-                {t('reposlist.no-data-repos-list')}
-              </Text>
-            </div>
-          )}
-        </div>
+        <Status isLoading={loadingReposList} errorMessage={errorReposList} isEmpty={reposListLen === 0}>
+          {t('reposlist.no-data-repos-list')}
+        </Status>
       ) : (
         <ul className={css.repos__list}>{!errorReposList && !loadingReposList && reposList}</ul>
       )}

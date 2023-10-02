@@ -3,9 +3,7 @@ import { FC, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import Button from 'components/Button';
 
-interface ILangButtonProps {}
-
-const LangButton: FC<ILangButtonProps> = () => {
+const LangButton: FC = () => {
   const [lang, setLang] = useState('En');
   const { t, i18n } = useTranslation();
 

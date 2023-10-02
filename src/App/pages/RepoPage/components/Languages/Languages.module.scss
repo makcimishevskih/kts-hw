@@ -1,12 +1,7 @@
 @import "styles/forwarded";
 
 .languages {
-  &__status {
-    margin-top: $space-xxs;
-    @include flexbox(center, center);
-    @include typo(20px, 22px);
-  }
-
+  flex-grow: 1;
   &__range {
     @include flexbox(center, flex-start, 2px);
 

@@ -4,18 +4,6 @@
   height: 100%;
   padding: $space-xxxl 0;
 
-  &__status {
-    @include flexbox(center, center);
-    @include typo(20px, 22px);
-    margin-top: $space-xxs;
-
-    &_error,
-    &_empty {
-      width: 35vw;
-      @include flexbox(center, space-between, 0px);
-    }
-  }
-
   .header {
     @include flexbox(center, flex-start, $space-m);
 
@@ -54,7 +42,7 @@
     }
   }
   &__info {
-    @include flexbox(flex-start, flex-start, 80px);
+    @include flexbox(flex-start, space-between, 80px);
     margin-top: $space-xl;
   }
 }

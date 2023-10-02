@@ -12,12 +12,12 @@ import { typeOptions } from './config';
 
 import css from './NavInputs.module.scss';
 
-interface INavInputsProps {
+type INavInputsProps = {
   orgName: string;
   handleOffsetToStart: () => void;
   setOrgName: (name: string) => void;
   setReposFilterType: (type: TTypes) => void;
-}
+};
 
 const NavInputs: FC<INavInputsProps> = ({ orgName, handleOffsetToStart, setOrgName, setReposFilterType }) => {
   const [searchInputValue, setSearchInputValue] = useState(orgName);

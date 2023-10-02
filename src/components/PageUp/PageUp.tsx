@@ -7,10 +7,10 @@ import scrollToTop from 'utils/scrollToTop';
 
 import css from './PageUp.module.scss';
 
-interface IPageUpProps {
+type IPageUpProps = {
   isScrollVisible: boolean;
   size: number;
-}
+};
 
 const PageUp: FC<IPageUpProps> = ({ isScrollVisible, size }) => {
   const cnPageUp = classNames(css.pageUp, isScrollVisible ? css.fadeIn : css.fadeOut);

@@ -2,7 +2,7 @@ import { toJS } from 'mobx';
 import { FC } from 'react';
 
 import { useTranslation } from 'react-i18next';
-import Loader from 'components/Loader';
+import Status from 'components/Status';
 import Text from 'components/Text';
 
 import { TLanguagesModel } from 'store/models/repo';
@@ -10,11 +10,11 @@ import { randomRGBColor } from 'utils/randomRGBColor';
 
 import css from './Languages.module.scss';
 
-interface ILanguagesProps {
+type ILanguagesProps = {
   languages: TLanguagesModel | null;
   error: string;
   loading: boolean;
-}
+};
 
 const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
   const { t } = useTranslation('repoPage');
@@ -36,23 +36,12 @@ const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
           {t('languages.languages-title')}
         </Text>
 
-        <div className={css.languages__status}>
-          {loading && !error && <Loader color="accent" size="l" />}
-          {error && !loading && (
-            <div className={css.languages__status_error}>
-              <Text view="p-20" tag="p">
-                {error}
-              </Text>
-            </div>
-          )}
-          {!loading && !error && languages === null && (
-            <div className={css.languages__status_empty}>
-              <Text view="p-20" tag="p">
-                {t('languages.no-data-languages')}
-              </Text>
-            </div>
-          )}
-        </div>
+        {/* {loading ||
+          (error && ( */}
+        <Status isLoading={loading} errorMessage={`${error}qweqwewqe`} isEmpty={languages !== null}>
+          {t('contributors.no-data-contributors')}
+        </Status>
+        {/* ))} */}
 
         {languagesWithPercent && languagesWithPercent?.length > 0 && (
           <>

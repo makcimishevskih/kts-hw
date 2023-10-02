@@ -6,11 +6,11 @@ import Text from 'components/Text';
 
 import css from './Subs.module.scss';
 
-interface ISubsProps {
+type ISubsProps = {
   forksCount: number;
   watchersCount: number;
   stargazersCount: number;
-}
+};
 
 const Subs: FC<ISubsProps> = ({ forksCount, watchersCount, stargazersCount }) => {
   const { t } = useTranslation('repoPage');
