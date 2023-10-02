@@ -1,3 +1,4 @@
+import { useSpring, animated } from '@react-spring/web';
 import classNames from 'classnames';
 import { FC } from 'react';
 
@@ -22,6 +23,15 @@ const Pagination: FC<TPaginationProps> = ({
   totalPagesCount,
   onChange,
 }) => {
+  const [props] = useSpring(
+    () => ({
+      from: { opacity: 0 },
+      to: { opacity: 1 },
+      delay: 300,
+    }),
+    [],
+  );
+
   const handleOffset = (n: number) => {
     onChange(n);
   };
@@ -37,7 +47,7 @@ const Pagination: FC<TPaginationProps> = ({
   };
 
   return (
-    <div className={css.pagination}>
+    <animated.div style={props} className={css.pagination}>
       <ArrowBackIcon
         className={classNames(isFirstPage && css.arrow_transparent)}
         width="36"
@@ -65,7 +75,7 @@ const Pagination: FC<TPaginationProps> = ({
         onClick={handleNextPage}
         color="accent"
       />
-    </div>
+    </animated.div>
   );
 };
 export default Pagination;

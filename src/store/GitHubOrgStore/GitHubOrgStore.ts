@@ -10,7 +10,7 @@ export type IPrivateFields = '_orgName' | '_orgRepos' | '_reposFilterType';
 export class GithubOrgStore implements ILocalStore {
   private _orgName: string = window.localStorage.getItem('orgName') || 'ktsstudio';
   private _orgRepos: CollectionModel<number | string, TOrgReposModel> = getInitialCollectionModel();
-  private _reposFilterType: TTypes = 'all';
+  private _reposFilterType: TTypes = (window.localStorage.getItem('filterType') || 'all') as TTypes;
 
   orgError: string = '';
   orgLoading: boolean = false;
@@ -58,6 +58,9 @@ export class GithubOrgStore implements ILocalStore {
   private setLocalStorageOrgName = (name: string) => {
     window.localStorage.setItem('orgName', name);
   };
+  private setLocalStorageRepoType = (name: string) => {
+    window.localStorage.setItem('filterType', name);
+  };
 
   get reposFilterType(): TTypes {
     return this._reposFilterType;
@@ -69,6 +72,7 @@ export class GithubOrgStore implements ILocalStore {
 
   setReposFilterType = (filterType: TTypes) => {
     this._reposFilterType = filterType;
+    this.setLocalStorageRepoType(filterType);
   };
 
   getReposData = async (perPage: number, offset: number) => {
@@ -128,7 +132,7 @@ export class GithubOrgStore implements ILocalStore {
   destroy = () => {
     this._orgName = window.localStorage.getItem('orgName') || 'ktsstudio';
     this._orgRepos = getInitialCollectionModel();
-    this._reposFilterType = 'all';
+    this._reposFilterType = (window.localStorage.getItem('filterType') || 'all') as TTypes;
     this.orgError = '';
     this.orgLoading = false;
     this.orgReposLength = 0;

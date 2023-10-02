@@ -15,7 +15,6 @@
     "lint:fix": "eslint \"./src/**/*.{js,jsx,ts,tsx}\" --fix"
   },
   "dependencies": {
-    "@react-spring/web": "^9.7.3",
     "axios": "^1.5.0",
     "classnames": "^2.3.2",
     "framer-motion": "^10.16.4",
@@ -39,6 +38,7 @@
     "@babel/preset-react": "^7.22.15",
     "@babel/preset-typescript": "^7.23.0",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.11",
+    "@react-spring/web": "^9.7.3",
     "@types/node": "^20.6.0",
     "@types/qs": "^6.9.8",
     "@types/react": "18.2.21",
@@ -63,6 +63,7 @@
     "eslint-plugin-react-refresh": "^0.4.3",
     "fork-ts-checker-webpack-plugin": "^8.0.0",
     "html-webpack-plugin": "^5.5.3",
+    "json-loader": "^0.5.7",
     "mini-css-extract-plugin": "^2.7.6",
     "postcss-loader": "^7.3.3",
     "prettier": "^3.0.3",
@@ -79,5 +80,10 @@
   },
   "browserslist": [
     "last 2 chrome versions"
-  ]
+  ],
+  "browser": {
+    "fs": false,
+    "path": false,
+    "url": false
+  }
 }

@@ -4,7 +4,6 @@ import intervalPlural from 'i18next-intervalplural-postprocessor';
 import { initReactI18next } from 'react-i18next';
 
 i18n.use(Backend).use(intervalPlural).use(initReactI18next).init({
-  // debug: true,
   lng: 'en',
   fallbackLng: false,
 });

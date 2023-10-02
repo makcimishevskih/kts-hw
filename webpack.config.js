@@ -6,7 +6,6 @@ import ReactRefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
 import Dotenv from 'dotenv-webpack';
 import TsCheckerPlugin from 'fork-ts-checker-webpack-plugin';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -90,9 +89,16 @@ export function getSettingsForLoaders(isProd) {
     use: getSettingsForStyles(isProd, true),
   };
 
-  return [babelLoader, scssLoader, scssLoaderModule, assetsLoader];
+  const jsonLoader = {
+    test: /\.json$/,
+    loader: 'json-loader',
+    type: 'javascript/auto',
+  };
+
+  return [babelLoader, scssLoader, scssLoaderModule, assetsLoader, jsonLoader];
 }
 
+// plugins
 export function getSettingsForPlugins(isProd) {
   return [
     new HtmlWebpackPlugin({

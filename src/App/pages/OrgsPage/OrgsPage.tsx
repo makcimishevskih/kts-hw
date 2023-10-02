@@ -82,14 +82,16 @@ const OrgsPage: FC = () => {
         loadingReposList={loadingReposList}
       />
 
-      <Pagination
-        offset={offset}
-        onChange={onChange}
-        isLastPage={isLastPage}
-        isFirstPage={isFirstPage}
-        paginationNums={paginationNums}
-        totalPagesCount={totalPagesCount}
-      />
+      {totalPagesCount > 0 && (
+        <Pagination
+          offset={offset}
+          onChange={onChange}
+          isLastPage={isLastPage}
+          isFirstPage={isFirstPage}
+          paginationNums={paginationNums}
+          totalPagesCount={totalPagesCount}
+        />
+      )}
 
       <PageUp isScrollVisible={isScrollVisible} size={60} />
     </section>

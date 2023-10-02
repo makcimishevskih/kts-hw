@@ -14,11 +14,10 @@ import { ROUTES } from 'config/routes';
 import css from './App.module.scss';
 
 // Checklist:
-// 1. Optimize requests
-// 2. Status component
-// 5. Logic to icon wrapper
-// 6. I18n
-// 7. 404 page
+// 1. Status component
+// 2. Logic to icon wrapper
+// 3. i18n
+// 4. 404 page
 
 const App = () => {
   return (
@@ -27,6 +26,7 @@ const App = () => {
 
       <Suspense fallback={<Loader size="xl" />}>
         <Routes>
+          <Route path={ROUTES.error.mask} element={<ErrorPage />} />
           <Route
             path={ROUTES.orgs.mask}
             element={
@@ -43,7 +43,6 @@ const App = () => {
               </Container>
             }
           />
-          <Route path={ROUTES.error.mask} element={<ErrorPage />} />
         </Routes>
       </Suspense>
     </div>

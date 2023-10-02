@@ -27,8 +27,9 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "noUnusedLocals": true,
+
     "noUnusedParameters": true,
-    "resolveJsonModule": false,
+    "resolveJsonModule": true,
     "moduleResolution": "Node",
     "jsxImportSource": "react",
     "noFallthroughCasesInSwitch": true,

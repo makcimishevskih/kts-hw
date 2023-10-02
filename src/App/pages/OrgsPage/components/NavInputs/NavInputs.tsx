@@ -21,10 +21,12 @@ interface INavInputsProps {
 
 const NavInputs: FC<INavInputsProps> = ({ orgName, handleOffsetToStart, setOrgName, setReposFilterType }) => {
   const [searchInputValue, setSearchInputValue] = useState(orgName);
-  const [optionsValue, setOptionsValue] = useState<Option[]>([typeOptions[0]]);
   const { t } = useTranslation();
-
   const { inputRef, handleElementFocusOnClick } = useFocus();
+
+  const typeFromStorage = window.localStorage.getItem('filterType');
+  const currentOptions = [typeOptions.find((el) => el.value === typeFromStorage) || typeOptions[0]];
+  const [optionsValue, setOptionsValue] = useState<Option[]>(currentOptions);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
