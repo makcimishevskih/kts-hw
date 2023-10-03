@@ -1,7 +1,7 @@
 @import "styles/forwarded";
 
 .wrapperDropDown {
-  width: 400px;
+  max-width: 400px;
   position: relative;
 
   .list {
@@ -10,7 +10,9 @@
     top: 50px;
     left: 0;
 
-    width: 400px;
+    max-width: 400px;
+    min-width: 100%;
+
     margin-top: $space-xxs;
 
     background-color: $dropdown-options-bg;

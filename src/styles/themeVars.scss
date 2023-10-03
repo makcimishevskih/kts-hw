@@ -43,16 +43,6 @@
   --button-primary-text-disabled: rgba(255, 255, 255, 1);
   --button-primary-bg-active: #487773;
   --button-primary-text-active: #ffffff;
-
-  --checkbox-bg: var(--checkbox-bg);
-  --checkbox-border: var(--checkbox-border);
-  --checkbox-bg-hover: var(--checkbox-bg-hover);
-  --checkbox-border-hover: var(--text-accent);
-  --checkbox-bg-disabled: #ffffff80;
-  --checkbox-border-disabled: #ffffff00;
-  --checkbox-check: var(--text-accent);
-  --checkbox-check-hover: var(--text-accent);
-  --checkbox-check-disabled: #00000033;
 }
 
 html[data-theme="dark"] {

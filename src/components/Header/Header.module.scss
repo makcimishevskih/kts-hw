@@ -1,4 +1,4 @@
-@import "styles/vars.scss";
+@import "styles/forwarded.scss";
 
 .header {
   padding: $space-m 0;
@@ -6,19 +6,7 @@
   height: $header-height;
 
   .nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    &__logoWrapper {
-      width: 32px;
-      height: 32px;
-    }
-
-    &__logo {
-      width: 100%;
-      height: 100%;
-    }
+    @include flexbox(center, space-between, 20px);
 
     &__github {
       display: flex;

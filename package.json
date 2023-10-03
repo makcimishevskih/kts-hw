@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev-wp": "node ./transformRuTranslations.js && SET NODE_ENV=development & npx webpack serve --mode=development",
-    "build-wp": "node ./transformRuTranslations.js && SET NODE_ENV=production & npx webpack --mode=production",
+    "dev-wp": "node ./public/transformRuTranslations.js && SET NODE_ENV=development & npx webpack serve --mode=development",
+    "build-wp": "node ./public/transformRuTranslations.js && SET NODE_ENV=production & npx webpack --mode=production",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "dev": "vite --open",
     "build": "tsc && vite build",

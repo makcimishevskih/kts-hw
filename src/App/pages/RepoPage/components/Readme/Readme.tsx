@@ -23,7 +23,7 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
         {readme?.name}
       </Text>
 
-      <Status isLoading={loading} errorMessage={error} isEmpty={false}></Status>
+      <Status isLoading={loading} errorMessage={error} isEmpty={false} />
 
       <pre className={css.content}>{readmeContent}</pre>
     </div>

@@ -22,6 +22,9 @@
 .title {
   @include typo(44px, 48px, 700);
 }
+.subtitle {
+  @include typo(32px, 36px, 700);
+}
 
 .button {
   @include typo(18px, 18px);

@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { IconProps } from '../Icon';
+import { IconProps } from '../types';
 import css from './ArrowBackIcon.module.scss';
 
 const ArrowBackIcon: FC<IconProps> = ({ width = 32, height = 32, color = 'primary', onClick, className, style }) => {

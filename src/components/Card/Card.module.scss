@@ -1,19 +1,19 @@
 @import "styles/forwarded";
 
 .card {
-  max-width: 360px;
+  max-width: 300px;
   height: 100%;
 
   background-color: $card-bg;
   transition: box-shadow 0.1s ease-out;
+
   &:hover {
     box-shadow: $card-hover-shadow;
   }
 
   &__img {
     width: 100%;
-    max-height: 360px;
-
+    max-height: 290px;
     background-color: $card-image-bg;
   }
 

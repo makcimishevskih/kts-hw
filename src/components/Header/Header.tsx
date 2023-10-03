@@ -19,11 +19,11 @@ const Header: FC = () => {
       <Container>
         <div className={css.nav}>
           <div className={css.nav__github}>
-            <Link to={ROUTES.orgs.mask} className={css.nav__logoWrapper}>
-              <img className={css.nav__logo} src={logo} alt="logo" />
+            <Link to={ROUTES.orgs.mask}>
+              <img width="32" height="32" src={logo} alt="logo" />
             </Link>
-            <Text tag="h1" view="p-20" weight="bold">
-              GitHub
+            <Text tag="h1" view="p-18" weight="bold">
+              GitHub Explorer
             </Text>
           </div>
 

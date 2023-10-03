@@ -57,7 +57,7 @@ const RepoPage: FC = () => {
           <header className={css.header}>
             <ArrowBackIcon width="32" height="32" onClick={goToBack} color="accent" />
             <img className={css.header__avatar} src={repo?.owner?.avatarUrl} width="40" height="40" alt="repo-avatar" />
-            <Text tag="h2" view="title">
+            <Text tag="h2" view="subtitle">
               {repo?.name}
             </Text>
           </header>
@@ -69,7 +69,7 @@ const RepoPage: FC = () => {
 
             {repo?.homepage ? (
               <Link className={css.homepage__link} to={repo.homepage} target="_blank">
-                <Text tag="span" view="p-16" weight="bold">
+                <Text tag="span" view="p-14" weight="bold">
                   {repo.homepage}
                 </Text>
               </Link>

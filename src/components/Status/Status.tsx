@@ -1,9 +1,10 @@
 import { FC, PropsWithChildren } from 'react';
 
+import { useTranslation } from 'react-i18next';
+import Button from 'components/Button';
 import Loader from 'components/Loader';
 import Text from 'components/Text';
 
-import ArrowBackIcon from 'components/icons/ArrowBackIcon';
 import css from './Status.module.scss';
 
 type IStatusProps = {
@@ -23,18 +24,30 @@ const Status: FC<IStatusProps> = ({
   isBackButton = false,
   goTo = () => {},
 }) => {
+  const { t } = useTranslation();
   return (
     <div className={css.status}>
       {!errorMessage && isLoading && <Loader color="accent" size="xl" />}
       {errorMessage && !isLoading && (
         <div className={css.status_error}>
-          {isBackButton && <ArrowBackIcon width="45" height="45" onClick={goTo} color="accent" />}
-          Error:{errorMessage}
+          {isBackButton && (
+            <div>
+              <Button className={css.button} onClick={goTo}>
+                {t('go-back')}
+              </Button>
+            </div>
+          )}
+          {errorMessage}
         </div>
       )}
       {!errorMessage && !isLoading && isEmpty && (
         <div className={css.status_empty}>
-          {isBackButton && <ArrowBackIcon width="45" height="45" onClick={goTo} color="accent" />}
+          {isBackButton && (
+            <div>
+              <Button onClick={goTo}> {t('go-back')}</Button>
+            </div>
+          )}
+
           <Text view="p-20" tag="p">
             {children}
           </Text>

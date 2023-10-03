@@ -4,6 +4,7 @@ import { normalizeOrgRepos, TOrgReposApi, TOrgReposModel } from 'store/models/re
 import { TTypes } from 'store/models/types';
 import { getData } from 'utils/fetchData';
 import { CollectionModel, getCollection, getInitialCollectionModel } from './../shared/collection';
+import orgStoreRoutes from './config/routes';
 
 export type IPrivateFields = '_orgName' | '_orgRepos' | '_reposFilterType';
 
@@ -12,13 +13,10 @@ export class GithubOrgStore implements ILocalStore {
   private _orgRepos: CollectionModel<number | string, TOrgReposModel> = getInitialCollectionModel();
   private _reposFilterType: TTypes = (window.localStorage.getItem('filterType') || 'all') as TTypes;
 
-  orgError: string = '';
   orgLoading: boolean = false;
   orgReposLength: number = 0;
   errorReposList = '';
   loadingReposList = false;
-
-  selectedRepo: TOrgReposModel | null = null;
 
   constructor() {
     makeObservable<GithubOrgStore, IPrivateFields>(this, {
@@ -26,24 +24,15 @@ export class GithubOrgStore implements ILocalStore {
       _reposFilterType: observable,
       _orgRepos: observable.ref,
 
-      orgError: observable,
       orgLoading: observable,
       errorReposList: observable,
       loadingReposList: observable,
 
       orgRepos: computed,
       getReposData: action,
-      findRepoById: action,
       setReposFilterType: action,
     });
   }
-
-  findRepoById = (paramId: string): TOrgReposModel | null => {
-    if (paramId) {
-      this.selectedRepo = this._orgRepos.entities[+paramId];
-    }
-    return this.selectedRepo || null;
-  };
 
   get orgName(): string {
     return this._orgName;
@@ -55,13 +44,6 @@ export class GithubOrgStore implements ILocalStore {
     this.setLocalStorageOrgName(name);
   };
 
-  private setLocalStorageOrgName = (name: string) => {
-    window.localStorage.setItem('orgName', name);
-  };
-  private setLocalStorageRepoType = (name: string) => {
-    window.localStorage.setItem('filterType', name);
-  };
-
   get reposFilterType(): TTypes {
     return this._reposFilterType;
   }
@@ -69,6 +51,13 @@ export class GithubOrgStore implements ILocalStore {
   get orgRepos(): TOrgReposModel[] {
     return this._orgRepos.order.map((id) => this._orgRepos.entities[id]);
   }
+
+  private setLocalStorageOrgName = (name: string) => {
+    window.localStorage.setItem('orgName', name);
+  };
+  private setLocalStorageRepoType = (name: string) => {
+    window.localStorage.setItem('filterType', name);
+  };
 
   setReposFilterType = (filterType: TTypes) => {
     this._reposFilterType = filterType;
@@ -82,11 +71,11 @@ export class GithubOrgStore implements ILocalStore {
 
     const [reposResponse, reposLengthResponse] = await Promise.all([
       getData<TOrgReposApi[], TOrgReposModel[]>(
-        `orgs/${this.orgName}/repos?type=${this.reposFilterType}&per_page=${perPage}&page=${offset}`,
+        orgStoreRoutes.orgs.filter.createRoot(this.orgName, this.reposFilterType, perPage, offset),
         normalizeOrgRepos,
       ),
       getData<TOrgReposApi[], TOrgReposModel[]>(
-        `orgs/${this.orgName}/repos?type=${this.reposFilterType}`,
+        orgStoreRoutes.orgs.all.createRoot(this.orgName, this.reposFilterType),
         normalizeOrgRepos,
       ),
     ]);
@@ -95,7 +84,7 @@ export class GithubOrgStore implements ILocalStore {
       runInAction(() => {
         this.loadingReposList = false;
         this.orgReposLength = 0;
-        this.errorReposList = "Can't load org repositories";
+        this.errorReposList = "Can't load repositories";
       });
     } else {
       try {
@@ -109,7 +98,7 @@ export class GithubOrgStore implements ILocalStore {
         runInAction(() => {
           this.loadingReposList = false;
           this.orgReposLength = 0;
-          this.errorReposList = "Can't load org repositories";
+          this.errorReposList = "Can't load repositories";
           this._orgRepos = getInitialCollectionModel();
         });
       }
@@ -119,7 +108,7 @@ export class GithubOrgStore implements ILocalStore {
       runInAction(() => {
         this.loadingReposList = false;
         this.orgReposLength = 0;
-        this.errorReposList = "Can't load org repositories";
+        this.errorReposList = "Can't load repositories";
       });
     } else {
       runInAction(() => {
@@ -133,12 +122,10 @@ export class GithubOrgStore implements ILocalStore {
     this._orgName = window.localStorage.getItem('orgName') || 'ktsstudio';
     this._orgRepos = getInitialCollectionModel();
     this._reposFilterType = (window.localStorage.getItem('filterType') || 'all') as TTypes;
-    this.orgError = '';
     this.orgLoading = false;
     this.orgReposLength = 0;
     this.errorReposList = '';
     this.loadingReposList = false;
-    this.selectedRepo = null;
   };
 }
 

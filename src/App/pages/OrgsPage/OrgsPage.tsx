@@ -25,7 +25,6 @@ const OrgsPage: FC = () => {
 
   const {
     orgName,
-    orgError,
     orgRepos,
     orgReposLength,
     errorReposList,
@@ -61,7 +60,7 @@ const OrgsPage: FC = () => {
   return (
     <section className={css.orgs}>
       <header className={css.orgs__header}>
-        <Text tag="h2" view="title">
+        <Text tag="h2" view="subtitle">
           {t('title')}
         </Text>
       </header>
@@ -72,8 +71,6 @@ const OrgsPage: FC = () => {
         setReposFilterType={setReposFilterType}
         handleOffsetToStart={handleOffsetToStart}
       />
-
-      {orgError && <div className={css.orgs_error}>{orgError}</div>}
 
       <OrgReposList
         orgName={orgName}

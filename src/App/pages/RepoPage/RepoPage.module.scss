@@ -44,6 +44,10 @@
   &__info {
     @include flexbox(flex-start, space-between, 80px);
     margin-top: $space-xl;
+    @media (max-width: 700px) {
+      flex-direction: column;
+      gap: 30px;
+    }
   }
 }
 

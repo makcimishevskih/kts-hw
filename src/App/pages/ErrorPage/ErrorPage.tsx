@@ -18,7 +18,7 @@ const ErrorPage: FC = () => {
       <div>
         <div className={css.error__text}>{t('error-page')}</div>
         <Button className={css.button} onClick={goToHome}>
-          Home
+          {t('home-button')}
         </Button>
       </div>
     </section>
