@@ -99,6 +99,7 @@ export class GitHubRepoStore implements ILocalStore {
     runInAction(() => {
       if (contributors.isError) {
         this.errorsRepo = { ...this.errorsRepo, contributors: "Can't load contributors" };
+        this.loadersRepo = { ...this.loadersRepo, contributors: false };
       } else {
         this.contributors = contributors.data as TContributorModel[];
         this.loadersRepo = { ...this.loadersRepo, contributors: false };
@@ -106,6 +107,7 @@ export class GitHubRepoStore implements ILocalStore {
 
       if (languages.isError) {
         this.errorsRepo = { ...this.errorsRepo, languages: "Can't load languages" };
+        this.loadersRepo = { ...this.loadersRepo, languages: false };
       } else {
         this.languages = languages.data as TLanguagesModel;
         this.loadersRepo = { ...this.loadersRepo, languages: false };
@@ -113,6 +115,7 @@ export class GitHubRepoStore implements ILocalStore {
 
       if (readme.isError) {
         this.errorsRepo = { ...this.errorsRepo, readme: `Can't load README.md` };
+        this.loadersRepo = { ...this.loadersRepo, readme: false };
       } else {
         this.readme = readme.data as TReadmeModel;
         this.loadersRepo = { ...this.loadersRepo, readme: false };

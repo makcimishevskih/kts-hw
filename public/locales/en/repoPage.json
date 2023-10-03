@@ -1,14 +1,13 @@
 {
-  "no-data-homepage": "Don't have link to homepage",
-  "no-data-repo-page": "Don't have repo data",
-
-  "reposlist": {
-    "no-data-repos-list": "Don't have repos with this org name or type of repos"
-  },
   "subs": {
     "stars_interval": "(0)[stars];(1)[star];(2-inf)[stars];",
     "watchers_interval": "(0)[watchers];(1)[watcher];(2-inf)[watchers]",
     "forks_interval": "(0)[forks];(1)[fork];(2-inf)[forks];"
+  },
+  "no-data-homepage": "Don't have link to homepage",
+  "no-data-repo-page": "Don't have repo data",
+  "reposlist": {
+    "no-data-repos-list": "Don't have repos with this org name or type of repos"
   },
   "contributors": {
     "contributors-title": "Contributors",
@@ -21,5 +20,10 @@
   },
   "readme": {
     "no-data-readme": "Can't load README.md"
-  }
+  },
+  "button": {
+    "Show": "Show",
+    "Hide": "Hide"
+  },
+  "updated": "Updated"
 }

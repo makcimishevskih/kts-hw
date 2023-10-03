@@ -2,6 +2,10 @@
 @import "./vars.scss";
 @import "./Roboto/fonts";
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: Roboto;
   font-size: 16px;

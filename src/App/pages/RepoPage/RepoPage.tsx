@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { FC, useCallback } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 
 import link from 'assets/link.svg';
 
@@ -69,7 +69,7 @@ const RepoPage: FC = () => {
 
             {repo?.homepage ? (
               <Link className={css.homepage__link} to={repo.homepage} target="_blank">
-                <Text tag="span" view="p-14" weight="bold">
+                <Text className={css.homepage__text} tag="span" view="p-14" weight="bold">
                   {repo.homepage}
                 </Text>
               </Link>

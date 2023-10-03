@@ -20,9 +20,9 @@ const Subs: FC<ISubsProps> = ({ forksCount, watchersCount, stargazersCount }) =>
     { count: watchersCount || 0, name: 'watchers', className: css.watchers },
     { count: forksCount || 0, name: 'forks', className: css.forks },
   ].map(({ count, name, className }) => (
-    <Text className={classNames(css.subs__tag, className)} key={name} tag="li" view="p-14" color="secondary">
-      <span className={css.subs__count}>{count}</span>
-      <span className={css.subs__text}>{t(`subs.${name}_interval`, { postProcess: 'interval', count })}</span>
+    <Text className={classNames(css.tags, className)} key={name} tag="li" view="p-14" color="secondary">
+      <span className={css.tags__count}>{count}</span>
+      <span className={css.tags__text}>{t(`subs.${name}_interval`, { postProcess: 'interval', count })}</span>
     </Text>
   ));
 

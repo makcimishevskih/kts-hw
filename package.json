@@ -4,8 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev-wp": "node ./public/transformRuTranslations.js && SET NODE_ENV=development & npx webpack serve --mode=development",
-    "build-wp": "node ./public/transformRuTranslations.js && SET NODE_ENV=production & npx webpack --mode=production",
+    "dev-wp": "node ./config/transformRuTranslations.js && SET NODE_ENV=development & npx webpack serve --mode=development",
+    "build-wp": "node ./config/transformRuTranslations.js && SET NODE_ENV=production & npx webpack --mode=production",
     "ts-check": "tsc --skipLibCheck --noEmit --project tsconfig.json",
     "dev": "vite --open",
     "build": "tsc && vite build",
@@ -17,7 +17,6 @@
   "dependencies": {
     "axios": "^1.5.0",
     "classnames": "^2.3.2",
-    "framer-motion": "^10.16.4",
     "i18next": "^23.5.1",
     "i18next-http-backend": "^2.2.2",
     "i18next-intervalplural-postprocessor": "^3.0.0",

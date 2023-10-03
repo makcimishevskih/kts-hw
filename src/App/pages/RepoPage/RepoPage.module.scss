@@ -31,10 +31,14 @@
       }
     }
 
-    &__Link {
+    &__text {
       @include typo(16px, 18px, 700);
       color: $tag-color;
       cursor: pointer;
+      color: $brand;
+      &:hover {
+        opacity: 0.5;
+      }
     }
     &_empty {
       @include flexbox(center, center);

@@ -1,5 +1,6 @@
 import { FC } from 'react';
 
+import { useTranslation } from 'react-i18next';
 import Status from 'components/Status';
 import Text from 'components/Text';
 
@@ -15,6 +16,7 @@ type TReadmeProps = {
 };
 
 const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
+  const { t } = useTranslation('repoPage');
   const readmeContent = readme && decodeFromUint8Array(readme?.content);
 
   return (
@@ -23,9 +25,13 @@ const Readme: FC<TReadmeProps> = ({ readme, error, loading }) => {
         {readme?.name}
       </Text>
 
-      <Status isLoading={loading} errorMessage={error} isEmpty={false} />
+      {(!readme || loading || error) && (
+        <Status isLoading={loading} errorMessage={error} isEmpty={!readme}>
+          {t('readme.no-data-readme')}
+        </Status>
+      )}
 
-      <pre className={css.content}>{readmeContent}</pre>
+      {readmeContent && <pre className={css.content}>{readmeContent}</pre>}
     </div>
   );
 };

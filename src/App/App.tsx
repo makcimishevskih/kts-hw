@@ -13,48 +13,18 @@ import { ROUTES } from 'config/routes';
 
 import css from './App.module.scss';
 
-// Checklist:
-// 1. 404 page design
-// 2. if to Many Contributors scroll or dropdown
-// 3. Выделение текста цвет при темной теме
-
-// COMMIT
-// 1. delete: checkbox comp&styles, iconwrapper
-// 2. fix: adaptive, ltl styles
-// 3. masks to pathes
-
 const App = () => {
   return (
     <div className={css.app}>
       <Header />
-
       <Suspense fallback={<Loader size="xl" />}>
-        <Routes>
-          <Route
-            path={ROUTES.orgs.mask}
-            element={
-              <Container>
-                <OrgsPage />
-              </Container>
-            }
-          />
-          <Route
-            path={ROUTES.orgs.repo.mask}
-            element={
-              <Container>
-                <RepoPage />
-              </Container>
-            }
-          />
-          <Route
-            path={ROUTES.error.mask}
-            element={
-              <Container>
-                <ErrorPage />
-              </Container>
-            }
-          />
-        </Routes>
+        <Container>
+          <Routes>
+            <Route path={ROUTES.orgs.mask} element={<OrgsPage />} />
+            <Route path={ROUTES.orgs.repo.mask} element={<RepoPage />} />
+            <Route path={ROUTES.error.mask} element={<ErrorPage />} />
+          </Routes>
+        </Container>
       </Suspense>
     </div>
   );

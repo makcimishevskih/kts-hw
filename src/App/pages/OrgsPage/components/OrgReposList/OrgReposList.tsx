@@ -21,12 +21,13 @@ type OrgListProps = {
 };
 
 const OrgReposList: FC<OrgListProps> = ({ orgName, loadingReposList, errorReposList, orgRepos }) => {
-  const { t } = useTranslation('repoPage');
+  const { t, i18n } = useTranslation('repoPage');
 
   const transitions = useTransition(orgRepos, {
-    from: { transform: 'translateX(-100%)' },
-    enter: { transform: 'translateX(0%)' },
-    leave: { transform: 'translateX(0%)' },
+    from: { transform: 'translateY(100vw)' },
+    enter: { transform: 'translateY(0%)' },
+    leave: { transform: 'translateY(0%)' },
+    delay: 200,
   });
 
   const reposList = transitions(
@@ -37,7 +38,9 @@ const OrgReposList: FC<OrgListProps> = ({ orgName, loadingReposList, errorReposL
             captionSlot={
               <>
                 <span className={css.stars}>{stargazersCount || 0}</span>
-                <span className={css.date}>Updated {getFormattedDate(createdAt)}</span>
+                <span className={css.date}>
+                  {t('updated')} {getFormattedDate(createdAt, i18n.language === 'en' ? 'en-GB' : 'ru-RU')}
+                </span>
               </>
             }
             title={name}

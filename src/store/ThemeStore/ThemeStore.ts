@@ -22,14 +22,14 @@ class ThemeStore implements ILocalStore {
       : (document.documentElement.dataset.theme = '');
   };
 
+  private setLocalStorageTheme = () => {
+    window.localStorage.setItem('theme', this.theme);
+  };
+
   changeTheme = () => {
     this.theme = this.theme === 'light' ? 'dark' : 'light';
     this.setTheme();
     this.setLocalStorageTheme();
-  };
-
-  private setLocalStorageTheme = () => {
-    window.localStorage.setItem('theme', this.theme);
   };
 
   destroy = () => {};

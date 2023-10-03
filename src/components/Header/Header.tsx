@@ -20,10 +20,10 @@ const Header: FC = () => {
         <div className={css.nav}>
           <div className={css.nav__github}>
             <Link to={ROUTES.orgs.mask}>
-              <img width="32" height="32" src={logo} alt="logo" />
+              <img className={css.nav__logo} width="32" height="32" src={logo} alt="logo" />
             </Link>
-            <Text tag="h1" view="p-18" weight="bold">
-              GitHub Explorer
+            <Text tag="h1" view="p-18" weight="bold" color="primary">
+              GitHub Client
             </Text>
           </div>
 

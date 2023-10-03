@@ -17,13 +17,13 @@
   }
 
   .nativeInput {
-    border: none;
-
-    width: 100%;
-
-    gap: 8px;
     @include typo(16px, 20px);
     @include border(1px, $input-border);
+
+    width: 100%;
+    gap: 8px;
+
+    border: nsone;
 
     &:focus {
       outline: none;

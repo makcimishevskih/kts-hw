@@ -1,7 +1,7 @@
 @import "styles/forwarded";
 
 .readme {
-  min-height: 560px;
+  min-height: 200px;
   margin-top: $space-xl;
 
   @include border(1px, $border-color-light, 4px);

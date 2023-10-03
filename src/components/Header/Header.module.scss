@@ -2,23 +2,18 @@
 
 .header {
   padding: $space-m 0;
-  border-bottom: 2px solid #d9d9d9;
+  border-bottom: 2px solid #d9d9d977;
   height: $header-height;
 
   .nav {
     @include flexbox(center, space-between, 20px);
 
     &__github {
-      display: flex;
-      align-items: center;
-      gap: $space-xl;
+      @include flexbox(center, flex-start, 24px);
     }
 
     &__switchers {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 20px;
+      @include flexbox(center, center, 20px);
     }
   }
 }

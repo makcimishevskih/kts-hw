@@ -22,16 +22,24 @@
       border-radius: 50%;
     }
   }
+  &__isOpenButton {
+    margin-top: $space-s;
+  }
 
   .contributors__list {
+    max-height: 240px;
+
     margin-top: $space-m;
+
+    overflow: hidden;
 
     .contributors__item {
       @include flexbox(center, flex-start, 12px);
       margin-top: $space-xxs;
+
       .info {
         @include flexbox(center, flex-start, 8px);
-        cursor: pointer;
+
         &__avatar {
           width: 32px;
           height: 32px;
@@ -40,5 +48,17 @@
         }
       }
     }
+    &.open {
+      height: auto;
+      max-height: 1500px;
+
+      transition: max-height 1s ease-out;
+    }
+  }
+
+  .error {
+    text-align: center;
+    @include typo(24px, 26px, 500);
+    color: red;
   }
 }
