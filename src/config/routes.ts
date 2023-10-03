@@ -7,6 +7,6 @@ export const ROUTES = {
     },
   },
   error: {
-    mask: '*',
+    mask: '/*',
   },
 };

@@ -36,12 +36,12 @@ const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
           {t('languages.languages-title')}
         </Text>
 
-        {/* {loading ||
-          (error && ( */}
-        <Status isLoading={loading} errorMessage={`${error}qweqwewqe`} isEmpty={languages !== null}>
-          {t('contributors.no-data-contributors')}
-        </Status>
-        {/* ))} */}
+        {loading ||
+          (error && (
+            <Status isLoading={loading} errorMessage={`${error}qweqwewqe`} isEmpty={languages !== null}>
+              {t('contributors.no-data-contributors')}
+            </Status>
+          ))}
 
         {languagesWithPercent && languagesWithPercent?.length > 0 && (
           <>

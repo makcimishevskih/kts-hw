@@ -3,6 +3,7 @@
 .header {
   padding: $space-m 0;
   border-bottom: 2px solid #d9d9d9;
+  height: $header-height;
 
   .nav {
     display: flex;

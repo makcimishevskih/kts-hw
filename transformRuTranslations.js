@@ -5,128 +5,42 @@ const reg2_4 = /^\d+?[2-4]$/;
 const reg5_9 = /^\d+?[5-9]$/;
 
 (async function () {
-  const generateRuStars = (name, totalCount) => {
-    let line = `(0)[${name.slice(0, name.length - 1)}];(1)[${name}];(2-4)[${name.slice(
-      0,
-      name.length - 1,
-    )}ы];(5-20)[${name.slice(0, name.length - 1)}];`;
+  const generateRuTranslations = (totalCount, one, many, parentCase) => {
+    let line = `(0)[${parentCase}];(1)[${one}];(2-4)[${many}];(5-20)[${parentCase}];`;
 
     for (let i = 21; i < totalCount; i++) {
       const strI = String(i);
 
       if (/\d+05/.test(strI)) {
         const incValue = 14;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 1)}]`;
+        line += `(${i}-${i + incValue})[${parentCase}]`;
         i += 14;
       } else if (reg1$.test(strI)) {
-        line += `(${i})[${name.slice(0, name.length - 1)}];`;
+        line += `(${i})[${parentCase}];`;
       } else if (/\d+1$/.test(strI)) {
-        line += `(${i})[${name}];`;
+        line += `(${i})[${one}];`;
       } else if (reg2_4.test(strI)) {
         const incValue = 2;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 1)}ы];`;
+        line += `(${i}-${i + incValue})[${many}];`;
         i += incValue;
       } else if (reg5_9.test(strI)) {
         const incValue = 4;
-        line += `(${i}-${incValue + i})[${name.slice(0, name.length - 1)}];`;
+        line += `(${i}-${incValue + i})[${parentCase}];`;
         i += incValue;
       }
     }
     return line;
   };
 
-  const generateRuWatchers = (name, totalCount) => {
-    let line = `(0)[${name.slice(0, name.length - 1)}];(1)[${name}];(2-4)[${name.slice(
-      0,
-      name.length - 1,
-    )}ы];(5-20)[${name.slice(0, name.length - 1)}];`;
-
-    for (let i = 21; i < totalCount; i++) {
-      const strI = String(i);
-
-      if (/\d+05/.test(strI)) {
-        const incValue = 14;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 1)}]`;
-        i += 14;
-      } else if (reg1$.test(strI)) {
-        line += `(${i})[${name}ов];`;
-      } else if (/\d+1$/.test(strI)) {
-        line += `(${i})[${name}];`;
-      } else if (reg2_4.test(strI)) {
-        const incValue = 2;
-        line += `(${i}-${i + incValue})[${name}а];`;
-        i += incValue;
-      } else if (reg5_9.test(strI)) {
-        const incValue = 4;
-        line += `(${i}-${i + incValue})[${name}ов];`;
-        i += incValue;
-      }
-    }
-    return line;
-  };
-
-  const generateRuForks = (name, totalCount) => {
-    let line = `(0)[${name.slice(0, name.length - 2)}ок];(1)[${name}];(2-4)[${name.slice(
-      0,
-      name.length - 1,
-    )}и];(5-20)[${name.slice(0, name.length - 2)}ок];`;
-
-    for (let i = 21; i < totalCount; i++) {
-      const strI = String(i);
-
-      if (/\d+05/.test(strI)) {
-        const incValue = 14;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 2)}ок]`;
-        i += 14;
-      } else if (/\d+1$/.test(strI)) {
-        line += `(${i})[${name}];`;
-      } else if (reg2_4.test(strI)) {
-        const incValue = 2;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 1)}и];`;
-        i += incValue;
-      } else if (reg5_9.test(strI)) {
-        const incValue = 4;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 2)}ок];`;
-        i += incValue;
-      }
-    }
-    return line;
-  };
-
-  const generateRuContributions = (name, totalCount) => {
-    let line = `(0)[${name.slice(0, name.length - 1)}й];(1)[${name}];(2-4)[${name.slice(
-      0,
-      name.length - 1,
-    )}и];(5-20)[${name.slice(0, name.length - 1)}й];`;
-
-    for (let i = 21; i < totalCount; i++) {
-      const strI = String(i);
-
-      if (/\d+05/.test(strI)) {
-        const incValue = 14;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 1)}й]`;
-        i += 14;
-      } else if (reg1$.test(strI)) {
-        line += `(${i})[${name.slice(0, name.length - 1)}й];`;
-      } else if (/\d+1$/.test(strI)) {
-        line += `(${i})[${name}];`;
-      } else if (reg2_4.test(strI)) {
-        const incValue = 2;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 1)}и];`;
-        i += incValue;
-      } else if (reg5_9.test(strI)) {
-        const incValue = 4;
-        line += `(${i}-${i + incValue})[${name.slice(0, name.length - 1)}й];`;
-        i += incValue;
-      }
-    }
-    return line;
-  };
-
-  const stars_interval = generateRuStars('звезда', 800);
-  const watchers_interval = generateRuWatchers('подписчик', 800);
-  const forks_interval = generateRuForks('ветка', 800);
-  const contributions_interval = generateRuContributions('Контрибуция', 800);
+  const stars_interval = generateRuTranslations(800, 'звезда', 'звезды', 'звезд');
+  const watchers_interval = generateRuTranslations(800, 'подписчик', 'подписчика', 'подписчиков');
+  const forks_interval = generateRuTranslations(800, 'ветка', 'ветки', 'веток');
+  const contributions_interval = generateRuTranslations(
+    800,
+    'Контрибуция: {{count}}',
+    'Контрибуций: {{count}}',
+    'Контрибуции: {{count}}',
+  );
 
   fs.readFile('./public/locales/ru/repoPage.json', (err, file) => {
     if (err) throw err;

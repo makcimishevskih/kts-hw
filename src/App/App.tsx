@@ -15,8 +15,7 @@ import css from './App.module.scss';
 
 // Checklist:
 // 1. Logic to icon wrapper
-// 2. i18n
-// 3. 404 page
+// 2. 404 page
 
 const App = () => {
   return (
@@ -25,7 +24,6 @@ const App = () => {
 
       <Suspense fallback={<Loader size="xl" />}>
         <Routes>
-          <Route path={ROUTES.error.mask} element={<ErrorPage />} />
           <Route
             path={ROUTES.orgs.mask}
             element={
@@ -39,6 +37,14 @@ const App = () => {
             element={
               <Container>
                 <RepoPage />
+              </Container>
+            }
+          />
+          <Route
+            path={ROUTES.error.mask}
+            element={
+              <Container>
+                <ErrorPage />
               </Container>
             }
           />
