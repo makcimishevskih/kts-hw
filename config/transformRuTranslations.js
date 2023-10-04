@@ -38,8 +38,8 @@ const reg5_9 = /^\d+?[5-9]$/;
   const contributions_interval = generateRuTranslations(
     800,
     'Контрибуция: {{count}}',
-    'Контрибуций: {{count}}',
     'Контрибуции: {{count}}',
+    'Контрибуций: {{count}}',
   );
 
   fs.readFile('./public/locales/ru/repoPage.json', (err, file) => {
