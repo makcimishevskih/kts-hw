@@ -17,9 +17,7 @@ class ThemeStore implements ILocalStore {
   }
 
   private setTheme = () => {
-    this.theme === 'dark'
-      ? (document.documentElement.dataset.theme = 'dark')
-      : (document.documentElement.dataset.theme = '');
+    document.documentElement.dataset.theme = this.theme === 'dark' ? 'dark' : '';
   };
 
   private setLocalStorageTheme = () => {
