@@ -1,12 +1,6 @@
-@import "styles/forwarded";
+@import "styles/forwarded.scss";
 
 .contributors {
-  &__status {
-    margin-top: $space-xxs;
-    @include flexbox(center, center);
-    @include typo(20px, 22px);
-  }
-
   &__title {
     display: flex;
 
@@ -24,24 +18,47 @@
 
       color: #0000009e;
 
-      background-color: #d9d9d9;
+      background-color: var(--card-image-bg);
       border-radius: 50%;
     }
   }
+  &__isOpenButton {
+    margin-top: $space-s;
+  }
 
   .contributors__list {
+    max-height: 240px;
+
     margin-top: $space-m;
 
+    overflow: hidden;
+
     .contributors__item {
-      @include flexbox(center, flex-start, 8px);
+      @include flexbox(center, flex-start, 12px);
       margin-top: $space-xxs;
 
-      .contributors__avatar {
-        width: 32px;
-        height: 32px;
+      .info {
+        @include flexbox(center, flex-start, 8px);
 
-        border-radius: 50%;
+        &__avatar {
+          width: 32px;
+          height: 32px;
+
+          border-radius: 50%;
+        }
       }
     }
+    &.open {
+      height: auto;
+      max-height: 1500px;
+
+      transition: max-height 1s ease-out;
+    }
+  }
+
+  .error {
+    text-align: center;
+    @include typo(24px, 26px, 500);
+    color: red;
   }
 }

@@ -1,0 +1,9 @@
+{
+  "language-button-text": "{{lang}}",
+  "theme-button-text": "{{theme}}",
+
+  "main": {
+    "header": "Nesting"
+  },
+  "go-back": "Go back"
+}

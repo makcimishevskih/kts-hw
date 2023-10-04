@@ -1,52 +1,58 @@
-@import "styles/vars.scss";
+@import "styles/forwarded.scss";
 
 .loaderWrapper {
-  width: 60px;
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: spin 0.6s infinite linear;
-
-  &.xl {
-    width: 100px;
-    height: 100px;
-  }
-  &.l {
-    width: 60px;
-    height: 60px;
-  }
-
-  &.m {
-    width: 48px;
-    height: 48px;
-  }
-
-  &.s {
-    width: 24px;
-    height: 24px;
-  }
+  @include flexbox(center, center);
+  margin: 0 auto;
 
   .loader {
-    height: 100%;
-    width: 100%;
-  }
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: spin 0.6s infinite linear;
 
-  .disabled {
-    stroke: #000000;
-    stroke-opacity: 0.2;
-  }
+    &.xl {
+      width: 100px;
+      height: 100px;
+    }
 
-  .fill_primary {
-    fill: $text-primary;
-  }
+    &.l {
+      width: 60px;
+      height: 60px;
+    }
 
-  .fill_secondary {
-    fill: $text-secondary;
-  }
+    &.m {
+      width: 48px;
+      height: 48px;
+    }
 
-  .fill_accent {
-    fill: $text-accent;
+    &.s {
+      width: 24px;
+      height: 24px;
+    }
+
+    .loader {
+      height: 100%;
+      width: 100%;
+    }
+
+    .disabled {
+      stroke: #000000;
+      stroke-opacity: 0.2;
+    }
+
+    .fill_primary {
+      fill: $text-primary;
+    }
+
+    .fill_secondary {
+      fill: $text-secondary;
+    }
+
+    .fill_accent {
+      fill: $text-accent;
+    }
   }
 }
 

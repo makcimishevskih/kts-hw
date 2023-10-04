@@ -1,23 +1,24 @@
-@import "styles/mixins.scss";
-@import "styles/vars.scss";
+@import "styles/forwarded";
 
 .myBtn {
-  border: none;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flexbox(center, space-between, 8px);
+  @include typo(18px, 18px);
 
   max-width: 185px;
-  height: 52px;
-  gap: 8px;
+  padding: $space-xs $space-m;
 
-  padding: $space-s $space-l;
-
-  @include typo(18px, 18px);
+  border: none;
 
   color: $button-primary-text;
   background-color: $brand;
+
+  &.rounded {
+    border-radius: 50%;
+  }
+
+  &.rected {
+    padding: $space-s $space-s;
+  }
 
   &:active {
     background-color: $brand-active;

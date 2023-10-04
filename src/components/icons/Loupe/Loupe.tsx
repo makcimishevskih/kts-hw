@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { IconProps } from 'components/icons/Icon';
+import { IconProps } from '../types';
 import css from './Loupe.module.scss';
 
 const Loupe: FC<IconProps> = ({ width = 24, height = 24, className, color }) => {

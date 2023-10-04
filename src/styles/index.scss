@@ -2,15 +2,20 @@
 @import "./vars.scss";
 @import "./Roboto/fonts";
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: Roboto;
-  font-weight: 400;
   font-size: 16px;
+  font-weight: 400;
+  scroll-behavior: smooth;
+  background-color: $background-color;
 }
 
 #root {
   max-width: 1440px;
   margin: 0 auto;
-
-  background-color: #f6f8fa;
+  color: $text-primary;
 }

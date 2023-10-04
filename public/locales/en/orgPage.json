@@ -1,0 +1,8 @@
+{
+  "title": "List organization repositories",
+  "all": "all",
+  "forks": "forks",
+  "private": "private",
+  "public": "public",
+  "member": "member"
+}

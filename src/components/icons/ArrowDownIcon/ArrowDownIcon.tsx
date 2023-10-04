@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import { FC } from 'react';
-import { IconProps } from '../Icon';
+import { IconProps } from '../types';
 import css from './ArrowDownIcon.module.scss';
 
 const ArrowDownIcon: FC<IconProps> = ({ width = 24, height = 24, color = 'primary', onClick, className, style }) => {

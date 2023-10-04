@@ -1,0 +1,90 @@
+:root {
+  --background-color: #f6f8fa;
+  --background-color-invert: #f6f8fa;
+
+  --border-color-light: #d9d9d9;
+
+  --text-primary: #000000;
+  --text-secondary: #afadb5;
+  --text-accent: #518581;
+
+  --loader-bg: #518581;
+
+  --button-primary-bg: #518581;
+
+  --brand: #4fcec3;
+  --brand-active: #487773ff;
+  --brand-hover: #86aaa7ff;
+
+  --input-text: #000000;
+  --input-bg: #ffffff;
+  --input-placeholder: #afadb5;
+  --input-border: #ffffff;
+  --input-bg-focus: #ffffff;
+  --input-border-focus: #518581;
+  --input-text-focus: #000000;
+  --input-bg-disabled: #ffffff;
+  --input-border-disabled: #ffffff;
+  --input-text-disabled: rgba(0, 0, 0, 0.2);
+
+  --card-bg: #ffffff;
+  --card-image-bg: #d9d9d9;
+  --card-hover-shadow: 0 0 20px 1px #518581;
+
+  --tag-bg: #daedff;
+  --tag-color: #0066cc;
+
+  --dropdown-options-bg: #ffffff;
+
+  --button-primary-bg-hover: #86aaa7;
+  --button-primary-text-hover: #ffffff;
+  --button-primary-bg-disabled: #d9d9d9;
+  --button-primary-text-disabled: rgba(255, 255, 255, 1);
+  --button-primary-bg-active: #487773;
+  --button-primary-text-active: #ffffff;
+}
+
+html[data-theme="dark"] {
+  --background-color: #090705;
+  --background-color-invert: #090705;
+
+  --text-primary: #ffffff;
+  --text-secondary: #afafaf;
+  --text-accent: #4fcec3;
+
+  --brand: #4fcec3;
+  --brand-active: #20b3a6;
+  --brand-hover: #b6e0dc;
+
+  --loader-bg: #4fcec3;
+
+  --button-primary-bg: #4fcec3;
+
+  --input-bg: #18123b;
+  --input-bg-focus: #18123b;
+  --input-border: #18123b;
+  --input-text: #ffffff;
+  --input-text-focus: #ffffff;
+  --input-placeholder: #afadb5;
+  --input-bg-disabled: #000000;
+  --input-text-disabled: #ffffff33;
+  --input-border-disabled: #000000;
+
+  --card-bg: #18123b;
+  --card-image-bg: #d9d9d9;
+  --card-hover-shadow: 0 0 20px 1px #518581;
+
+  --tag-bg: #daedff;
+  --tag-color: #0066cc;
+
+  --dropdown-options-bg: #000000;
+
+  --button-primary-bg-hover: #86aaa7;
+  --button-primary-text-hover: #000000;
+  --button-primary-bg-disabled: #d9d9d9;
+  --button-primary-text-disabled: 000000;
+  --button-primary-bg-active: #487773;
+  --button-primary-text-active: #000000;
+
+  --border-color-light: #d9d9d9;
+}

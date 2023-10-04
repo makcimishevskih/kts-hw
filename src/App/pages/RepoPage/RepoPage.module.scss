@@ -1,46 +1,62 @@
-@import "styles/mixins.scss";
-@import "styles/vars.scss";
+@import "styles/forwarded";
 
 .repo {
   height: 100%;
   padding: $space-xxxl 0;
 
-  &__status {
-    margin-top: $space-xxs;
-    @include flexbox(center, center);
-    @include typo(20px, 22px);
-    &_empty {
-      width: 30vw;
-      display: flex;
-      align-items: center;
-
-      justify-content: space-between;
-    }
-  }
-
-  &__header {
+  .header {
     @include flexbox(center, flex-start, $space-m);
-    img {
+
+    &__avatar {
       border-radius: $border-radius;
     }
   }
 
-  &__homepage {
-    margin-top: $space-xl;
+  .homepage {
     @include flexbox(center, flex-start, $space-xxs);
+    margin-top: $space-xl;
 
-    .homepage__Link {
+    &__imgWrapper {
+      @include flexbox(center, center);
+
+      width: 30px;
+      height: 30px;
+
+      border-radius: 50%;
+      background-color: $brand;
+
+      .homepage__img {
+        height: 20px;
+        width: 20px;
+      }
+    }
+
+    &__text {
       @include typo(16px, 18px, 700);
       color: $tag-color;
+      cursor: pointer;
+      color: $brand;
+      &:hover {
+        opacity: 0.5;
+      }
+    }
+    &_empty {
+      @include flexbox(center, center);
+      @include typo(20px, 22px, 500);
     }
   }
-  .homepage__empty {
-    @include flexbox(center, center);
-    @include typo(20px, 22px, 500);
-  }
-
   &__info {
-    @include flexbox(flex-start, flex-start, 80px);
+    @include flexbox(flex-start, space-between, 80px);
     margin-top: $space-xl;
+    @media (max-width: 700px) {
+      flex-direction: column;
+      gap: 30px;
+    }
+  }
+}
+
+html[data-theme="dark"] {
+  .homepage__ImgWrapper {
+    background-color: $background-color-invert;
   }
 }

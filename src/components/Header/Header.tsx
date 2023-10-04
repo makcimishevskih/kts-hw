@@ -1,35 +1,39 @@
+import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
-import user from 'assets/header.png';
+
 import logo from 'assets/logo.svg';
+
 import Container from 'components/Container';
+import LangButton from 'components/LangButton';
 import Text from 'components/Text';
+import ThemeButton from 'components/ThemeButton';
+
+import { ROUTES } from 'config/routes';
+
 import css from './Header.module.scss';
 
-interface IHeaderProps {}
-
-const Header: FC<IHeaderProps> = () => {
+const Header: FC = () => {
   return (
     <header className={css.header}>
       <Container>
-        <div className={`${css.header__nav}`}>
-          <div className={css.header__left}>
-            <Link to="/" className={css.header__logoWrapper}>
-              <img className={css.header__logo} src={logo} alt="logo" />
+        <div className={css.nav}>
+          <div className={css.nav__github}>
+            <Link to={ROUTES.orgs.mask}>
+              <img className={css.nav__logo} width="32" height="32" src={logo} alt="logo" />
             </Link>
-            <Text tag="h1" view="p-20" weight="bold">
+            <Text tag="h1" view="p-18" weight="bold" color="primary">
               GitHub Client
             </Text>
           </div>
 
-          <div className={css.header__right}>
-            <Link to="/" className={css.header__logoWrapper}>
-              <img className={css.header__userLogo} src={user} alt="user" />
-            </Link>
+          <div className={css.nav__switchers}>
+            <LangButton />
+            <ThemeButton />
           </div>
         </div>
       </Container>
     </header>
   );
 };
-export default Header;
+export default observer(Header);

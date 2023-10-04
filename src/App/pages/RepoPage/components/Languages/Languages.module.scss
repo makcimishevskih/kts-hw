@@ -1,20 +1,14 @@
-@import "styles/vars.scss";
-@import "styles/mixins.scss";
+@import "styles/forwarded";
 
 .languages {
-  &__status {
-    margin-top: $space-xxs;
-    @include flexbox(center, center);
-    @include typo(20px, 22px);
-  }
-
+  flex-grow: 1;
   &__range {
     @include flexbox(center, flex-start, 2px);
 
     width: 280px;
     height: 10px;
 
-    margin-top: $space-xxs;
+    margin-top: $space-l;
 
     border-radius: $border-radius;
     overflow: hidden;
@@ -26,7 +20,7 @@
 
   .languages__list {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, auto));
+    grid-template-columns: repeat(2, minmax(auto, 150px));
     grid-gap: 4px 20px;
 
     margin-top: $space-m;

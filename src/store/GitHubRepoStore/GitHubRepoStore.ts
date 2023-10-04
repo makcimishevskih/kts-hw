@@ -15,6 +15,7 @@ import {
 } from 'store/models/repo';
 
 import { getData } from 'utils/fetchData';
+import repoStoreRoutes from './config/routes';
 
 type GitHubRepoStoreConstructor = {
   orgName: string | undefined;
@@ -44,7 +45,6 @@ export class GitHubRepoStore implements ILocalStore {
       errorsRepo: observable,
       loadersRepo: observable,
       getFullRepoData: action,
-      getSelectedRepoData: action,
     });
 
     this.orgName = orgName;
@@ -59,9 +59,11 @@ export class GitHubRepoStore implements ILocalStore {
   getSelectedRepoData = async () => {
     this.repoLoading = true;
     this.repoError = '';
-    const repoURL = `repos/${this.orgName}/${this.repoName}`;
 
-    const { data, isError } = await getData<TOrgReposApi[], TOrgReposModel[]>(repoURL, normalizeOrgRepos);
+    const { data, isError } = await getData<TOrgReposApi[], TOrgReposModel[]>(
+      repoStoreRoutes.repos.createRoot(this.orgName, this.repoName),
+      normalizeOrgRepos,
+    );
 
     runInAction(() => {
       if (isError) {
@@ -76,20 +78,28 @@ export class GitHubRepoStore implements ILocalStore {
   };
 
   getFullRepoData = async () => {
-    const repoURL = `repos/${this.orgName}/${this.repoName}`;
-
     this.errorsRepo = { contributors: '', readme: '', languages: '' };
     this.loadersRepo = { contributors: true, readme: true, languages: true };
 
     const [contributors, languages, readme] = await Promise.all([
-      getData<TContributorApi[], TContributorModel[]>(`${repoURL}/contributors`, normalizeContributor),
-      getData<TLanguagesModel, TLanguagesModel>(`${repoURL}/languages`, (data) => data),
-      getData<TReadmeApi, TReadmeModel>(`${repoURL}/contents/README.md`, normalizeReadme),
+      getData<TContributorApi[], TContributorModel[]>(
+        repoStoreRoutes.repos.contributors.createRoot(this.orgName, this.repoName),
+        normalizeContributor,
+      ),
+      getData<TLanguagesModel, TLanguagesModel>(
+        repoStoreRoutes.repos.languages.createRoot(this.orgName, this.repoName),
+        (data) => data,
+      ),
+      getData<TReadmeApi, TReadmeModel>(
+        repoStoreRoutes.repos.readme.createRoot(this.orgName, this.repoName),
+        normalizeReadme,
+      ),
     ]);
 
     runInAction(() => {
       if (contributors.isError) {
         this.errorsRepo = { ...this.errorsRepo, contributors: "Can't load contributors" };
+        this.loadersRepo = { ...this.loadersRepo, contributors: false };
       } else {
         this.contributors = contributors.data as TContributorModel[];
         this.loadersRepo = { ...this.loadersRepo, contributors: false };
@@ -97,6 +107,7 @@ export class GitHubRepoStore implements ILocalStore {
 
       if (languages.isError) {
         this.errorsRepo = { ...this.errorsRepo, languages: "Can't load languages" };
+        this.loadersRepo = { ...this.loadersRepo, languages: false };
       } else {
         this.languages = languages.data as TLanguagesModel;
         this.loadersRepo = { ...this.loadersRepo, languages: false };
@@ -104,6 +115,7 @@ export class GitHubRepoStore implements ILocalStore {
 
       if (readme.isError) {
         this.errorsRepo = { ...this.errorsRepo, readme: `Can't load README.md` };
+        this.loadersRepo = { ...this.loadersRepo, readme: false };
       } else {
         this.readme = readme.data as TReadmeModel;
         this.loadersRepo = { ...this.loadersRepo, readme: false };

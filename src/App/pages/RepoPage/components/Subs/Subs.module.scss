@@ -3,13 +3,15 @@
 .subs {
   margin-top: $space-l;
 
-  .subs__tag {
+  .tags {
     position: relative;
 
     margin-top: $space-xxs;
     padding-left: $space-xl;
 
-    .subs__count {
+    .tags__count {
+      display: inline-block;
+      width: 25px;
       margin-right: $space-xxs;
       font-weight: 700;
     }

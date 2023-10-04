@@ -1,8 +1,8 @@
 import { toJS } from 'mobx';
-import { observer } from 'mobx-react-lite';
 import { FC } from 'react';
 
-import Loader from 'components/Loader';
+import { useTranslation } from 'react-i18next';
+import Status from 'components/Status';
 import Text from 'components/Text';
 
 import { TLanguagesModel } from 'store/models/repo';
@@ -10,13 +10,15 @@ import { randomRGBColor } from 'utils/randomRGBColor';
 
 import css from './Languages.module.scss';
 
-interface ILanguagesProps {
+type ILanguagesProps = {
   languages: TLanguagesModel | null;
   error: string;
   loading: boolean;
-}
+};
 
 const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
+  const { t } = useTranslation('repoPage');
+
   const langValues: number[] = (languages && Object.values(toJS(languages))) || [];
   const oneLanguagesSum = langValues.reduce((acc, count) => acc + count, 0) / 100;
   const languagesWithPercent =
@@ -31,16 +33,15 @@ const Languages: FC<ILanguagesProps> = ({ languages, error, loading }) => {
     <>
       <div className={css.languages}>
         <Text tag="h4" weight="bold" view="p-18">
-          Languages
+          {t('languages.languages-title')}
         </Text>
 
-        <div className={css.languages__status}>
-          {loading && !error && <Loader color="accent" size="l" />}
-          {error && !loading && <div className={css.languages__status_error}>{error}</div>}
-          {!loading && !error && languages === null && (
-            <div className={css.languages__status_empty}>No languages data </div>
-          )}
-        </div>
+        {loading ||
+          (error && (
+            <Status isLoading={loading} errorMessage={`${error}qweqwewqe`} isEmpty={languages !== null}>
+              {t('contributors.no-data-contributors')}
+            </Status>
+          ))}
 
         {languagesWithPercent && languagesWithPercent?.length > 0 && (
           <>

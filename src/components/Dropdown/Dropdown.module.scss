@@ -1,16 +1,18 @@
-@import "styles/mixins.scss";
-@import "styles/vars.scss";
+@import "styles/forwarded";
 
 .wrapperDropDown {
-  width: 400px;
+  max-width: 400px;
   position: relative;
 
   .list {
+    z-index: 1;
     position: absolute;
     top: 50px;
     left: 0;
 
-    width: 400px;
+    max-width: 400px;
+    min-width: 100%;
+
     margin-top: $space-xxs;
 
     background-color: $dropdown-options-bg;
@@ -18,7 +20,10 @@
 
     .item {
       @include typo(16px, 20px);
+
       padding: $space-s $space-xs;
+
+      transition: color 0.1s ease;
 
       cursor: pointer;
 

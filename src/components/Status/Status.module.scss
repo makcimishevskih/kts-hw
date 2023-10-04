@@ -1,0 +1,21 @@
+@import "styles/forwarded.scss";
+
+.status {
+  margin-top: $space-l;
+  padding: $space-s $space-xl;
+
+  &_empty,
+  &_error {
+    @include flexbox(center, center, 80px);
+    margin: 0 auto;
+  }
+
+  .button {
+    text-transform: uppercase;
+  }
+
+  &_error {
+    @include typo(24px, 26px, 500);
+    color: red;
+  }
+}

@@ -1,5 +1,4 @@
-@import "styles/mixins.scss";
-@import "styles/vars.scss";
+@import "styles/forwarded";
 
 .text {
   font-weight: normal;
@@ -22,6 +21,9 @@
 
 .title {
   @include typo(44px, 48px, 700);
+}
+.subtitle {
+  @include typo(32px, 36px, 700);
 }
 
 .button {

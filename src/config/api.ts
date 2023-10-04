@@ -1,4 +1,4 @@
-export const API_TOKEN = import.meta.env.VITE_REACT_APP_GH_TOKEN;
+export const API_TOKEN = process.env.REACT_APP_WEBPACK_GH_TOKEN;
 
 export const config = {
   headers: {

@@ -3,9 +3,9 @@ import { FC } from 'react';
 
 import css from './Tags.module.scss';
 
-interface ITagsProps {
+type ITagsProps = {
   tags: string[];
-}
+};
 
 const Tags: FC<ITagsProps> = ({ tags }) => {
   return (
