@@ -84,5 +84,9 @@
     "fs": false,
     "path": false,
     "url": false
-  }
+  },
+  "main": "index.js",
+  "repository": "git@github.com:makcimishevskih/kts-hw.git",
+  "author": "MaximI <makcimka1477@yandex.ru>",
+  "license": "MIT"
 }

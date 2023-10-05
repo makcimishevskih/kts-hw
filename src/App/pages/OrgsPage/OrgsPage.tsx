@@ -13,6 +13,7 @@ import useScroll from 'hooks/useScroll';
 import GitHubOrgStore from 'store/GitHubOrgStore';
 import PaginationStore from 'store/PaginationStore';
 
+import scrollTo from 'utils/scrollTo';
 import NavInputs from './components/NavInputs';
 import OrgReposList from './components/OrgReposList';
 
@@ -50,7 +51,7 @@ const OrgsPage: FC = () => {
   useEffect(() => {
     getReposData(ITEM_PER_PAGE, offset);
     setQueryParams(`name=${orgName}&type=${reposFilterType}&offset=${offset}`);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    scrollTo(0);
   }, [offset, orgName, reposFilterType]);
 
   useEffect(() => {
